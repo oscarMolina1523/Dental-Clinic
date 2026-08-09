@@ -1,3 +1,5 @@
+import { DentalChartSchemas } from "./schemas/dentalChart.schema";
+import { DentalChartPaths } from "./paths/dentalChart.path";
 import { PatientDiseaseSchemas } from "./schemas/patientDisease.schema";
 import { PatientDiseasePaths } from "./paths/patientDisease.path";
 import { DiseaseSchemas } from "./schemas/disease.schema";
@@ -22,6 +24,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...DentalChartPaths,
     ...PatientDiseasePaths,
     ...DiseasePaths,
     ...PatientPaths,
@@ -36,6 +39,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...DentalChartSchemas,
       ...PatientDiseaseSchemas,
       ...DiseaseSchemas,
       ...PatientSchemas,

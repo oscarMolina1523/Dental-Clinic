@@ -160,6 +160,27 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "DentalChart",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "evaluationDate",
+          "type": "string"
+        },
+        {
+          "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "observations",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
