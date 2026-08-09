@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IDentalChartDetailRepository } from "./../../Domain/repositories/dentalChartDetailRepository.interface";
+import { DentalChartDetailRepository } from "./../../Infrastructure/repositories/dentalChartDetail.repository";
+import { IDentalChartDetailService } from "./../../Application/interfaces/dentalChartDetail.service.interface";
+import { DentalChartDetailService } from "./../../Application/services/dentalChartDetail.service";
+import { DentalChartDetailController } from "./../controllers/dentalChartDetail.controller";
 import { IDentalChartRepository } from "./../../Domain/repositories/dentalChartRepository.interface";
 import { DentalChartRepository } from "./../../Infrastructure/repositories/dentalChart.repository";
 import { IDentalChartService } from "./../../Application/interfaces/dentalChart.service.interface";
@@ -32,6 +37,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// DentalChartDetail
+container.register<IDentalChartDetailRepository>("IDentalChartDetailRepository", { useClass: DentalChartDetailRepository });
+container.register<IDentalChartDetailService>("IDentalChartDetailService", { useClass: DentalChartDetailService });
+container.register<DentalChartDetailController>("DentalChartDetailController", { useClass: DentalChartDetailController });
 // DentalChart
 container.register<IDentalChartRepository>("IDentalChartRepository", { useClass: DentalChartRepository });
 container.register<IDentalChartService>("IDentalChartService", { useClass: DentalChartService });

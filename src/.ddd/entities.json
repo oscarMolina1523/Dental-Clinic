@@ -181,6 +181,31 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "DentalChartDetail",
+      "fields": [
+        {
+          "name": "dentalChartId",
+          "type": "string"
+        },
+        {
+          "name": "toothNumber",
+          "type": "number"
+        },
+        {
+          "name": "face",
+          "type": "varchar"
+        },
+        {
+          "name": "toothStatus",
+          "type": "string"
+        },
+        {
+          "name": "notes",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
