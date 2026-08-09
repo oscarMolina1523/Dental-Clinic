@@ -276,6 +276,39 @@
           "type": "boolean"
         }
       ]
+    },
+    {
+      "name": "TreatmentPlan",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "code",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        },
+        {
+          "name": "totalAmount",
+          "type": "number"
+        },
+        {
+          "name": "discount",
+          "type": "number"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        }
+      ]
     }
   ]
 }
