@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IMedicalPrescriptionRepository } from "./../../Domain/repositories/medicalPrescriptionRepository.interface";
+import { MedicalPrescriptionRepository } from "./../../Infrastructure/repositories/medicalPrescription.repository";
+import { IMedicalPrescriptionService } from "./../../Application/interfaces/medicalPrescription.service.interface";
+import { MedicalPrescriptionService } from "./../../Application/services/medicalPrescription.service";
+import { MedicalPrescriptionController } from "./../controllers/medicalPrescription.controller";
 import { IClinicalProgresRepository } from "./../../Domain/repositories/clinicalProgresRepository.interface";
 import { ClinicalProgresRepository } from "./../../Infrastructure/repositories/clinicalProgres.repository";
 import { IClinicalProgresService } from "./../../Application/interfaces/clinicalProgres.service.interface";
@@ -62,6 +67,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// MedicalPrescription
+container.register<IMedicalPrescriptionRepository>("IMedicalPrescriptionRepository", { useClass: MedicalPrescriptionRepository });
+container.register<IMedicalPrescriptionService>("IMedicalPrescriptionService", { useClass: MedicalPrescriptionService });
+container.register<MedicalPrescriptionController>("MedicalPrescriptionController", { useClass: MedicalPrescriptionController });
 // ClinicalProgres
 container.register<IClinicalProgresRepository>("IClinicalProgresRepository", { useClass: ClinicalProgresRepository });
 container.register<IClinicalProgresService>("IClinicalProgresService", { useClass: ClinicalProgresService });

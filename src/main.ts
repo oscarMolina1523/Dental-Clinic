@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import medicalPrescriptionRoutes from "./WebApi/routes/medicalPrescription.routes";
 import clinicalProgresRoutes from "./WebApi/routes/clinicalProgres.routes";
 import treatmentPlanDetailRoutes from "./WebApi/routes/treatmentPlanDetail.routes";
 import treatmentPlanRoutes from "./WebApi/routes/treatmentPlan.routes";
@@ -41,6 +42,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/medicalPrescription", medicalPrescriptionRoutes);
 app.use("/clinicalProgres", clinicalProgresRoutes);
 app.use("/treatmentPlanDetail", treatmentPlanDetailRoutes);
 app.use("/treatmentPlan", treatmentPlanRoutes);
