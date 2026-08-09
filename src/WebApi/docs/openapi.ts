@@ -1,3 +1,5 @@
+import { TreatmentPlanSchemas } from "./schemas/treatmentPlan.schema";
+import { TreatmentPlanPaths } from "./paths/treatmentPlan.path";
 import { TreatmentCatalogSchemas } from "./schemas/treatmentCatalog.schema";
 import { TreatmentCatalogPaths } from "./paths/treatmentCatalog.path";
 import { DateSchemas } from "./schemas/date.schema";
@@ -30,6 +32,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...TreatmentPlanPaths,
     ...TreatmentCatalogPaths,
     ...DatePaths,
     ...DentalChartDetailPaths,
@@ -48,6 +51,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...TreatmentPlanSchemas,
       ...TreatmentCatalogSchemas,
       ...DateSchemas,
       ...DentalChartDetailSchemas,
