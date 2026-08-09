@@ -421,6 +421,39 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "PatientAttachment",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "fileType",
+          "type": "string"
+        },
+        {
+          "name": "fileUrl",
+          "type": "string"
+        },
+        {
+          "name": "fileName",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "uploadedBy",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
