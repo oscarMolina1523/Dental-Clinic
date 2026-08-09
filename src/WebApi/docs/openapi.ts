@@ -1,3 +1,5 @@
+import { DiseaseSchemas } from "./schemas/disease.schema";
+import { DiseasePaths } from "./paths/disease.path";
 import { PatientSchemas } from "./schemas/patient.schema";
 import { PatientPaths } from "./paths/patient.path";
 import { UserSchemas } from "./schemas/user.schema";
@@ -18,6 +20,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...DiseasePaths,
     ...PatientPaths,
     ...UserPaths,
     ...RolePaths,},
@@ -30,6 +33,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...DiseaseSchemas,
       ...PatientSchemas,
       ...UserSchemas,
       ...RoleSchemas,}
