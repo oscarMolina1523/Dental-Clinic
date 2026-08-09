@@ -1,3 +1,5 @@
+import { UserSchemas } from "./schemas/user.schema";
+import { UserPaths } from "./paths/user.path";
 import { RoleSchemas } from "./schemas/role.schema";
 import { RolePaths } from "./paths/role.path";
 export const OpenApiSpecification = {
@@ -14,6 +16,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...UserPaths,
     ...RolePaths,},
   components: {
     securitySchemes: {
@@ -24,6 +27,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...UserSchemas,
       ...RoleSchemas,}
   }
 };

@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import userRoutes from "./WebApi/routes/user.routes";
 import roleRoutes from "./WebApi/routes/role.routes";
 //AUTO-IMPORT-OPENAPI
 import { apiReference } from "@scalar/express-api-reference";
@@ -30,6 +31,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/user", userRoutes);
 app.use("/role", roleRoutes);
 
 app.listen(PORT, () => {

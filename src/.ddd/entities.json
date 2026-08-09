@@ -16,6 +16,51 @@
           "type": "Date"
         }
       ]
+    },
+    {
+      "name": "User",
+      "fields": [
+        {
+          "name": "roleId",
+          "type": "string"
+        },
+        {
+          "name": "fullName",
+          "type": "string"
+        },
+        {
+          "name": "image",
+          "type": "string"
+        },
+        {
+          "name": "email",
+          "type": "string"
+        },
+        {
+          "name": "password",
+          "type": "string"
+        },
+        {
+          "name": "phoneNumber",
+          "type": "string"
+        },
+        {
+          "name": "membershipNumber",
+          "type": "string"
+        },
+        {
+          "name": "active",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        },
+        {
+          "name": "updatedAt",
+          "type": "Date"
+        }
+      ]
     }
   ]
 }
