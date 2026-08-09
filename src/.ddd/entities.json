@@ -375,6 +375,27 @@
           "type": "Date"
         }
       ]
+    },
+    {
+      "name": "MedicalPrescription",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "date",
+          "type": "Date"
+        },
+        {
+          "name": "generalInstructions",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
