@@ -1,3 +1,5 @@
+import { PatientAttachmentSchemas } from "./schemas/patientAttachment.schema";
+import { PatientAttachmentPaths } from "./paths/patientAttachment.path";
 import { MedicalPrescriptionDetailSchemas } from "./schemas/medicalPrescriptionDetail.schema";
 import { MedicalPrescriptionDetailPaths } from "./paths/medicalPrescriptionDetail.path";
 import { MedicalPrescriptionSchemas } from "./schemas/medicalPrescription.schema";
@@ -40,6 +42,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...PatientAttachmentPaths,
     ...MedicalPrescriptionDetailPaths,
     ...MedicalPrescriptionPaths,
     ...ClinicalProgresPaths,
@@ -63,6 +66,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...PatientAttachmentSchemas,
       ...MedicalPrescriptionDetailSchemas,
       ...MedicalPrescriptionSchemas,
       ...ClinicalProgresSchemas,

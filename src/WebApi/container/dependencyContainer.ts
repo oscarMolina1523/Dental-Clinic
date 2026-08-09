@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IPatientAttachmentRepository } from "./../../Domain/repositories/patientAttachmentRepository.interface";
+import { PatientAttachmentRepository } from "./../../Infrastructure/repositories/patientAttachment.repository";
+import { IPatientAttachmentService } from "./../../Application/interfaces/patientAttachment.service.interface";
+import { PatientAttachmentService } from "./../../Application/services/patientAttachment.service";
+import { PatientAttachmentController } from "./../controllers/patientAttachment.controller";
 import { IMedicalPrescriptionDetailRepository } from "./../../Domain/repositories/medicalPrescriptionDetailRepository.interface";
 import { MedicalPrescriptionDetailRepository } from "./../../Infrastructure/repositories/medicalPrescriptionDetail.repository";
 import { IMedicalPrescriptionDetailService } from "./../../Application/interfaces/medicalPrescriptionDetail.service.interface";
@@ -72,6 +77,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// PatientAttachment
+container.register<IPatientAttachmentRepository>("IPatientAttachmentRepository", { useClass: PatientAttachmentRepository });
+container.register<IPatientAttachmentService>("IPatientAttachmentService", { useClass: PatientAttachmentService });
+container.register<PatientAttachmentController>("PatientAttachmentController", { useClass: PatientAttachmentController });
 // MedicalPrescriptionDetail
 container.register<IMedicalPrescriptionDetailRepository>("IMedicalPrescriptionDetailRepository", { useClass: MedicalPrescriptionDetailRepository });
 container.register<IMedicalPrescriptionDetailService>("IMedicalPrescriptionDetailService", { useClass: MedicalPrescriptionDetailService });
