@@ -143,6 +143,23 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "PatientDisease",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "diseaseId",
+          "type": "string"
+        },
+        {
+          "name": "observations",
+          "type": "string"
+        }
+      ]
     }
   ]
 }

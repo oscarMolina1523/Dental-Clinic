@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import patientDiseaseRoutes from "./WebApi/routes/patientDisease.routes";
 import diseaseRoutes from "./WebApi/routes/disease.routes";
 import patientRoutes from "./WebApi/routes/patient.routes";
 import userRoutes from "./WebApi/routes/user.routes";
@@ -33,6 +34,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/patientDisease", patientDiseaseRoutes);
 app.use("/disease", diseaseRoutes);
 app.use("/patient", patientRoutes);
 app.use("/user", userRoutes);
