@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IInvoiceRepository } from "./../../Domain/repositories/invoiceRepository.interface";
+import { InvoiceRepository } from "./../../Infrastructure/repositories/invoice.repository";
+import { IInvoiceService } from "./../../Application/interfaces/invoice.service.interface";
+import { InvoiceService } from "./../../Application/services/invoice.service";
+import { InvoiceController } from "./../controllers/invoice.controller";
 import { IPatientAttachmentRepository } from "./../../Domain/repositories/patientAttachmentRepository.interface";
 import { PatientAttachmentRepository } from "./../../Infrastructure/repositories/patientAttachment.repository";
 import { IPatientAttachmentService } from "./../../Application/interfaces/patientAttachment.service.interface";
@@ -77,6 +82,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Invoice
+container.register<IInvoiceRepository>("IInvoiceRepository", { useClass: InvoiceRepository });
+container.register<IInvoiceService>("IInvoiceService", { useClass: InvoiceService });
+container.register<InvoiceController>("InvoiceController", { useClass: InvoiceController });
 // PatientAttachment
 container.register<IPatientAttachmentRepository>("IPatientAttachmentRepository", { useClass: PatientAttachmentRepository });
 container.register<IPatientAttachmentService>("IPatientAttachmentService", { useClass: PatientAttachmentService });
