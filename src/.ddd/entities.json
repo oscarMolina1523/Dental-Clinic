@@ -309,6 +309,39 @@
           "type": "Date"
         }
       ]
+    },
+    {
+      "name": "TreatmentPlanDetail",
+      "fields": [
+        {
+          "name": "planId",
+          "type": "string"
+        },
+        {
+          "name": "treatmentId",
+          "type": "string"
+        },
+        {
+          "name": "toothNumber",
+          "type": "number"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "unitPrice",
+          "type": "number"
+        },
+        {
+          "name": "subtotal",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
