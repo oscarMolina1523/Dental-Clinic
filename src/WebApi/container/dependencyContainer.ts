@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IPatientDiseaseRepository } from "./../../Domain/repositories/patientDiseaseRepository.interface";
+import { PatientDiseaseRepository } from "./../../Infrastructure/repositories/patientDisease.repository";
+import { IPatientDiseaseService } from "./../../Application/interfaces/patientDisease.service.interface";
+import { PatientDiseaseService } from "./../../Application/services/patientDisease.service";
+import { PatientDiseaseController } from "./../controllers/patientDisease.controller";
 import { IDiseaseRepository } from "./../../Domain/repositories/diseaseRepository.interface";
 import { DiseaseRepository } from "./../../Infrastructure/repositories/disease.repository";
 import { IDiseaseService } from "./../../Application/interfaces/disease.service.interface";
@@ -22,6 +27,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// PatientDisease
+container.register<IPatientDiseaseRepository>("IPatientDiseaseRepository", { useClass: PatientDiseaseRepository });
+container.register<IPatientDiseaseService>("IPatientDiseaseService", { useClass: PatientDiseaseService });
+container.register<PatientDiseaseController>("PatientDiseaseController", { useClass: PatientDiseaseController });
 // Disease
 container.register<IDiseaseRepository>("IDiseaseRepository", { useClass: DiseaseRepository });
 container.register<IDiseaseService>("IDiseaseService", { useClass: DiseaseService });
