@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { ITreatmentCatalogRepository } from "./../../Domain/repositories/treatmentCatalogRepository.interface";
+import { TreatmentCatalogRepository } from "./../../Infrastructure/repositories/treatmentCatalog.repository";
+import { ITreatmentCatalogService } from "./../../Application/interfaces/treatmentCatalog.service.interface";
+import { TreatmentCatalogService } from "./../../Application/services/treatmentCatalog.service";
+import { TreatmentCatalogController } from "./../controllers/treatmentCatalog.controller";
 import { IDateRepository } from "./../../Domain/repositories/dateRepository.interface";
 import { DateRepository } from "./../../Infrastructure/repositories/date.repository";
 import { IDateService } from "./../../Application/interfaces/date.service.interface";
@@ -42,6 +47,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// TreatmentCatalog
+container.register<ITreatmentCatalogRepository>("ITreatmentCatalogRepository", { useClass: TreatmentCatalogRepository });
+container.register<ITreatmentCatalogService>("ITreatmentCatalogService", { useClass: TreatmentCatalogService });
+container.register<TreatmentCatalogController>("TreatmentCatalogController", { useClass: TreatmentCatalogController });
 // Date
 container.register<IDateRepository>("IDateRepository", { useClass: DateRepository });
 container.register<IDateService>("IDateService", { useClass: DateService });

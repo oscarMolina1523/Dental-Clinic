@@ -247,6 +247,35 @@
           "type": "Date"
         }
       ]
+    },
+    {
+      "name": "TreatmentCatalog",
+      "fields": [
+        {
+          "name": "code",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "basePrice",
+          "type": "number"
+        },
+        {
+          "name": "estimatedDurationMinutes",
+          "type": "string"
+        },
+        {
+          "name": "active",
+          "type": "boolean"
+        }
+      ]
     }
   ]
 }
