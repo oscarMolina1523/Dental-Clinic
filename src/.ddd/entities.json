@@ -396,6 +396,31 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "MedicalPrescriptionDetail",
+      "fields": [
+        {
+          "name": "medicalPrescriptionId",
+          "type": "string"
+        },
+        {
+          "name": "medicine",
+          "type": "string"
+        },
+        {
+          "name": "dose",
+          "type": "string"
+        },
+        {
+          "name": "frequency",
+          "type": "string"
+        },
+        {
+          "name": "duration",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
