@@ -1,3 +1,5 @@
+import { MedicalPrescriptionDetailSchemas } from "./schemas/medicalPrescriptionDetail.schema";
+import { MedicalPrescriptionDetailPaths } from "./paths/medicalPrescriptionDetail.path";
 import { MedicalPrescriptionSchemas } from "./schemas/medicalPrescription.schema";
 import { MedicalPrescriptionPaths } from "./paths/medicalPrescription.path";
 import { ClinicalProgresSchemas } from "./schemas/clinicalProgres.schema";
@@ -38,6 +40,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...MedicalPrescriptionDetailPaths,
     ...MedicalPrescriptionPaths,
     ...ClinicalProgresPaths,
     ...TreatmentPlanDetailPaths,
@@ -60,6 +63,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...MedicalPrescriptionDetailSchemas,
       ...MedicalPrescriptionSchemas,
       ...ClinicalProgresSchemas,
       ...TreatmentPlanDetailSchemas,
