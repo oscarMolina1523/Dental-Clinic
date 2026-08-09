@@ -1,3 +1,5 @@
+import { DateSchemas } from "./schemas/date.schema";
+import { DatePaths } from "./paths/date.path";
 import { DentalChartDetailSchemas } from "./schemas/dentalChartDetail.schema";
 import { DentalChartDetailPaths } from "./paths/dentalChartDetail.path";
 import { DentalChartSchemas } from "./schemas/dentalChart.schema";
@@ -26,6 +28,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...DatePaths,
     ...DentalChartDetailPaths,
     ...DentalChartPaths,
     ...PatientDiseasePaths,
@@ -42,6 +45,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...DateSchemas,
       ...DentalChartDetailSchemas,
       ...DentalChartSchemas,
       ...PatientDiseaseSchemas,

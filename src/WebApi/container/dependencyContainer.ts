@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IDateRepository } from "./../../Domain/repositories/dateRepository.interface";
+import { DateRepository } from "./../../Infrastructure/repositories/date.repository";
+import { IDateService } from "./../../Application/interfaces/date.service.interface";
+import { DateService } from "./../../Application/services/date.service";
+import { DateController } from "./../controllers/date.controller";
 import { IDentalChartDetailRepository } from "./../../Domain/repositories/dentalChartDetailRepository.interface";
 import { DentalChartDetailRepository } from "./../../Infrastructure/repositories/dentalChartDetail.repository";
 import { IDentalChartDetailService } from "./../../Application/interfaces/dentalChartDetail.service.interface";
@@ -37,6 +42,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Date
+container.register<IDateRepository>("IDateRepository", { useClass: DateRepository });
+container.register<IDateService>("IDateService", { useClass: DateService });
+container.register<DateController>("DateController", { useClass: DateController });
 // DentalChartDetail
 container.register<IDentalChartDetailRepository>("IDentalChartDetailRepository", { useClass: DentalChartDetailRepository });
 container.register<IDentalChartDetailService>("IDentalChartDetailService", { useClass: DentalChartDetailService });
