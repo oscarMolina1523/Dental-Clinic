@@ -1,0 +1,21 @@
+{
+  "models": [
+    {
+      "name": "Role",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        }
+      ]
+    }
+  ]
+}
