@@ -342,6 +342,39 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "ClinicalProgres",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "dateId",
+          "type": "string"
+        },
+        {
+          "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "diagnosis",
+          "type": "string"
+        },
+        {
+          "name": "treatmentId",
+          "type": "string"
+        },
+        {
+          "name": "observations",
+          "type": "string"
+        },
+        {
+          "name": "registrationDate",
+          "type": "Date"
+        }
+      ]
     }
   ]
 }
