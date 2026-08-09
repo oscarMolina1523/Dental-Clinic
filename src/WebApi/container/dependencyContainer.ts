@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { ITreatmentPlanDetailRepository } from "./../../Domain/repositories/treatmentPlanDetailRepository.interface";
+import { TreatmentPlanDetailRepository } from "./../../Infrastructure/repositories/treatmentPlanDetail.repository";
+import { ITreatmentPlanDetailService } from "./../../Application/interfaces/treatmentPlanDetail.service.interface";
+import { TreatmentPlanDetailService } from "./../../Application/services/treatmentPlanDetail.service";
+import { TreatmentPlanDetailController } from "./../controllers/treatmentPlanDetail.controller";
 import { ITreatmentPlanRepository } from "./../../Domain/repositories/treatmentPlanRepository.interface";
 import { TreatmentPlanRepository } from "./../../Infrastructure/repositories/treatmentPlan.repository";
 import { ITreatmentPlanService } from "./../../Application/interfaces/treatmentPlan.service.interface";
@@ -52,6 +57,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// TreatmentPlanDetail
+container.register<ITreatmentPlanDetailRepository>("ITreatmentPlanDetailRepository", { useClass: TreatmentPlanDetailRepository });
+container.register<ITreatmentPlanDetailService>("ITreatmentPlanDetailService", { useClass: TreatmentPlanDetailService });
+container.register<TreatmentPlanDetailController>("TreatmentPlanDetailController", { useClass: TreatmentPlanDetailController });
 // TreatmentPlan
 container.register<ITreatmentPlanRepository>("ITreatmentPlanRepository", { useClass: TreatmentPlanRepository });
 container.register<ITreatmentPlanService>("ITreatmentPlanService", { useClass: TreatmentPlanService });
