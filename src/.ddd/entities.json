@@ -454,6 +454,39 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "Invoice",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "treatmentPlanId",
+          "type": "string"
+        },
+        {
+          "name": "invoiceNumber",
+          "type": "string"
+        },
+        {
+          "name": "totalAmount",
+          "type": "number"
+        },
+        {
+          "name": "paidAmount",
+          "type": "number"
+        },
+        {
+          "name": "pendingAmount",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
