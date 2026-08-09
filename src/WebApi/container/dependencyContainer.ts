@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IPatientRepository } from "./../../Domain/repositories/patientRepository.interface";
+import { PatientRepository } from "./../../Infrastructure/repositories/patient.repository";
+import { IPatientService } from "./../../Application/interfaces/patient.service.interface";
+import { PatientService } from "./../../Application/services/patient.service";
+import { PatientController } from "./../controllers/patient.controller";
 import { IUserRepository } from "./../../Domain/repositories/userRepository.interface";
 import { UserRepository } from "./../../Infrastructure/repositories/user.repository";
 import { IUserService } from "./../../Application/interfaces/user.service.interface";
@@ -12,6 +17,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Patient
+container.register<IPatientRepository>("IPatientRepository", { useClass: PatientRepository });
+container.register<IPatientService>("IPatientService", { useClass: PatientService });
+container.register<PatientController>("PatientController", { useClass: PatientController });
 // User
 container.register<IUserRepository>("IUserRepository", { useClass: UserRepository });
 container.register<IUserService>("IUserService", { useClass: UserService });
