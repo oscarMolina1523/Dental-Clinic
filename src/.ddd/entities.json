@@ -729,6 +729,39 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "PaymentNotification",
+      "fields": [
+        {
+          "name": "installmentId",
+          "type": "string"
+        },
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "scheduledDate",
+          "type": "Date"
+        },
+        {
+          "name": "sendAt",
+          "type": "Date"
+        },
+        {
+          "name": "notificationType",
+          "type": "string"
+        },
+        {
+          "name": "channel",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        }
+      ]
     }
   ]
 }

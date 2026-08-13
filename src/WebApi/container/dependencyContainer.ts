@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IPaymentNotificationRepository } from "./../../Domain/repositories/paymentNotificationRepository.interface";
+import { PaymentNotificationRepository } from "./../../Infrastructure/repositories/paymentNotification.repository";
+import { IPaymentNotificationService } from "./../../Application/interfaces/paymentNotification.service.interface";
+import { PaymentNotificationService } from "./../../Application/services/paymentNotification.service";
+import { PaymentNotificationController } from "./../controllers/paymentNotification.controller";
 import { IInstallmentRepository } from "./../../Domain/repositories/installmentRepository.interface";
 import { InstallmentRepository } from "./../../Infrastructure/repositories/installment.repository";
 import { IInstallmentService } from "./../../Application/interfaces/installment.service.interface";
@@ -132,6 +137,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// PaymentNotification
+container.register<IPaymentNotificationRepository>("IPaymentNotificationRepository", { useClass: PaymentNotificationRepository });
+container.register<IPaymentNotificationService>("IPaymentNotificationService", { useClass: PaymentNotificationService });
+container.register<PaymentNotificationController>("PaymentNotificationController", { useClass: PaymentNotificationController });
 // Installment
 container.register<IInstallmentRepository>("IInstallmentRepository", { useClass: InstallmentRepository });
 container.register<IInstallmentService>("IInstallmentService", { useClass: InstallmentService });

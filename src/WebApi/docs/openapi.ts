@@ -1,3 +1,5 @@
+import { PaymentNotificationSchemas } from "./schemas/paymentNotification.schema";
+import { PaymentNotificationPaths } from "./paths/paymentNotification.path";
 import { InstallmentSchemas } from "./schemas/installment.schema";
 import { InstallmentPaths } from "./paths/installment.path";
 import { PaymentPlanSchemas } from "./schemas/paymentPlan.schema";
@@ -64,6 +66,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...PaymentNotificationPaths,
     ...InstallmentPaths,
     ...PaymentPlanPaths,
     ...InventoryMovementPaths,
@@ -99,6 +102,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...PaymentNotificationSchemas,
       ...InstallmentSchemas,
       ...PaymentPlanSchemas,
       ...InventoryMovementSchemas,
