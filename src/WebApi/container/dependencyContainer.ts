@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IInventoryLoteRepository } from "./../../Domain/repositories/inventoryLoteRepository.interface";
+import { InventoryLoteRepository } from "./../../Infrastructure/repositories/inventoryLote.repository";
+import { IInventoryLoteService } from "./../../Application/interfaces/inventoryLote.service.interface";
+import { InventoryLoteService } from "./../../Application/services/inventoryLote.service";
+import { InventoryLoteController } from "./../controllers/inventoryLote.controller";
 import { IMeasurementUnitRepository } from "./../../Domain/repositories/measurementUnitRepository.interface";
 import { MeasurementUnitRepository } from "./../../Infrastructure/repositories/measurementUnit.repository";
 import { IMeasurementUnitService } from "./../../Application/interfaces/measurementUnit.service.interface";
@@ -107,6 +112,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// InventoryLote
+container.register<IInventoryLoteRepository>("IInventoryLoteRepository", { useClass: InventoryLoteRepository });
+container.register<IInventoryLoteService>("IInventoryLoteService", { useClass: InventoryLoteService });
+container.register<InventoryLoteController>("InventoryLoteController", { useClass: InventoryLoteController });
 // MeasurementUnit
 container.register<IMeasurementUnitRepository>("IMeasurementUnitRepository", { useClass: MeasurementUnitRepository });
 container.register<IMeasurementUnitService>("IMeasurementUnitService", { useClass: MeasurementUnitService });

@@ -1,3 +1,5 @@
+import { InventoryLoteSchemas } from "./schemas/inventoryLote.schema";
+import { InventoryLotePaths } from "./paths/inventoryLote.path";
 import { MeasurementUnitSchemas } from "./schemas/measurementUnit.schema";
 import { MeasurementUnitPaths } from "./paths/measurementUnit.path";
 import { CategorySchemas } from "./schemas/category.schema";
@@ -54,6 +56,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...InventoryLotePaths,
     ...MeasurementUnitPaths,
     ...CategoryPaths,
     ...ProductPaths,
@@ -84,6 +87,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...InventoryLoteSchemas,
       ...MeasurementUnitSchemas,
       ...CategorySchemas,
       ...ProductSchemas,
