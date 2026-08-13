@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import paymentRoutes from "./WebApi/routes/payment.routes";
 import invoiceRoutes from "./WebApi/routes/invoice.routes";
 import patientAttachmentRoutes from "./WebApi/routes/patientAttachment.routes";
 import medicalPrescriptionDetailRoutes from "./WebApi/routes/medicalPrescriptionDetail.routes";
@@ -45,6 +46,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/payment", paymentRoutes);
 app.use("/invoice", invoiceRoutes);
 app.use("/patientAttachment", patientAttachmentRoutes);
 app.use("/medicalPrescriptionDetail", medicalPrescriptionDetailRoutes);

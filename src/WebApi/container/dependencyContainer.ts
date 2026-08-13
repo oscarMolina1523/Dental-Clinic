@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IPaymentRepository } from "./../../Domain/repositories/paymentRepository.interface";
+import { PaymentRepository } from "./../../Infrastructure/repositories/payment.repository";
+import { IPaymentService } from "./../../Application/interfaces/payment.service.interface";
+import { PaymentService } from "./../../Application/services/payment.service";
+import { PaymentController } from "./../controllers/payment.controller";
 import { IInvoiceRepository } from "./../../Domain/repositories/invoiceRepository.interface";
 import { InvoiceRepository } from "./../../Infrastructure/repositories/invoice.repository";
 import { IInvoiceService } from "./../../Application/interfaces/invoice.service.interface";
@@ -82,6 +87,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Payment
+container.register<IPaymentRepository>("IPaymentRepository", { useClass: PaymentRepository });
+container.register<IPaymentService>("IPaymentService", { useClass: PaymentService });
+container.register<PaymentController>("PaymentController", { useClass: PaymentController });
 // Invoice
 container.register<IInvoiceRepository>("IInvoiceRepository", { useClass: InvoiceRepository });
 container.register<IInvoiceService>("IInvoiceService", { useClass: InvoiceService });
