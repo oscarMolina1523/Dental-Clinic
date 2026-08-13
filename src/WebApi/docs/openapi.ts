@@ -1,3 +1,5 @@
+import { PaymentPlanSchemas } from "./schemas/paymentPlan.schema";
+import { PaymentPlanPaths } from "./paths/paymentPlan.path";
 import { InventoryMovementSchemas } from "./schemas/inventoryMovement.schema";
 import { InventoryMovementPaths } from "./paths/inventoryMovement.path";
 import { InventorySchemas } from "./schemas/inventory.schema";
@@ -60,6 +62,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...PaymentPlanPaths,
     ...InventoryMovementPaths,
     ...InventoryPaths,
     ...InventoryLotePaths,
@@ -93,6 +96,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...PaymentPlanSchemas,
       ...InventoryMovementSchemas,
       ...InventorySchemas,
       ...InventoryLoteSchemas,

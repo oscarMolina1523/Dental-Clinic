@@ -659,6 +659,43 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "PaymentPlan",
+      "fields": [
+        {
+          "name": "invoiceId",
+          "type": "string"
+        },
+        {
+          "name": "totalAmount",
+          "type": "number"
+        },
+        {
+          "name": "numberOfInstallments",
+          "type": "number"
+        },
+        {
+          "name": "frequencyDays",
+          "type": "number"
+        },
+        {
+          "name": "interestRate",
+          "type": "number"
+        },
+        {
+          "name": "lateFreePercentage",
+          "type": "number"
+        },
+        {
+          "name": "gracePeriodDays",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "varchar"
+        }
+      ]
     }
   ]
 }
