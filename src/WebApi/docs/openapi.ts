@@ -1,3 +1,5 @@
+import { MeasurementUnitSchemas } from "./schemas/measurementUnit.schema";
+import { MeasurementUnitPaths } from "./paths/measurementUnit.path";
 import { CategorySchemas } from "./schemas/category.schema";
 import { CategoryPaths } from "./paths/category.path";
 import { ProductSchemas } from "./schemas/product.schema";
@@ -52,6 +54,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...MeasurementUnitPaths,
     ...CategoryPaths,
     ...ProductPaths,
     ...SupplierPaths,
@@ -81,6 +84,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...MeasurementUnitSchemas,
       ...CategorySchemas,
       ...ProductSchemas,
       ...SupplierSchemas,
