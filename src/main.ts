@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import paymentNotificationRoutes from "./WebApi/routes/paymentNotification.routes";
 import installmentRoutes from "./WebApi/routes/installment.routes";
 import paymentPlanRoutes from "./WebApi/routes/paymentPlan.routes";
 import inventoryMovementRoutes from "./WebApi/routes/inventoryMovement.routes";
@@ -55,6 +56,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/paymentNotification", paymentNotificationRoutes);
 app.use("/installment", installmentRoutes);
 app.use("/paymentPlan", paymentPlanRoutes);
 app.use("/inventoryMovement", inventoryMovementRoutes);
