@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IInventoryRepository } from "./../../Domain/repositories/inventoryRepository.interface";
+import { InventoryRepository } from "./../../Infrastructure/repositories/inventory.repository";
+import { IInventoryService } from "./../../Application/interfaces/inventory.service.interface";
+import { InventoryService } from "./../../Application/services/inventory.service";
+import { InventoryController } from "./../controllers/inventory.controller";
 import { IInventoryLoteRepository } from "./../../Domain/repositories/inventoryLoteRepository.interface";
 import { InventoryLoteRepository } from "./../../Infrastructure/repositories/inventoryLote.repository";
 import { IInventoryLoteService } from "./../../Application/interfaces/inventoryLote.service.interface";
@@ -112,6 +117,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Inventory
+container.register<IInventoryRepository>("IInventoryRepository", { useClass: InventoryRepository });
+container.register<IInventoryService>("IInventoryService", { useClass: InventoryService });
+container.register<InventoryController>("InventoryController", { useClass: InventoryController });
 // InventoryLote
 container.register<IInventoryLoteRepository>("IInventoryLoteRepository", { useClass: InventoryLoteRepository });
 container.register<IInventoryLoteService>("IInventoryLoteService", { useClass: InventoryLoteService });

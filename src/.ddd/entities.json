@@ -617,6 +617,23 @@
           "type": "Date"
         }
       ]
+    },
+    {
+      "name": "Inventory",
+      "fields": [
+        {
+          "name": "productId",
+          "type": "string"
+        },
+        {
+          "name": "currentStock",
+          "type": "number"
+        },
+        {
+          "name": "minimumStock",
+          "type": "number"
+        }
+      ]
     }
   ]
 }

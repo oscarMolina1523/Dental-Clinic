@@ -4,6 +4,7 @@ import express from "express";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import inventoryRoutes from "./WebApi/routes/inventory.routes";
 import inventoryLoteRoutes from "./WebApi/routes/inventoryLote.routes";
 import measurementUnitRoutes from "./WebApi/routes/measurementUnit.routes";
 import categoryRoutes from "./WebApi/routes/category.routes";
@@ -51,6 +52,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/inventory", inventoryRoutes);
 app.use("/inventoryLote", inventoryLoteRoutes);
 app.use("/measurementUnit", measurementUnitRoutes);
 app.use("/category", categoryRoutes);
