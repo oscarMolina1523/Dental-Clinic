@@ -588,6 +588,35 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "InventoryLote",
+      "fields": [
+        {
+          "name": "productId",
+          "type": "string"
+        },
+        {
+          "name": "supplierId",
+          "type": "string"
+        },
+        {
+          "name": "loteNumber",
+          "type": "string"
+        },
+        {
+          "name": "quantity",
+          "type": "number"
+        },
+        {
+          "name": "dueDate",
+          "type": "Date"
+        },
+        {
+          "name": "entryDate",
+          "type": "Date"
+        }
+      ]
     }
   ]
 }
