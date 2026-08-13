@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { ICategoryRepository } from "./../../Domain/repositories/categoryRepository.interface";
+import { CategoryRepository } from "./../../Infrastructure/repositories/category.repository";
+import { ICategoryService } from "./../../Application/interfaces/category.service.interface";
+import { CategoryService } from "./../../Application/services/category.service";
+import { CategoryController } from "./../controllers/category.controller";
 import { IProductRepository } from "./../../Domain/repositories/productRepository.interface";
 import { ProductRepository } from "./../../Infrastructure/repositories/product.repository";
 import { IProductService } from "./../../Application/interfaces/product.service.interface";
@@ -97,6 +102,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Category
+container.register<ICategoryRepository>("ICategoryRepository", { useClass: CategoryRepository });
+container.register<ICategoryService>("ICategoryService", { useClass: CategoryService });
+container.register<CategoryController>("CategoryController", { useClass: CategoryController });
 // Product
 container.register<IProductRepository>("IProductRepository", { useClass: ProductRepository });
 container.register<IProductService>("IProductService", { useClass: ProductService });
