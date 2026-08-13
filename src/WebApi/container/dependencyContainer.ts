@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IInstallmentRepository } from "./../../Domain/repositories/installmentRepository.interface";
+import { InstallmentRepository } from "./../../Infrastructure/repositories/installment.repository";
+import { IInstallmentService } from "./../../Application/interfaces/installment.service.interface";
+import { InstallmentService } from "./../../Application/services/installment.service";
+import { InstallmentController } from "./../controllers/installment.controller";
 import { IPaymentPlanRepository } from "./../../Domain/repositories/paymentPlanRepository.interface";
 import { PaymentPlanRepository } from "./../../Infrastructure/repositories/paymentPlan.repository";
 import { IPaymentPlanService } from "./../../Application/interfaces/paymentPlan.service.interface";
@@ -127,6 +132,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Installment
+container.register<IInstallmentRepository>("IInstallmentRepository", { useClass: InstallmentRepository });
+container.register<IInstallmentService>("IInstallmentService", { useClass: InstallmentService });
+container.register<InstallmentController>("InstallmentController", { useClass: InstallmentController });
 // PaymentPlan
 container.register<IPaymentPlanRepository>("IPaymentPlanRepository", { useClass: PaymentPlanRepository });
 container.register<IPaymentPlanService>("IPaymentPlanService", { useClass: PaymentPlanService });

@@ -696,6 +696,39 @@
           "type": "varchar"
         }
       ]
+    },
+    {
+      "name": "Installment",
+      "fields": [
+        {
+          "name": "paymentPlanId",
+          "type": "string"
+        },
+        {
+          "name": "installmentNumber",
+          "type": "number"
+        },
+        {
+          "name": "dueDate",
+          "type": "Date"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "lateFeeAmount",
+          "type": "number"
+        },
+        {
+          "name": "paidAmount",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
