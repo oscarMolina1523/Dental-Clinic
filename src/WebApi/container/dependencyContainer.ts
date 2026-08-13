@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IInventoryMovementRepository } from "./../../Domain/repositories/inventoryMovementRepository.interface";
+import { InventoryMovementRepository } from "./../../Infrastructure/repositories/inventoryMovement.repository";
+import { IInventoryMovementService } from "./../../Application/interfaces/inventoryMovement.service.interface";
+import { InventoryMovementService } from "./../../Application/services/inventoryMovement.service";
+import { InventoryMovementController } from "./../controllers/inventoryMovement.controller";
 import { IInventoryRepository } from "./../../Domain/repositories/inventoryRepository.interface";
 import { InventoryRepository } from "./../../Infrastructure/repositories/inventory.repository";
 import { IInventoryService } from "./../../Application/interfaces/inventory.service.interface";
@@ -117,6 +122,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// InventoryMovement
+container.register<IInventoryMovementRepository>("IInventoryMovementRepository", { useClass: InventoryMovementRepository });
+container.register<IInventoryMovementService>("IInventoryMovementService", { useClass: InventoryMovementService });
+container.register<InventoryMovementController>("InventoryMovementController", { useClass: InventoryMovementController });
 // Inventory
 container.register<IInventoryRepository>("IInventoryRepository", { useClass: InventoryRepository });
 container.register<IInventoryService>("IInventoryService", { useClass: InventoryService });
