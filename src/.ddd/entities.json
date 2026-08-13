@@ -487,6 +487,39 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "Payment",
+      "fields": [
+        {
+          "name": "invoice_id",
+          "type": "string"
+        },
+        {
+          "name": "amount",
+          "type": "number"
+        },
+        {
+          "name": "payment_method",
+          "type": "string"
+        },
+        {
+          "name": "transaction_reference",
+          "type": "string"
+        },
+        {
+          "name": "served_by",
+          "type": "string"
+        },
+        {
+          "name": "payment_date",
+          "type": "string"
+        },
+        {
+          "name": "installment_id",
+          "type": "string"
+        }
+      ]
     }
   ]
 }

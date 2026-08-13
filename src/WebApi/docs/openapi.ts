@@ -1,3 +1,5 @@
+import { PaymentSchemas } from "./schemas/payment.schema";
+import { PaymentPaths } from "./paths/payment.path";
 import { InvoiceSchemas } from "./schemas/invoice.schema";
 import { InvoicePaths } from "./paths/invoice.path";
 import { PatientAttachmentSchemas } from "./schemas/patientAttachment.schema";
@@ -44,6 +46,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...PaymentPaths,
     ...InvoicePaths,
     ...PatientAttachmentPaths,
     ...MedicalPrescriptionDetailPaths,
@@ -69,6 +72,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...PaymentSchemas,
       ...InvoiceSchemas,
       ...PatientAttachmentSchemas,
       ...MedicalPrescriptionDetailSchemas,
