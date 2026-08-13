@@ -575,6 +575,19 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "MeasurementUnit",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "abreviation",
+          "type": "string"
+        }
+      ]
     }
   ]
 }

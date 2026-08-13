@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IMeasurementUnitRepository } from "./../../Domain/repositories/measurementUnitRepository.interface";
+import { MeasurementUnitRepository } from "./../../Infrastructure/repositories/measurementUnit.repository";
+import { IMeasurementUnitService } from "./../../Application/interfaces/measurementUnit.service.interface";
+import { MeasurementUnitService } from "./../../Application/services/measurementUnit.service";
+import { MeasurementUnitController } from "./../controllers/measurementUnit.controller";
 import { ICategoryRepository } from "./../../Domain/repositories/categoryRepository.interface";
 import { CategoryRepository } from "./../../Infrastructure/repositories/category.repository";
 import { ICategoryService } from "./../../Application/interfaces/category.service.interface";
@@ -102,6 +107,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// MeasurementUnit
+container.register<IMeasurementUnitRepository>("IMeasurementUnitRepository", { useClass: MeasurementUnitRepository });
+container.register<IMeasurementUnitService>("IMeasurementUnitService", { useClass: MeasurementUnitService });
+container.register<MeasurementUnitController>("MeasurementUnitController", { useClass: MeasurementUnitController });
 // Category
 container.register<ICategoryRepository>("ICategoryRepository", { useClass: CategoryRepository });
 container.register<ICategoryService>("ICategoryService", { useClass: CategoryService });
