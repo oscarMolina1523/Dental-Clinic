@@ -541,6 +541,31 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "Product",
+      "fields": [
+        {
+          "name": "barcode",
+          "type": "string"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "category_id",
+          "type": "string"
+        },
+        {
+          "name": "measurement_unit_id",
+          "type": "string"
+        }
+      ]
     }
   ]
 }

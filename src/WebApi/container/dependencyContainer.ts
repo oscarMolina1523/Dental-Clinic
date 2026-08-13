@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IProductRepository } from "./../../Domain/repositories/productRepository.interface";
+import { ProductRepository } from "./../../Infrastructure/repositories/product.repository";
+import { IProductService } from "./../../Application/interfaces/product.service.interface";
+import { ProductService } from "./../../Application/services/product.service";
+import { ProductController } from "./../controllers/product.controller";
 import { ISupplierRepository } from "./../../Domain/repositories/supplierRepository.interface";
 import { SupplierRepository } from "./../../Infrastructure/repositories/supplier.repository";
 import { ISupplierService } from "./../../Application/interfaces/supplier.service.interface";
@@ -92,6 +97,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Product
+container.register<IProductRepository>("IProductRepository", { useClass: ProductRepository });
+container.register<IProductService>("IProductService", { useClass: ProductService });
+container.register<ProductController>("ProductController", { useClass: ProductController });
 // Supplier
 container.register<ISupplierRepository>("ISupplierRepository", { useClass: SupplierRepository });
 container.register<ISupplierService>("ISupplierService", { useClass: SupplierService });
