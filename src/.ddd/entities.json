@@ -566,6 +566,15 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "Category",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
     }
   ]
 }
