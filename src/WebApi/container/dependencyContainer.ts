@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { ISupplierRepository } from "./../../Domain/repositories/supplierRepository.interface";
+import { SupplierRepository } from "./../../Infrastructure/repositories/supplier.repository";
+import { ISupplierService } from "./../../Application/interfaces/supplier.service.interface";
+import { SupplierService } from "./../../Application/services/supplier.service";
+import { SupplierController } from "./../controllers/supplier.controller";
 import { IPaymentRepository } from "./../../Domain/repositories/paymentRepository.interface";
 import { PaymentRepository } from "./../../Infrastructure/repositories/payment.repository";
 import { IPaymentService } from "./../../Application/interfaces/payment.service.interface";
@@ -87,6 +92,10 @@ import { RoleController } from "./../controllers/role.controller";
 //builder, database connection and entity service
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Supplier
+container.register<ISupplierRepository>("ISupplierRepository", { useClass: SupplierRepository });
+container.register<ISupplierService>("ISupplierService", { useClass: SupplierService });
+container.register<SupplierController>("SupplierController", { useClass: SupplierController });
 // Payment
 container.register<IPaymentRepository>("IPaymentRepository", { useClass: PaymentRepository });
 container.register<IPaymentService>("IPaymentService", { useClass: PaymentService });
