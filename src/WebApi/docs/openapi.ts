@@ -1,3 +1,5 @@
+import { ProductSchemas } from "./schemas/product.schema";
+import { ProductPaths } from "./paths/product.path";
 import { SupplierSchemas } from "./schemas/supplier.schema";
 import { SupplierPaths } from "./paths/supplier.path";
 import { PaymentSchemas } from "./schemas/payment.schema";
@@ -48,6 +50,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...ProductPaths,
     ...SupplierPaths,
     ...PaymentPaths,
     ...InvoicePaths,
@@ -75,6 +78,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...ProductSchemas,
       ...SupplierSchemas,
       ...PaymentSchemas,
       ...InvoiceSchemas,
