@@ -8,7 +8,7 @@ export default class User extends BaseModel {
   password: string;
   phoneNumber: string;
   membershipNumber: string;
-  active: boolean;
+  private active: boolean;
   createdAt: Date;
   updatedAt: Date;
 
@@ -48,5 +48,54 @@ export default class User extends BaseModel {
     this.active = active;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+  }
+
+  //activar un usuario
+  activate(): void {
+    this.active = true;
+  }
+
+  //desactivar un usuario
+  deactivate(): void {
+    this.active = false;
+  }
+
+  //comprobar si un usuario esta activo
+  ensureActive(): void {
+    if (!this.active) {
+      throw new Error("El usuario está inactivo");
+    }
+  }
+
+  //cambiar contraseña
+  changePassword(passwordHash: string): void {
+    this.password = passwordHash;
+    this.updatedAt = new Date();
+  }
+
+  //cambiar email
+  changeEmail(email: string): void {
+    if (!email || !email.includes("@")) {
+      throw new Error("El correo electrónico no es válido");
+    }
+
+    this.email = email;
+    this.updatedAt = new Date();
+  }
+
+  //cambiar numero de telefono
+  changePhoneNumber(phoneNumber: string): void {
+    this.phoneNumber = phoneNumber;
+    this.updatedAt = new Date();
+  }
+
+  //cambiar role del usuario
+  changeRole(roleId: string): void {
+    if (!roleId) {
+      throw new Error("El usuario debe tener un rol");
+    }
+
+    this.roleId = roleId;
+    this.updatedAt = new Date();
   }
 }
