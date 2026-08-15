@@ -25,11 +25,18 @@ export class UserService implements IUserService {
   }
 
   async create(data: UserDto): Promise<User> {
+    const passwordHash = await this._passwordService.hash(
+      data.password
+    );
+
     const newData: User = new User({
       ...data,
+      password: passwordHash,
       id: generateId(),
     })
+
     await this._userRepository.create(newData);
+
     return newData;
   }
 
