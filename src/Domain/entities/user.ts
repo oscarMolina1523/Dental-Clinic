@@ -98,4 +98,23 @@ export default class User extends BaseModel {
     this.roleId = roleId;
     this.updatedAt = new Date();
   }
+
+  //para actualizar los datos del perfil
+  updateProfile(
+    fullName: string,
+    phoneNumber: string,
+    image?: string,
+    membershipNumber?: string
+  ): void {
+    if (!fullName) {
+      throw new Error("El nombre es obligatorio");
+    }
+
+    this.fullName = fullName;
+    this.phoneNumber = phoneNumber;
+    this.image = image ?? this.image;
+    this.membershipNumber = membershipNumber;
+
+    this.updatedAt = new Date();
+  }
 }
