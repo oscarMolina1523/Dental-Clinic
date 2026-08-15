@@ -7,7 +7,7 @@ export default class User extends BaseModel {
   email: string;
   password: string;
   phoneNumber: string;
-  membershipNumber: string;
+  membershipNumber?: string;
   private active: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -32,7 +32,7 @@ export default class User extends BaseModel {
     email: string;
     password: string;
     phoneNumber: string;
-    membershipNumber: string;
+    membershipNumber?: string;
     active: boolean;
     createdAt: Date;
     updatedAt: Date;
