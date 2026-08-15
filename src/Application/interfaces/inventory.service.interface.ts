@@ -7,4 +7,14 @@ export interface IInventoryService {
   create(data: InventoryDto): Promise<Inventory>;
   update(id: string, data: InventoryDto): Promise<Inventory | null>;
   delete(id: string): Promise<void>;
+
+  increaseStock(
+    id: string,
+    quantity: number
+  ): Promise<Inventory | null>;
+
+  decreaseStock(
+    id: string,
+    quantity: number
+  ): Promise<Inventory | null>
 }
