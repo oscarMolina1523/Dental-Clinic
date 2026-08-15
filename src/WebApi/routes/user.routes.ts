@@ -11,4 +11,34 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+router.put(
+  "/users/:id/email",
+  controller.changeEmail
+);
+
+router.put(
+  "/users/:id/phone",
+  controller.changePhoneNumber
+);
+
+router.put(
+  "/users/:id/password",
+  controller.changePassword
+);
+
+router.put(
+  "/users/:id/role",
+  controller.changeRole
+);
+
+router.post(
+  "/users/:id/activate",
+  controller.activate
+);
+
+router.post(
+  "/users/:id/deactivate",
+  controller.deactivate
+);
+
 export default router;

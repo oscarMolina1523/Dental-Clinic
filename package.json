@@ -10,6 +10,7 @@
   "dependencies": {
     "@libsql/client": "^0.17.4",
     "@scalar/express-api-reference": "^0.10.13",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "reflect-metadata": "^0.2.2",

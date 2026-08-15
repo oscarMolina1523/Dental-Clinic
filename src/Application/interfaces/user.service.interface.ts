@@ -8,6 +8,11 @@ export interface IUserService {
   update(id: string, data: UserDto): Promise<User | null>;
   delete(id: string): Promise<void>;
 
+  changeEmail(
+    id: string,
+    email: string
+  ): Promise<User | null>;
+
   changePhoneNumber(
     id: string,
     phoneNumber: string
@@ -15,7 +20,8 @@ export interface IUserService {
 
   changePassword(
     id: string,
-    passwordHash: string
+    currentPassword: string,
+    newPassword: string
   ): Promise<User | null>;
 
   changeRole(

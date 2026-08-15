@@ -32,6 +32,13 @@ export class InventoryController {
   update = async (req: Request, res: Response) => {
     const id = req.params.id as string;
     const result = await this._inventoryService.update(id, req.body);
+
+    if (!result) {
+      return res.status(404).json({
+        message: "Inventario no encontrado"
+      });
+    }
+
     res.json(result);
   }
 

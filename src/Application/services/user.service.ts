@@ -4,13 +4,16 @@ import { IUserRepository } from "../../Domain/repositories/userRepository.interf
 import { UserDto } from "../dtos/user.dto";
 import User from "../../Domain/entities/user";
 import { generateId } from "../../shared/utils/generateId";
+import { IPasswordService } from "../../Domain/repositories/passwordService.interface";
 
 @injectable()
 export class UserService implements IUserService {
   private readonly _userRepository: IUserRepository;
+  private readonly _passwordService: IPasswordService;
 
-  constructor(@inject("IUserRepository") repository: IUserRepository) {
+  constructor(@inject("IUserRepository") repository: IUserRepository, @inject("IPassworService") passwordService: IPasswordService) {
     this._userRepository = repository;
+    this._passwordService = passwordService;
   }
 
   async findAll(page: number = 1, pageSize: number = 100): Promise<User[]> {
@@ -94,7 +97,8 @@ export class UserService implements IUserService {
 
   async changePassword(
     id: string,
-    passwordHash: string
+    currentPassword: string,
+    newPassword: string
   ): Promise<User | null> {
 
     const existing = await this._userRepository.findById(id);
@@ -102,6 +106,18 @@ export class UserService implements IUserService {
     if (!existing) {
       return null;
     }
+
+    const validPassword = await this._passwordService.compare(
+      currentPassword,
+      existing.password
+    );
+
+    if (!validPassword) {
+      throw new Error("La contraseña actual no es correcta");
+    }
+
+    const passwordHash =
+      await this._passwordService.hash(newPassword);
 
     existing.changePassword(passwordHash);
 
