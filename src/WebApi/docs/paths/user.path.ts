@@ -83,336 +83,337 @@ export const UserPaths = {
           description: "Not found"
         }
       }
+    }
+  },
+
+  put: {
+    summary: "Update User",
+    tags: ["User"],
+    parameters: [
+      {
+        name: "id",
+        in: "path",
+        required: true,
+        schema: { type: "string" }
+      }
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: { $ref: "#/components/schemas/UserRequest" }
+        }
+      }
     },
+    responses: {
+      200: {
+        description: "User updated"
+      },
+      404: {
+        description: "Not found"
+      }
+    }
+  },
+
+  delete: {
+    summary: "Delete User",
+    tags: ["User"],
+    parameters: [
+      {
+        name: "id",
+        in: "path",
+        required: true,
+        schema: { type: "string" }
+      }
+    ],
+    responses: {
+      204: {
+        description: "User deleted"
+      },
+      404: {
+        description: "Not found"
+      }
+    }
+  },
+
+  "/user/{id}/email": {
 
     put: {
-      summary: "Update User",
+      summary: "Change User Email",
       tags: ["User"],
+
       parameters: [
         {
           name: "id",
           in: "path",
           required: true,
-          schema: { type: "string" }
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
         }
       ],
+
       requestBody: {
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/components/schemas/UserRequest" }
+            schema: {
+              $ref: "#/components/schemas/ChangeEmailRequest"
+            }
           }
         }
       },
+
       responses: {
         200: {
-          description: "User updated"
+          description: "Email updated",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/User"
+              }
+            }
+          }
         },
+
+        400: {
+          description: "Invalid email"
+        },
+
         404: {
-          description: "Not found"
+          description: "User not found"
         }
       }
-    },
+    }
+  },
 
-    delete: {
-      summary: "Delete User",
+  "/user/{id}/phone": {
+
+    put: {
+      summary: "Change User Phone Number",
       tags: ["User"],
+
       parameters: [
         {
           name: "id",
           in: "path",
           required: true,
-          schema: { type: "string" }
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
         }
       ],
+
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/ChangePhoneNumberRequest"
+            }
+          }
+        }
+      },
+
       responses: {
-        204: {
-          description: "User deleted"
+        200: {
+          description: "Phone number updated",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/User"
+              }
+            }
+          }
         },
+
         404: {
-          description: "Not found"
+          description: "User not found"
         }
       }
-    },
+    }
+  },
 
-    "/user/{id}/email": {
+  "/user/{id}/password": {
 
-      put: {
-        summary: "Change User Email",
-        tags: ["User"],
+    put: {
+      summary: "Change User Password",
+      tags: ["User"],
 
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
-
-        requestBody: {
+      parameters: [
+        {
+          name: "id",
+          in: "path",
           required: true,
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
+        }
+      ],
+
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/ChangePasswordRequest"
+            }
+          }
+        }
+      },
+
+      responses: {
+        200: {
+          description: "Password updated",
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/ChangeEmailRequest"
-              }
-            }
-          }
-        },
-
-        responses: {
-          200: {
-            description: "Email updated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/User"
-                }
-              }
-            }
-          },
-
-          400: {
-            description: "Invalid email"
-          },
-
-          404: {
-            description: "User not found"
-          }
-        }
-      }
-    },
-
-    "/user/{id}/phone": {
-
-      put: {
-        summary: "Change User Phone Number",
-        tags: ["User"],
-
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
-
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                $ref: "#/components/schemas/ChangePhoneNumberRequest"
-              }
-            }
-          }
-        },
-
-        responses: {
-          200: {
-            description: "Phone number updated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/User"
-                }
-              }
-            }
-          },
-
-          404: {
-            description: "User not found"
-          }
-        }
-      }
-    },
-
-    "/user/{id}/password": {
-
-      put: {
-        summary: "Change User Password",
-        tags: ["User"],
-
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
-
-        requestBody: {
-          required: true,
-          content: {
-            "application/json": {
-              schema: {
-                $ref: "#/components/schemas/ChangePasswordRequest"
-              }
-            }
-          }
-        },
-
-        responses: {
-          200: {
-            description: "Password updated",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  properties: {
-                    message: {
-                      type: "string",
-                      example: "Contraseña actualizada correctamente"
-                    }
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                    example: "Contraseña actualizada correctamente"
                   }
                 }
               }
             }
-          },
-
-          400: {
-            description: "Current password is incorrect"
-          },
-
-          404: {
-            description: "User not found"
           }
+        },
+
+        400: {
+          description: "Current password is incorrect"
+        },
+
+        404: {
+          description: "User not found"
         }
       }
-    },
+    }
+  },
 
-    "/user/{id}/role": {
+  "/user/{id}/role": {
 
-      put: {
-        summary: "Change User Role",
-        tags: ["User"],
+    put: {
+      summary: "Change User Role",
+      tags: ["User"],
 
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
-
-        requestBody: {
+      parameters: [
+        {
+          name: "id",
+          in: "path",
           required: true,
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
+        }
+      ],
+
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/ChangeRoleRequest"
+            }
+          }
+        }
+      },
+
+      responses: {
+        200: {
+          description: "Role updated",
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/ChangeRoleRequest"
+                $ref: "#/components/schemas/User"
               }
             }
           }
         },
 
-        responses: {
-          200: {
-            description: "Role updated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/User"
-                }
-              }
-            }
-          },
-
-          404: {
-            description: "User not found"
-          }
+        404: {
+          description: "User not found"
         }
       }
-    },
+    }
+  },
 
-    "/user/{id}/activate": {
+  "/user/{id}/activate": {
 
-      post: {
-        summary: "Activate User",
-        tags: ["User"],
+    post: {
+      summary: "Activate User",
+      tags: ["User"],
 
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
+        }
+      ],
 
-        responses: {
-          200: {
-            description: "User activated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/User"
-                }
+      responses: {
+        200: {
+          description: "User activated",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/User"
               }
             }
-          },
-
-          404: {
-            description: "User not found"
           }
+        },
+
+        404: {
+          description: "User not found"
         }
       }
-    },
+    }
+  },
 
-    "/user/{id}/deactivate": {
+  "/user/{id}/deactivate": {
 
-      post: {
-        summary: "Deactivate User",
-        tags: ["User"],
+    post: {
+      summary: "Deactivate User",
+      tags: ["User"],
 
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            schema: {
-              type: "string"
-            },
-            description: "User ID"
-          }
-        ],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          },
+          description: "User ID"
+        }
+      ],
 
-        responses: {
-          200: {
-            description: "User deactivated",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/User"
-                }
+      responses: {
+        200: {
+          description: "User deactivated",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/User"
               }
             }
-          },
-
-          404: {
-            description: "User not found"
           }
+        },
+
+        404: {
+          description: "User not found"
         }
       }
     }
   }
+
 };
