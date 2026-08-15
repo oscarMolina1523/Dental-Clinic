@@ -140,10 +140,15 @@ import { ISqlCommandOperationBuilder } from "../../Infrastructure/interface/sqlC
 import { SqlCommandOperationBuilder } from "../../Infrastructure/builders/sqlCommandOperation.builder";
 import { EntitiesService } from "../../Infrastructure/services/entities.service";
 import { IEntitiesService } from "../../Infrastructure/interface/entitiesService.interface";
+import { IPasswordService } from "../../Domain/repositories/passwordService.interface";
+import { PasswordService } from "../../Infrastructure/services/password.service";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
 container.registerSingleton<IEntitiesService>('IEntityService', EntitiesService);
+
+//Servicios de cifrado de contraseña
+container.register<IPasswordService>('IPasswordService', {useClass: PasswordService});
 
 // AUTO-GENERATED MODULE REGISTRATIONS
 // Appointment

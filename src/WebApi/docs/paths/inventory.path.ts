@@ -134,5 +134,97 @@ export const InventoryPaths = {
         }
       }
     }
+  },
+
+  "/inventory/{id}/increase": {
+    post: {
+      summary: "Increase Inventory",
+      tags: ["Inventory"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          },
+          description: "Inventory ID"
+        }
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/InventoryQuantityRequest"
+            }
+          }
+        }
+      },
+      responses: {
+        200: {
+          description: "Inventory increased",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Inventory"
+              }
+            }
+          }
+        },
+        404: {
+          description: "Inventory not found"
+        },
+        400: {
+          description: "Invalid quantity"
+        }
+      }
+    }
+  },
+
+  "/inventory/{id}/decrease": {
+    post: {
+      summary: "Decrease Inventory",
+      tags: ["Inventory"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          },
+          description: "Inventory ID"
+        }
+      ],
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/InventoryQuantityRequest"
+            }
+          }
+        }
+      },
+      responses: {
+        200: {
+          description: "Inventory decreased",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Inventory"
+              }
+            }
+          }
+        },
+        404: {
+          description: "Inventory not found"
+        },
+        400: {
+          description: "Invalid quantity or insufficient stock"
+        }
+      }
+    }
   }
 };
