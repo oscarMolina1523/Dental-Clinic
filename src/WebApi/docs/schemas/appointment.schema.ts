@@ -1,5 +1,5 @@
-export const DateSchemas = {
-  DateRequest: {
+export const AppointmentSchemas = {
+  AppointmentRequest: {
     type: "object",
     required: [
       
@@ -7,9 +7,9 @@ export const DateSchemas = {
       
         "dentistId",
       
-        "startDateTime",
+        "startAppointmentTime",
       
-        "endDateTime",
+        "endAppointmentTime",
       
         "reason",
       
@@ -28,9 +28,9 @@ export const DateSchemas = {
       
       dentistId: { type: "string" },
       
-      startDateTime: { type: "string" },
+      startAppointmentTime: { type: "string" },
       
-      endDateTime: { type: "string" },
+      endAppointmentTime: { type: "string" },
       
       reason: { type: "string" },
       
@@ -45,7 +45,7 @@ export const DateSchemas = {
     }
   },
 
-  Date: {
+  Appointment: {
     type: "object",
     properties: {
       id: { type: "string" },
@@ -54,9 +54,9 @@ export const DateSchemas = {
       
       dentistId: { type: "string" },
       
-      startDateTime: { type: "string" },
+      startAppointmentTime: { type: "string" },
       
-      endDateTime: { type: "string" },
+      endAppointmentTime: { type: "string" },
       
       reason: { type: "string" },
       

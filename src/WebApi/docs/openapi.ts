@@ -1,3 +1,5 @@
+import { AppointmentSchemas } from "./schemas/appointment.schema";
+import { AppointmentPaths } from "./paths/appointment.path";
 import { PaymentNotificationSchemas } from "./schemas/paymentNotification.schema";
 import { PaymentNotificationPaths } from "./paths/paymentNotification.path";
 import { InstallmentSchemas } from "./schemas/installment.schema";
@@ -36,8 +38,6 @@ import { TreatmentPlanSchemas } from "./schemas/treatmentPlan.schema";
 import { TreatmentPlanPaths } from "./paths/treatmentPlan.path";
 import { TreatmentCatalogSchemas } from "./schemas/treatmentCatalog.schema";
 import { TreatmentCatalogPaths } from "./paths/treatmentCatalog.path";
-import { DateSchemas } from "./schemas/date.schema";
-import { DatePaths } from "./paths/date.path";
 import { DentalChartDetailSchemas } from "./schemas/dentalChartDetail.schema";
 import { DentalChartDetailPaths } from "./paths/dentalChartDetail.path";
 import { DentalChartSchemas } from "./schemas/dentalChart.schema";
@@ -66,6 +66,7 @@ export const OpenApiSpecification = {
     }
   ],
   paths: {
+    ...AppointmentPaths,
     ...PaymentNotificationPaths,
     ...InstallmentPaths,
     ...PaymentPlanPaths,
@@ -85,7 +86,6 @@ export const OpenApiSpecification = {
     ...TreatmentPlanDetailPaths,
     ...TreatmentPlanPaths,
     ...TreatmentCatalogPaths,
-    ...DatePaths,
     ...DentalChartDetailPaths,
     ...DentalChartPaths,
     ...PatientDiseasePaths,
@@ -102,6 +102,7 @@ export const OpenApiSpecification = {
       }
     },
     schemas: {
+      ...AppointmentSchemas,
       ...PaymentNotificationSchemas,
       ...InstallmentSchemas,
       ...PaymentPlanSchemas,
@@ -121,7 +122,6 @@ export const OpenApiSpecification = {
       ...TreatmentPlanDetailSchemas,
       ...TreatmentPlanSchemas,
       ...TreatmentCatalogSchemas,
-      ...DateSchemas,
       ...DentalChartDetailSchemas,
       ...DentalChartSchemas,
       ...PatientDiseaseSchemas,

@@ -1,8 +1,8 @@
-export interface DateDto {
+export interface AppointmentDto {
   patientId: string;
   dentistId: string;
-  startDateTime: Date;
-  endDateTime: Date;
+  startAppointmentTime: Date;
+  endAppointmentTime: Date;
   reason: string;
   status: string;
   cancelationNotes: string;

@@ -1,8 +1,8 @@
-export const DatePaths = {
-  "/date": {
+export const AppointmentPaths = {
+  "/appointment": {
     get: {
-      summary: "Get all Date",
-      tags: ["Date"],
+      summary: "Get all Appointment",
+      tags: ["Appointment"],
       parameters: [
         {
           name: "page",
@@ -27,12 +27,12 @@ export const DatePaths = {
       ],
       responses: {
         200: {
-          description: "List of Date",
+          description: "List of Appointment",
           content: {
             "application/json": {
               schema: {
                 type: "array",
-                items: { $ref: "#/components/schemas/Date" }
+                items: { $ref: "#/components/schemas/Appointment" }
               }
             }
           }
@@ -40,28 +40,28 @@ export const DatePaths = {
       }
     },
     post: {
-      summary: "Create Date",
-      tags: ["Date"],
+      summary: "Create Appointment",
+      tags: ["Appointment"],
       requestBody: {
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/components/schemas/DateRequest" }
+            schema: { $ref: "#/components/schemas/AppointmentRequest" }
           }
         }
       },
       responses: {
         201: {
-          description: "Date created"
+          description: "Appointment created"
         }
       }
     }
   },
 
-  "/date/{id}": {
+  "/appointment/{id}": {
     get: {
-      summary: "Get Date by id",
-      tags: ["Date"],
+      summary: "Get Appointment by id",
+      tags: ["Appointment"],
       parameters: [
         {
           name: "id",
@@ -72,10 +72,10 @@ export const DatePaths = {
       ],
       responses: {
         200: {
-          description: "Date found",
+          description: "Appointment found",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Date" }
+              schema: { $ref: "#/components/schemas/Appointment" }
             }
           }
         },
@@ -86,8 +86,8 @@ export const DatePaths = {
     },
 
     put: {
-      summary: "Update Date",
-      tags: ["Date"],
+      summary: "Update Appointment",
+      tags: ["Appointment"],
       parameters: [
         {
           name: "id",
@@ -100,13 +100,13 @@ export const DatePaths = {
         required: true,
         content: {
           "application/json": {
-            schema: { $ref: "#/components/schemas/DateRequest" }
+            schema: { $ref: "#/components/schemas/AppointmentRequest" }
           }
         }
       },
       responses: {
         200: {
-          description: "Date updated"
+          description: "Appointment updated"
         },
         404: {
           description: "Not found"
@@ -115,8 +115,8 @@ export const DatePaths = {
     },
 
     delete: {
-      summary: "Delete Date",
-      tags: ["Date"],
+      summary: "Delete Appointment",
+      tags: ["Appointment"],
       parameters: [
         {
           name: "id",
@@ -127,7 +127,7 @@ export const DatePaths = {
       ],
       responses: {
         204: {
-          description: "Date deleted"
+          description: "Appointment deleted"
         },
         404: {
           description: "Not found"

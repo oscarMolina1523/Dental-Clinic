@@ -1,10 +1,10 @@
 import BaseModel from "./base.model";
 
-export default class Date extends BaseModel {
+export default class Appointment extends BaseModel {
   patientId: string;
   dentistId: string;
-  startDateTime: Date;
-  endDateTime: Date;
+  startAppointmentTime: Date;
+  endAppointmentTime: Date;
   reason: string;
   status: string;
   cancelationNotes: string;
@@ -15,8 +15,8 @@ export default class Date extends BaseModel {
     id,
     patientId,
     dentistId,
-    startDateTime,
-    endDateTime,
+    startAppointmentTime,
+    endAppointmentTime,
     reason,
     status,
     cancelationNotes,
@@ -26,8 +26,8 @@ export default class Date extends BaseModel {
     id: string;
     patientId: string;
     dentistId: string;
-    startDateTime: Date;
-    endDateTime: Date;
+    startAppointmentTime: Date;
+    endAppointmentTime: Date;
     reason: string;
     status: string;
     cancelationNotes: string;
@@ -37,8 +37,8 @@ export default class Date extends BaseModel {
     super(id);
     this.patientId = patientId;
     this.dentistId = dentistId;
-    this.startDateTime = startDateTime;
-    this.endDateTime = endDateTime;
+    this.startAppointmentTime = startAppointmentTime;
+    this.endAppointmentTime = endAppointmentTime;
     this.reason = reason;
     this.status = status;
     this.cancelationNotes = cancelationNotes;
