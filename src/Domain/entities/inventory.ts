@@ -2,7 +2,7 @@ import BaseModel from "./base.model";
 
 export default class Inventory extends BaseModel {
   productId: string;
-  currentStock: number;
+  private currentStock: number;
   minimumStock: number;
 
   constructor({
