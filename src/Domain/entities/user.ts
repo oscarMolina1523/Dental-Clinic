@@ -53,11 +53,13 @@ export default class User extends BaseModel {
   //activar un usuario
   activate(): void {
     this.active = true;
+    this.updatedAt = new Date();
   }
 
   //desactivar un usuario
   deactivate(): void {
     this.active = false;
+    this.updatedAt = new Date();
   }
 
   //comprobar si un usuario esta activo

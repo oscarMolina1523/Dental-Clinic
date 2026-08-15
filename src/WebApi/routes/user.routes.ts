@@ -12,32 +12,32 @@ router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
 router.put(
-  "/users/:id/email",
+  "/:id/email",
   controller.changeEmail
 );
 
 router.put(
-  "/users/:id/phone",
+  "/:id/phone",
   controller.changePhoneNumber
 );
 
 router.put(
-  "/users/:id/password",
+  "/:id/password",
   controller.changePassword
 );
 
 router.put(
-  "/users/:id/role",
+  "/:id/role",
   controller.changeRole
 );
 
 router.post(
-  "/users/:id/activate",
+  "/:id/activate",
   controller.activate
 );
 
 router.post(
-  "/users/:id/deactivate",
+  "/:id/deactivate",
   controller.deactivate
 );
 
