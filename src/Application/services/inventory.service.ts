@@ -22,10 +22,11 @@ export class InventoryService implements IInventoryService {
   }
   
   async create(data: InventoryDto): Promise<Inventory> {
-    const newData: Inventory = {
+    const newData: Inventory = new Inventory({
       ...data,
       id: generateId(), 
-    }
+    })
+
     await this._inventoryRepository.create(newData);
     return newData;
   }
@@ -36,10 +37,11 @@ export class InventoryService implements IInventoryService {
       return null;
     }
 
-    const newData: Inventory = {
+    const newData: Inventory = new Inventory({
       ...data,
       id,
-    }
+    })
+    
     await this._inventoryRepository.update(newData);
     return newData;
   }
