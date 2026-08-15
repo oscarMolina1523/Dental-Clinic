@@ -208,47 +208,6 @@
       ]
     },
     {
-      "name": "Date",
-      "fields": [
-        {
-          "name": "patientId",
-          "type": "string"
-        },
-        {
-          "name": "dentistId",
-          "type": "string"
-        },
-        {
-          "name": "startDateTime",
-          "type": "Date"
-        },
-        {
-          "name": "endDateTime",
-          "type": "Date"
-        },
-        {
-          "name": "reason",
-          "type": "string"
-        },
-        {
-          "name": "status",
-          "type": "string"
-        },
-        {
-          "name": "cancelationNotes",
-          "type": "string"
-        },
-        {
-          "name": "reminderSent",
-          "type": "boolean"
-        },
-        {
-          "name": "createdAt",
-          "type": "Date"
-        }
-      ]
-    },
-    {
       "name": "TreatmentCatalog",
       "fields": [
         {
@@ -762,6 +721,48 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "Appointment",
+      "fields": [
+        {
+          "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "startAppointmentTime",
+          "type": "Date"
+        },
+        {
+          "name": "endAppointmentTime",
+          "type": "Date"
+        },
+        {
+          "name": "reason",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "string"
+        },
+        {
+          "name": "cancelationNotes",
+          "type": "string"
+        },
+        {
+          "name": "reminderSent",
+          "type": "boolean"
+        },
+        {
+          "name": "createdAt",
+          "type": "Date"
+        }
+      ]
     }
-  ]
+  ],
+  "databaseProvider": "turso"
 }

@@ -1,9 +1,9 @@
 import express from "express";
 import { container } from "tsyringe";
-import { DateController } from "../controllers/date.controller";
+import { AppointmentController } from "../controllers/appointment.controller";
 
 const router = express.Router();
-const controller = container.resolve(DateController);
+const controller = container.resolve(AppointmentController);
 
 router.post("/", controller.create);
 router.get("/", controller.getAll);

@@ -1,41 +1,98 @@
 /* AUTO-GENERATED-IMPORTS START */
-import { injectable, inject } from "tsyringe";
-import { IDentalChartRepository } from "../../Domain/repositories/dentalChartRepository.interface";
-import DentalChart  from "../../Domain/entities/dentalChart";
-/* AUTO-GENERATED-IMPORTS END */
+        import { injectable, inject } from "tsyringe";
+        import { IDentalChartRepository } from "../../Domain/repositories/dentalChartRepository.interface";
+        import DentalChart from "../../Domain/entities/dentalChart";
+        import { EntityType } from "../utils/entityTypes";
+import { SqlReadOperation, SqlWriteOperation } from "../builders/sqlOperations.enum";
+import { ISqlCommandOperationBuilder } from "../interface/sqlCommandOperation.interface";
+import { ISingletonSqlConnection } from "../interface/dbConnection.interface";
+        /* AUTO-GENERATED-IMPORTS END */
 
 @injectable()
 export class DentalChartRepository implements IDentalChartRepository {
 
   /* AUTO-GENERATED-PROPERTIES START */
-  /* AUTO-GENERATED-PROPERTIES END */
+        private readonly _operationBuilder: ISqlCommandOperationBuilder;
+private readonly _connection: ISingletonSqlConnection;
+        /* AUTO-GENERATED-PROPERTIES END */
 
   /* AUTO-GENERATED-CONSTRUCTOR START */
-  /* AUTO-GENERATED-CONSTRUCTOR END */
+        constructor(
+  @inject("IOperationBuilder") operationBuilder: ISqlCommandOperationBuilder,
+  @inject("ISingletonSqlConnection") connection: ISingletonSqlConnection
+) {
+  this._operationBuilder = operationBuilder;
+  this._connection = connection;
+}
+        /* AUTO-GENERATED-CONSTRUCTOR END */
 
   /* AUTO-GENERATED-METHODS START */
-  async findAll(page: number = 1, pageSize: number = 100): Promise<DentalChart[]> {
-    throw new Error("Method not implemented.");
-  }
+        async findAll(page: number = 1, pageSize: number = 100): Promise<DentalChart[]> {
+  const offset = (page - 1) * pageSize;
 
-  async findById(id: string): Promise<DentalChart | null> {
-    throw new Error("Method not implemented.");
-  }
+  const readCommand = this._operationBuilder
+    .Initialize(EntityType.DentalChart)
+    .WithOperation(SqlReadOperation.Select)
+    .WithPagination(pageSize, offset)
+    .BuildReader();
 
-  async create(data: DentalChart) : Promise<void>{
-    // implementar luego
-    throw new Error("Method not implemented.");
-  }
+  const rows = await this._connection.executeQuery(readCommand);
+  return rows.map(
+  (row) =>
+    ({
+      id: row["ID"],
+      patientId: row["PATIENTID"],
+evaluationDate: row["EVALUATIONDATE"],
+dentistId: row["DENTISTID"],
+observations: row["OBSERVATIONS"],
+    } as DentalChart)
+);
+}
 
+async findById(id: string): Promise<DentalChart | null> {
+  const readCommand = this._operationBuilder
+    .Initialize(EntityType.DentalChart)
+    .WithOperation(SqlReadOperation.SelectById)
+    .WithId(id)
+    .BuildReader();
 
-  async update(data: DentalChart): Promise<void> {
-    // implementar luego
-    throw new Error("Method not implemented.");
-  }
+  const row = await this._connection.executeScalar(readCommand);
+  if (!row) return null;
 
-  async delete(data: DentalChart): Promise<void> {
-    // implementar luego
-    throw new Error("Method not implemented.");
-  }
-  /* AUTO-GENERATED-METHODS END */
+  return {
+  id: row["ID"],
+      patientId: row["PATIENTID"],
+evaluationDate: row["EVALUATIONDATE"],
+dentistId: row["DENTISTID"],
+observations: row["OBSERVATIONS"],
+  } as DentalChart;
+}
+
+async create(entity: DentalChart): Promise<void> {
+  const writeCommand = this._operationBuilder
+    .From(EntityType.DentalChart, entity)
+    .WithOperation(SqlWriteOperation.Create)
+    .BuildWritter();
+
+  await this._connection.executeNonQuery(writeCommand);
+}
+
+async update(entity: DentalChart): Promise<void> {
+  const writeCommand = this._operationBuilder
+    .From(EntityType.DentalChart, entity)
+    .WithOperation(SqlWriteOperation.Update)
+    .BuildWritter();
+
+  await this._connection.executeNonQuery(writeCommand);
+}
+
+async delete(entity: DentalChart): Promise<void> {
+  const writeCommand = this._operationBuilder
+    .From(EntityType.DentalChart, entity)
+    .WithOperation(SqlWriteOperation.Delete)
+    .BuildWritter();
+
+  await this._connection.executeNonQuery(writeCommand);
+}
+        /* AUTO-GENERATED-METHODS END */
 }

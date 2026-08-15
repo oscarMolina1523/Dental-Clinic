@@ -1,9 +1,12 @@
 import "reflect-metadata";
 //AUTO-IMPORT-DOTENV
+import "dotenv/config";
 import express from "express";
+// import { initializeDatabase } from "./Infrastructure/database/initializeDatabase";
 //AUTO-IMPORT-CONTAINER
 import "./WebApi/container/dependencyContainer";
 //AUTO-IMPORT-ROUTES
+import appointmentRoutes from "./WebApi/routes/appointment.routes";
 import paymentNotificationRoutes from "./WebApi/routes/paymentNotification.routes";
 import installmentRoutes from "./WebApi/routes/installment.routes";
 import paymentPlanRoutes from "./WebApi/routes/paymentPlan.routes";
@@ -23,7 +26,6 @@ import clinicalProgresRoutes from "./WebApi/routes/clinicalProgres.routes";
 import treatmentPlanDetailRoutes from "./WebApi/routes/treatmentPlanDetail.routes";
 import treatmentPlanRoutes from "./WebApi/routes/treatmentPlan.routes";
 import treatmentCatalogRoutes from "./WebApi/routes/treatmentCatalog.routes";
-import dateRoutes from "./WebApi/routes/date.routes";
 import dentalChartDetailRoutes from "./WebApi/routes/dentalChartDetail.routes";
 import dentalChartRoutes from "./WebApi/routes/dentalChart.routes";
 import patientDiseaseRoutes from "./WebApi/routes/patientDisease.routes";
@@ -56,6 +58,7 @@ app.get("/api-docs", async (req, res, next) => {
     }
   });
 //AUTO-REGISTER-ROUTES
+app.use("/appointment", appointmentRoutes);
 app.use("/paymentNotification", paymentNotificationRoutes);
 app.use("/installment", installmentRoutes);
 app.use("/paymentPlan", paymentPlanRoutes);
@@ -75,7 +78,6 @@ app.use("/clinicalProgres", clinicalProgresRoutes);
 app.use("/treatmentPlanDetail", treatmentPlanDetailRoutes);
 app.use("/treatmentPlan", treatmentPlanRoutes);
 app.use("/treatmentCatalog", treatmentCatalogRoutes);
-app.use("/date", dateRoutes);
 app.use("/dentalChartDetail", dentalChartDetailRoutes);
 app.use("/dentalChart", dentalChartRoutes);
 app.use("/patientDisease", patientDiseaseRoutes);
@@ -84,6 +86,12 @@ app.use("/patient", patientRoutes);
 app.use("/user", userRoutes);
 app.use("/role", roleRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+  // await initializeDatabase();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+startServer();

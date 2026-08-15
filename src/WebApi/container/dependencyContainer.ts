@@ -1,4 +1,9 @@
 import { container } from "tsyringe";
+import { IAppointmentRepository } from "./../../Domain/repositories/appointmentRepository.interface";
+import { AppointmentRepository } from "./../../Infrastructure/repositories/appointment.repository";
+import { IAppointmentService } from "./../../Application/interfaces/appointment.service.interface";
+import { AppointmentService } from "./../../Application/services/appointment.service";
+import { AppointmentController } from "./../controllers/appointment.controller";
 import { IPaymentNotificationRepository } from "./../../Domain/repositories/paymentNotificationRepository.interface";
 import { PaymentNotificationRepository } from "./../../Infrastructure/repositories/paymentNotification.repository";
 import { IPaymentNotificationService } from "./../../Application/interfaces/paymentNotification.service.interface";
@@ -94,11 +99,6 @@ import { TreatmentCatalogRepository } from "./../../Infrastructure/repositories/
 import { ITreatmentCatalogService } from "./../../Application/interfaces/treatmentCatalog.service.interface";
 import { TreatmentCatalogService } from "./../../Application/services/treatmentCatalog.service";
 import { TreatmentCatalogController } from "./../controllers/treatmentCatalog.controller";
-import { IDateRepository } from "./../../Domain/repositories/dateRepository.interface";
-import { DateRepository } from "./../../Infrastructure/repositories/date.repository";
-import { IDateService } from "./../../Application/interfaces/date.service.interface";
-import { DateService } from "./../../Application/services/date.service";
-import { DateController } from "./../controllers/date.controller";
 import { IDentalChartDetailRepository } from "./../../Domain/repositories/dentalChartDetailRepository.interface";
 import { DentalChartDetailRepository } from "./../../Infrastructure/repositories/dentalChartDetail.repository";
 import { IDentalChartDetailService } from "./../../Application/interfaces/dentalChartDetail.service.interface";
@@ -134,9 +134,22 @@ import { RoleRepository } from "./../../Infrastructure/repositories/role.reposit
 import { IRoleService } from "./../../Application/interfaces/role.service.interface";
 import { RoleService } from "./../../Application/services/role.service";
 import { RoleController } from "./../controllers/role.controller";
+import { ISingletonSqlConnection } from '../../Infrastructure/interface/dbConnection.interface';
+import { SingletonSqlConnection } from '../../Infrastructure/database/dbConnection';
+import { ISqlCommandOperationBuilder } from "../../Infrastructure/interface/sqlCommandOperation.interface";
+import { SqlCommandOperationBuilder } from "../../Infrastructure/builders/sqlCommandOperation.builder";
+import { EntitiesService } from "../../Infrastructure/services/entities.service";
+import { IEntitiesService } from "../../Infrastructure/interface/entitiesService.interface";
 //builder, database connection and entity service
+container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
+container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
+container.registerSingleton<IEntitiesService>('IEntityService', EntitiesService);
 
 // AUTO-GENERATED MODULE REGISTRATIONS
+// Appointment
+container.register<IAppointmentRepository>("IAppointmentRepository", { useClass: AppointmentRepository });
+container.register<IAppointmentService>("IAppointmentService", { useClass: AppointmentService });
+container.register<AppointmentController>("AppointmentController", { useClass: AppointmentController });
 // PaymentNotification
 container.register<IPaymentNotificationRepository>("IPaymentNotificationRepository", { useClass: PaymentNotificationRepository });
 container.register<IPaymentNotificationService>("IPaymentNotificationService", { useClass: PaymentNotificationService });
@@ -213,10 +226,6 @@ container.register<TreatmentPlanController>("TreatmentPlanController", { useClas
 container.register<ITreatmentCatalogRepository>("ITreatmentCatalogRepository", { useClass: TreatmentCatalogRepository });
 container.register<ITreatmentCatalogService>("ITreatmentCatalogService", { useClass: TreatmentCatalogService });
 container.register<TreatmentCatalogController>("TreatmentCatalogController", { useClass: TreatmentCatalogController });
-// Date
-container.register<IDateRepository>("IDateRepository", { useClass: DateRepository });
-container.register<IDateService>("IDateService", { useClass: DateService });
-container.register<DateController>("DateController", { useClass: DateController });
 // DentalChartDetail
 container.register<IDentalChartDetailRepository>("IDentalChartDetailRepository", { useClass: DentalChartDetailRepository });
 container.register<IDentalChartDetailService>("IDentalChartDetailService", { useClass: DentalChartDetailService });

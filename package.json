@@ -8,7 +8,9 @@
     "dev": "ts-node-dev --respawn src/main.ts"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.4",
     "@scalar/express-api-reference": "^0.10.13",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.10.0"
@@ -17,6 +19,6 @@
     "@types/express": "^5.0.6",
     "@types/node": "^26.2.0",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^7.0.2"
+    "typescript": "^5.9.2"
   }
 }
