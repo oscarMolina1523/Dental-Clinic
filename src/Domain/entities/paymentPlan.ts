@@ -8,7 +8,7 @@ export default class PaymentPlan extends BaseModel {
   interestRate: number;
   lateFreePercentage: number;
   gracePeriodDays: number;
-  status: varchar;
+  status: string;
 
   constructor({
     id,
@@ -29,7 +29,7 @@ export default class PaymentPlan extends BaseModel {
     interestRate: number;
     lateFreePercentage: number;
     gracePeriodDays: number;
-    status: varchar;
+    status: string;
   }) {
     super(id);
     this.invoiceId = invoiceId;

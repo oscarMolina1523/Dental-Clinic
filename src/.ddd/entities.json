@@ -652,7 +652,7 @@
         },
         {
           "name": "status",
-          "type": "varchar"
+          "type": "string"
         }
       ]
     },

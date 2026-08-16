@@ -6,5 +6,5 @@ export interface PaymentPlanDto {
   interestRate: number;
   lateFreePercentage: number;
   gracePeriodDays: number;
-  status: varchar;
+  status: string;
 }
