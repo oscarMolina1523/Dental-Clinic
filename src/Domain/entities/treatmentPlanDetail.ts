@@ -5,7 +5,7 @@ export default class TreatmentPlanDetail extends BaseModel {
   treatmentId: string;
   toothNumber: number;
   quantity: number;
-  unitPrice: number;
+  unitPrice: number; //almacena el precio del momento que tenia el tratamiento, asi en el futuro cuando aumente el precio este tendra el de ese momento y no se cambiara
   subtotal: number;
   status: string;
 

@@ -228,7 +228,7 @@
         },
         {
           "name": "estimatedDurationMinutes",
-          "type": "string"
+          "type": "number"
         },
         {
           "name": "active",
