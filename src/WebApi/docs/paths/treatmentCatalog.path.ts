@@ -83,7 +83,8 @@ export const TreatmentCatalogPaths = {
           description: "Not found"
         }
       }
-    },
+    }
+    ,
 
     put: {
       summary: "Update TreatmentCatalog",
@@ -131,6 +132,248 @@ export const TreatmentCatalogPaths = {
         },
         404: {
           description: "Not found"
+        }
+      }
+    }
+  },
+
+  // ============================================================
+  // CHANGE PRICE
+  // ============================================================
+
+  "/treatmentCatalog/{id}/price": {
+
+    put: {
+
+      summary: "Change treatment price",
+
+      description:
+        "Changes the base price of an existing treatment. The price must be zero or greater.",
+
+      tags: ["TreatmentCatalog"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          description: "Treatment catalog ID"
+        }
+      ],
+
+      requestBody: {
+
+        required: true,
+
+        content: {
+          "application/json": {
+
+            schema: {
+              $ref: "#/components/schemas/TreatmentCatalogPriceRequest"
+            }
+          }
+        }
+      },
+
+      responses: {
+
+        200: {
+          description: "Treatment price updated",
+
+          content: {
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/TreatmentCatalog"
+              }
+            }
+          }
+        },
+
+        400: {
+          description: "Invalid price"
+        },
+
+        404: {
+          description: "TreatmentCatalog not found"
+        }
+      }
+    }
+  },
+
+  // ============================================================
+  // CHANGE DURATION
+  // ============================================================
+
+  "/treatmentCatalog/{id}/duration": {
+
+    put: {
+
+      summary: "Change treatment duration",
+
+      description:
+        "Changes the estimated duration of an existing treatment. Duration must be greater than zero.",
+
+      tags: ["TreatmentCatalog"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          description: "Treatment catalog ID"
+        }
+      ],
+
+      requestBody: {
+
+        required: true,
+
+        content: {
+          "application/json": {
+
+            schema: {
+              $ref: "#/components/schemas/TreatmentCatalogDurationRequest"
+            }
+          }
+        }
+      },
+
+      responses: {
+
+        200: {
+          description: "Treatment duration updated",
+
+          content: {
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/TreatmentCatalog"
+              }
+            }
+          }
+        },
+
+        400: {
+          description: "Invalid duration"
+        },
+
+        404: {
+          description: "TreatmentCatalog not found"
+        }
+      }
+    }
+  },
+
+  // ============================================================
+  // ACTIVATE
+  // ============================================================
+
+  "/treatmentCatalog/{id}/activate": {
+
+    post: {
+
+      summary: "Activate treatment",
+      description:
+        "Activates the treatment so it can be used in new treatment plans.",
+
+      tags: ["TreatmentCatalog"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          description: "Treatment catalog ID"
+        }
+      ],
+
+      responses: {
+
+        200: {
+          description: "Treatment activated",
+
+          content: {
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/TreatmentCatalog"
+              }
+            }
+          }
+        },
+
+        404: {
+          description: "TreatmentCatalog not found"
+        }
+      }
+    }
+  },
+
+  // ============================================================
+  // DEACTIVATE
+  // ============================================================
+
+  "/treatmentCatalog/{id}/deactivate": {
+
+    post: {
+
+      summary: "Deactivate treatment",
+      description:
+        "Deactivates the treatment so it cannot be selected for new treatment plans.",
+
+      tags: ["TreatmentCatalog"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          description: "Treatment catalog ID"
+        }
+      ],
+
+      responses: {
+
+        200: {
+          description: "Treatment deactivated",
+
+          content: {
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/TreatmentCatalog"
+              }
+            }
+          }
+        },
+
+        404: {
+          description: "TreatmentCatalog not found"
         }
       }
     }
