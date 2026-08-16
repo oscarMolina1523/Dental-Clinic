@@ -5,6 +5,7 @@ import { TreatmentPlanDto } from "../dtos/treatmentPlan.dto";
 import TreatmentPlan from "../../Domain/entities/treatmentPlan";
 import { generateId } from "../../shared/utils/generateId";
 import { TreatmentPlanStatus } from "../../Domain/types/treatmentPlanStatus.enum";
+import { generateEntityCode } from "../../Infrastructure/utils/codeGenerator";
 
 @injectable()
 export class TreatmentPlanService implements ITreatmentPlanService {
@@ -23,11 +24,17 @@ export class TreatmentPlanService implements ITreatmentPlanService {
   }
 
   async create(data: TreatmentPlanDto): Promise<TreatmentPlan> {
-    const now= new Date();
+    const now = new Date();
+    const treatmentCode = generateEntityCode({
+      prefix: "TRT",
+      date: new Date(),
+      uniqueId: data.patientId.substring(0, 8) // Corta los primeros 8 caracteres del ID del paciente
+    });
 
     const newData: TreatmentPlan = new TreatmentPlan({
       ...data,
-      createdAt:now,
+      createdAt: now,
+      code: treatmentCode,
       id: generateId(),
     })
     await this._treatmentPlanRepository.create(newData);

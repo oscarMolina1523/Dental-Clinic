@@ -4,6 +4,7 @@ import { ITreatmentCatalogRepository } from "../../Domain/repositories/treatment
 import { TreatmentCatalogDto } from "../dtos/treatmentCatalog.dto";
 import TreatmentCatalog from "../../Domain/entities/treatmentCatalog";
 import { generateId } from "../../shared/utils/generateId";
+import { generateEntityCode } from "../../Infrastructure/utils/codeGenerator";
 
 @injectable()
 export class TreatmentCatalogService implements ITreatmentCatalogService {
@@ -22,8 +23,16 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
   }
 
   async create(data: TreatmentCatalogDto): Promise<TreatmentCatalog> {
+
+    const treatmentCode = generateEntityCode({
+      prefix: "TRT",
+      date: new Date(),
+      uniqueId: data.name.substring(0, 8) // Corta los primeros 8 caracteres del ID del paciente
+    });
+
     const newData: TreatmentCatalog = new TreatmentCatalog({
       ...data,
+      code:treatmentCode,
       id: generateId(),
     })
     await this._treatmentCatalogRepository.create(newData);
