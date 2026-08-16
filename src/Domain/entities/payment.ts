@@ -5,7 +5,7 @@ export default class Payment extends BaseModel {
   invoice_id: string;
   amount: number;
   payment_method: PaymentMethods;
-  transaction_reference: string;
+  transaction_reference?: string;//hace referencia al numero de transaccion ejemplo que da el banco, o el voucher de cuando se paga con tarjeta
   served_by: string;
   payment_date: string;
   installment_id: string;
@@ -24,7 +24,7 @@ export default class Payment extends BaseModel {
     invoice_id: string;
     amount: number;
     payment_method: PaymentMethods;
-    transaction_reference: string;
+    transaction_reference?: string;
     served_by: string;
     payment_date: string;
     installment_id: string;
