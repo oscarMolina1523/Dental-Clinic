@@ -11,4 +11,14 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+router.put("/:id/quantity", controller.changeQuantity);
+
+router.put("/:id/tooth", controller.changeTooth);
+
+router.post("/:id/start", controller.start);
+
+router.post("/:id/complete", controller.complete);
+
+router.post("/:id/cancel", controller.cancel);
+
 export default router;
