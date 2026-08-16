@@ -4,7 +4,7 @@ export interface PatientDto {
   name: string;
   lastName: string;
   idCard: string;
-  birthdate: string;
+  birthdate: Date;
   gender: string;
   phoneNumber: string;
   email: string;
@@ -12,7 +12,7 @@ export interface PatientDto {
   emergencyContactName: string;
   emergencyContactPhone: string;
   maritalStatus: string;
-  active: string;
-  createdAt: string;
-  updatedAt: string;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }

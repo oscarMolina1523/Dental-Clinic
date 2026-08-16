@@ -52,7 +52,7 @@ await db.execute(`
         EMERGENCYCONTACTNAME TEXT,
         EMERGENCYCONTACTPHONE TEXT,
         MARITALSTATUS TEXT,
-        ACTIVE TEXT,
+        ACTIVE INTEGER,
         CREATEDAT TEXT,
         UPDATEDAT TEXT
     );

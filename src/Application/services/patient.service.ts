@@ -22,10 +22,10 @@ export class PatientService implements IPatientService {
   }
   
   async create(data: PatientDto): Promise<Patient> {
-    const newData: Patient = {
+    const newData: Patient = new Patient({
       ...data,
       id: generateId(), 
-    }
+    })
     await this._patientRepository.create(newData);
     return newData;
   }
@@ -36,10 +36,10 @@ export class PatientService implements IPatientService {
       return null;
     }
 
-    const newData: Patient = {
+    const newData: Patient = new Patient({
       ...data,
       id,
-    }
+    })
     await this._patientRepository.update(newData);
     return newData;
   }
