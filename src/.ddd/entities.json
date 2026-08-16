@@ -87,7 +87,7 @@
         },
         {
           "name": "birthdate",
-          "type": "string"
+          "type": "Date"
         },
         {
           "name": "gender",
@@ -119,15 +119,15 @@
         },
         {
           "name": "active",
-          "type": "string"
+          "type": "boolean"
         },
         {
           "name": "createdAt",
-          "type": "string"
+          "type": "Date"
         },
         {
           "name": "updatedAt",
-          "type": "string"
+          "type": "Date"
         }
       ]
     },

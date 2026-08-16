@@ -22,10 +22,10 @@ export class PatientService implements IPatientService {
   }
   
   async create(data: PatientDto): Promise<Patient> {
-    const newData: Patient = {
+    const newData: Patient = new Patient({
       ...data,
       id: generateId(), 
-    }
+    })
     await this._patientRepository.create(newData);
     return newData;
   }
@@ -36,12 +36,15 @@ export class PatientService implements IPatientService {
       return null;
     }
 
-    const newData: Patient = {
-      ...data,
-      id,
-    }
-    await this._patientRepository.update(newData);
-    return newData;
+    existing.updatePersonalInformation(
+      data.name,
+      data.lastName,
+      data.birthdate,
+      data.gender
+    );
+
+    await this._patientRepository.update(existing);
+    return existing;
   }
 
   async delete(id: string) : Promise<void> {
@@ -50,5 +53,140 @@ export class PatientService implements IPatientService {
       return ;
     }
     return await this._patientRepository.delete(existing);
+  }
+
+  async changePhoneNumber(
+    id: string,
+    phoneNumber: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.changePhoneNumber(phoneNumber);
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+  async changeEmail(
+    id: string,
+    email: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.changeEmail(email);
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+  async changeAddress(
+    id: string,
+    address: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.changeAddress(address);
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+   async updateEmergencyContact(
+    id: string,
+    name: string,
+    phone: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.updateEmergencyContact(
+      name,
+      phone
+    );
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+  async changeImage(
+    id: string,
+    image: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.changeImage(image);
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+  async activate(
+    id: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.activate();
+
+    await this._patientRepository.update(existing);
+
+    return existing;
+  }
+
+  async deactivate(
+    id: string
+  ): Promise<Patient | null> {
+
+    const existing =
+      await this._patientRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.deactivate();
+
+    await this._patientRepository.update(existing);
+
+    return existing;
   }
 }

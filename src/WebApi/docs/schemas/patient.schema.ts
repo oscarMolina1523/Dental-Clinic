@@ -111,5 +111,78 @@ export const PatientSchemas = {
       updatedAt: { type: "string" },
       
     }
+  },
+
+  ChangePhoneNumberRequest: {
+    type: "object",
+    required: [
+      "phoneNumber"
+    ],
+    properties: {
+      phoneNumber: {
+        type: "string",
+        example: "+50588888888"
+      }
+    }
+  },
+
+  ChangeEmailRequest: {
+    type: "object",
+    required: [
+      "email"
+    ],
+    properties: {
+      email: {
+        type: "string",
+        format: "email",
+        example: "patient@example.com"
+      }
+    }
+  },
+
+  ChangeAddressRequest: {
+    type: "object",
+    required: [
+      "address"
+    ],
+    properties: {
+      address: {
+        type: "string",
+        example: "Jinotepe, Carazo"
+      }
+    }
+  },
+
+  EmergencyContactRequest: {
+    type: "object",
+    required: [
+      "name",
+      "phone"
+    ],
+    properties: {
+
+      name: {
+        type: "string",
+        example: "Juan Molina"
+      },
+
+      phone: {
+        type: "string",
+        example: "+50587777777"
+      }
+    }
+  },
+
+  ChangeImageRequest: {
+    type: "object",
+    required: [
+      "image"
+    ],
+    properties: {
+      image: {
+        type: "string",
+        example: "https://example.com/patient.jpg"
+      }
+    }
   }
 };
