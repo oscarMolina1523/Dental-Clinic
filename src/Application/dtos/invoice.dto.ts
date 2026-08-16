@@ -1,3 +1,5 @@
+import { InvoiceStatus } from "../../Domain/types/invoicesStatus.enum";
+
 export interface InvoiceDto {
   patientId: string;
   treatmentPlanId: string;
@@ -5,5 +7,5 @@ export interface InvoiceDto {
   totalAmount: number;
   paidAmount: number;
   pendingAmount: number;
-  status: string;
+  status: InvoiceStatus;
 }
