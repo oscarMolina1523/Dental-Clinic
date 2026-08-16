@@ -4,6 +4,7 @@ import { ITreatmentPlanDetailRepository } from "../../Domain/repositories/treatm
 import { TreatmentPlanDetailDto } from "../dtos/treatmentPlanDetail.dto";
 import TreatmentPlanDetail from "../../Domain/entities/treatmentPlanDetail";
 import { generateId } from "../../shared/utils/generateId";
+import { TreatmentPlanDetailStatus } from "../../Domain/types/treatmentPlanStatus.enum";
 
 @injectable()
 export class TreatmentPlanDetailService implements ITreatmentPlanDetailService {
@@ -25,6 +26,7 @@ export class TreatmentPlanDetailService implements ITreatmentPlanDetailService {
     const newData: TreatmentPlanDetail = new TreatmentPlanDetail({
       ...data,
       id: generateId(),
+      status: TreatmentPlanDetailStatus.PENDING
     })
     await this._treatmentPlanDetailRepository.create(newData);
     return newData;
@@ -36,12 +38,11 @@ export class TreatmentPlanDetailService implements ITreatmentPlanDetailService {
       return null;
     }
 
-    const newData: TreatmentPlanDetail = new TreatmentPlanDetail({
-      ...data,
-      id,
-    })
-    await this._treatmentPlanDetailRepository.update(newData);
-    return newData;
+    existing.changeTooth(data.toothNumber);
+    existing.changeQuantity(data.quantity);
+    
+    await this._treatmentPlanDetailRepository.update(existing);
+    return existing;
   }
 
   async delete(id: string): Promise<void> {

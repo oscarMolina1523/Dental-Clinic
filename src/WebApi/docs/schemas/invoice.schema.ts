@@ -57,5 +57,29 @@ export const InvoiceSchemas = {
       status: { type: "string" },
       
     }
-  }
+  },
+
+  // ============================================================
+  // PAYMENT
+  // ============================================================
+
+  InvoicePaymentRequest: {
+    type: "object",
+
+    required: [
+      "amount"
+    ],
+
+    properties: {
+
+      amount: {
+        type: "number",
+        format: "double",
+        minimum: 0.01,
+        example: 500,
+        description: "Monto del pago que se aplicará a la factura."
+      }
+    }
+  },
+
 };

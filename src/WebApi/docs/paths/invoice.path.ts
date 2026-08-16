@@ -134,5 +134,192 @@ export const InvoicePaths = {
         }
       }
     }
+  },
+
+  // ============================================================
+  // PAYMENT
+  // ============================================================
+
+  "/invoice/{id}/payment": {
+
+    post: {
+
+      summary: "Register payment",
+      description:
+        "Registers a payment against the invoice. The service automatically updates paidAmount, pendingAmount and invoice status.",
+
+      tags: ["Invoice"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          example: "invoice-123"
+        }
+      ],
+
+      requestBody: {
+
+        required: true,
+
+        content: {
+
+          "application/json": {
+
+            schema: {
+              $ref: "#/components/schemas/InvoicePaymentRequest"
+            },
+
+            example: {
+              amount: 500
+            }
+          }
+        }
+      },
+
+      responses: {
+
+        200: {
+
+          description: "Payment registered",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/Invoice"
+              }
+            }
+          }
+        },
+
+        400: {
+          description:
+            "Invalid payment, payment exceeds pending balance or invoice cannot receive payments"
+        },
+
+        404: {
+          description: "Invoice not found"
+        }
+      }
+    },
+
+
+    delete: {
+
+      summary: "Remove payment",
+      description:
+        "Reverts the payment associated with the invoice and recalculates the paid amount, pending amount and status.",
+
+      tags: ["Invoice"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          example: "invoice-123"
+        }
+      ],
+
+      responses: {
+
+        200: {
+
+          description: "Payment removed",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/Invoice"
+              }
+            }
+          }
+        },
+
+        400: {
+          description: "Payment cannot be removed"
+        },
+
+        404: {
+          description: "Invoice not found"
+        }
+      }
+    }
+  },
+
+
+  // ============================================================
+  // CANCEL
+  // ============================================================
+
+  "/invoice/{id}/cancel": {
+
+    post: {
+
+      summary: "Cancel invoice",
+
+      description:
+        "Cancels the invoice. A paid or otherwise restricted invoice may not be cancellable depending on the business rules.",
+
+      tags: ["Invoice"],
+
+      parameters: [
+
+        {
+          name: "id",
+          in: "path",
+          required: true,
+
+          schema: {
+            type: "string"
+          },
+
+          example: "invoice-123"
+        }
+      ],
+
+      responses: {
+
+        200: {
+
+          description: "Invoice cancelled",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+                $ref: "#/components/schemas/Invoice"
+              }
+            }
+          }
+        },
+
+        400: {
+          description: "Invoice cannot be cancelled"
+        },
+
+        404: {
+          description: "Invoice not found"
+        }
+      }
+    }
   }
 };

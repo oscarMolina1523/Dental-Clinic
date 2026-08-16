@@ -221,4 +221,21 @@ export default class TreatmentPlan extends BaseModel {
     this.status =
       TreatmentPlanStatus.CANCELLED;
   }
+
+  //personas
+  changePatient(patientId: string): void {
+    if (!patientId) {
+      throw new Error("El paciente es obligatorio");
+    }
+
+    this.patientId = patientId;
+  }
+
+  changeDentist(dentistId: string): void {
+    if (!dentistId) {
+      throw new Error("El odontólogo es obligatorio");
+    }
+
+    this.dentistId = dentistId;
+  }
 }

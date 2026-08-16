@@ -35,6 +35,9 @@ export class TreatmentPlanService implements ITreatmentPlanService {
       ...data,
       createdAt: now,
       code: treatmentCode,
+      totalAmount: 0,
+      discount: 0,
+      status: TreatmentPlanStatus.DRAFT,
       id: generateId(),
     })
     await this._treatmentPlanRepository.create(newData);
@@ -47,13 +50,11 @@ export class TreatmentPlanService implements ITreatmentPlanService {
       return null;
     }
 
-    const newData: TreatmentPlan = new TreatmentPlan({
-      ...data,
-      id,
-    })
+    existing.changePatient(data.patientId);
+    existing.changeDentist(data.dentistId);
 
-    await this._treatmentPlanRepository.update(newData);
-    return newData;
+    await this._treatmentPlanRepository.update(existing);
+    return existing;
   }
 
   async delete(id: string): Promise<void> {
