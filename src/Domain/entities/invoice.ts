@@ -184,32 +184,21 @@ export default class Invoice extends BaseModel {
 
 
   private updateStatus(): void {
+    this.status = this.calculateStatus();
+  }
+
+  private calculateStatus(): InvoiceStatus {
 
     if (this.paidAmount === 0) {
-
-      this.status =
-        InvoiceStatus.PENDING;
-
-      return;
+      return InvoiceStatus.PENDING;
     }
 
     if (this.paidAmount < this.totalAmount) {
-
-      this.status =
-        InvoiceStatus.PARTIALLY_PAID;
-
-      return;
+      return InvoiceStatus.PARTIALLY_PAID;
     }
 
-    if (this.paidAmount === this.totalAmount) {
-
-      this.status =
-        InvoiceStatus.PAID;
-
-      return;
-    }
+    return InvoiceStatus.PAID;
   }
-
 
   // ============================================================
   // TOTAL

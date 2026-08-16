@@ -5,7 +5,6 @@ import { InvoiceDto } from "../dtos/invoice.dto";
 import Invoice from "../../Domain/entities/invoice";
 import { generateId } from "../../shared/utils/generateId";
 import { generateEntityCode } from "../../Infrastructure/utils/codeGenerator";
-import { InvoiceStatus } from "../../Domain/types/invoicesStatus.enum";
 
 @injectable()
 export class InvoiceService implements IInvoiceService {
@@ -34,14 +33,6 @@ export class InvoiceService implements IInvoiceService {
       ...data,
       invoiceNumber: invoiceCode,
       id: generateId(),
-      // Una factura nueva empieza sin pagos
-      paidAmount: 0,
-
-      // Se calcula automáticamente
-      pendingAmount: data.totalAmount,
-
-      // Una factura nueva empieza pendiente
-      status: InvoiceStatus.PENDING
     })
     await this._invoiceRepository.create(newData);
     return newData;
