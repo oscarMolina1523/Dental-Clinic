@@ -93,22 +93,26 @@ export default class Patient extends BaseModel {
     this.updatedAt = updatedAt;
   }
 
+  //activar paciente
   activate(): void {
     this.active = true;
     this.updatedAt = new Date();
   }
 
+  //desactivar paciente
   deactivate(): void {
     this.active = false;
     this.updatedAt = new Date();
   }
 
+  //saber si el paciente esta activo
   ensureActive(): void {
     if (!this.active) {
       throw new Error("El paciente está inactivo");
     }
   }
 
+  //actualizar informacion personal
   updatePersonalInformation(
     name: string,
     lastName: string,
@@ -138,6 +142,7 @@ export default class Patient extends BaseModel {
     this.updatedAt = new Date();
   }
 
+  //cambiar numero de telefono del paciente
   changePhoneNumber(phoneNumber: string): void {
 
     if (!phoneNumber?.trim()) {
@@ -150,6 +155,7 @@ export default class Patient extends BaseModel {
     this.updatedAt = new Date();
   }
 
+  //cambiar email del paciente
   changeEmail(email: string): void {
 
     if (!email?.includes("@")) {
@@ -162,12 +168,14 @@ export default class Patient extends BaseModel {
     this.updatedAt = new Date();
   }
 
+  //cambiar direccion del paciente
   changeAddress(address: string): void {
 
     this.address = address;
     this.updatedAt = new Date();
   }
 
+  //actualizar contacto de emergencia del paciente
   updateEmergencyContact(
     name: string,
     phone: string
@@ -191,39 +199,52 @@ export default class Patient extends BaseModel {
     this.updatedAt = new Date();
   }
 
+  //obtener la edad exacta en años del paciente
   get age(): number {
 
+    //obtenemos la fecha de hoy
     const today = new Date();
 
+    //restamos el actual año menos la fecha de nacimiento
     let age =
       today.getFullYear() -
       this.birthdate.getFullYear();
 
+    //calculamos la diferencia entre el mes actual y el mes de nacimiento
     const month =
       today.getMonth() -
       this.birthdate.getMonth();
 
+    //verificamos si la persona no ha cumplido años en el año actual
     if (
+      //si el actual mes es anterior al mes de la fecha de nacimiento ó
       month < 0 ||
+      //si estamos en el mismo mes de nacimiento , pero el dia actual es menos al dia de la 
+      //fecha de nacimiento
       (
         month === 0 &&
         today.getDate() < this.birthdate.getDate()
       )
     ) {
+      //si se cumplen cualquiera de las condiciones anteriores, le restamos 1 año
+      //porque significa que aunque este cerca de cumplirlos aun no cumple años
       age--;
     }
 
     return age;
   }
 
+  //saber si es menor de edad
   get isMinor(): boolean {
     return this.age < 18;
   }
 
+  //obtener el nombre completo
   get fullName(): string {
     return `${this.name} ${this.lastName}`;
   }
 
+  //cambiar imagen del paciente
   changeImage(image: string): void {
 
     this.image = image;
