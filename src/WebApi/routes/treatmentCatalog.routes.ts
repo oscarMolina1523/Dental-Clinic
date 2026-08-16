@@ -11,4 +11,16 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+// Cambiar precio
+router.put("/:id/price", controller.changePrice);
+
+// Cambiar duración
+router.put("/:id/duration", controller.changeDuration);
+
+// Activar tratamiento
+router.post("/:id/activate", controller.activate);
+
+// Desactivar tratamiento
+router.post("/:id/deactivate", controller.deactivate);
+
 export default router;

@@ -52,10 +52,7 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
     return await this._treatmentCatalogRepository.delete(existing);
   }
 
-  // ============================================================
   // PRICE
-  // ============================================================
-
   async changePrice(
     id: string,
     price: number
@@ -75,10 +72,7 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
     return existing;
   }
 
-  // ============================================================
   // DURATION
-  // ============================================================
-
   async changeDuration(
     id: string,
     minutes: number
@@ -98,10 +92,7 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
     return existing;
   }
 
-  // ============================================================
   // ACTIVE / INACTIVE
-  // ============================================================
-
   async activate(
     id: string
   ): Promise<TreatmentCatalog | null> {
