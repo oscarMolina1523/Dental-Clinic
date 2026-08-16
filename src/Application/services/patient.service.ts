@@ -22,8 +22,11 @@ export class PatientService implements IPatientService {
   }
   
   async create(data: PatientDto): Promise<Patient> {
+    const now = new Date();
+
     const newData: Patient = new Patient({
       ...data,
+      createdAt:now,
       id: generateId(), 
     })
     await this._patientRepository.create(newData);

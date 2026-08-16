@@ -23,8 +23,11 @@ export class TreatmentPlanService implements ITreatmentPlanService {
   }
 
   async create(data: TreatmentPlanDto): Promise<TreatmentPlan> {
+    const now= new Date();
+
     const newData: TreatmentPlan = new TreatmentPlan({
       ...data,
+      createdAt:now,
       id: generateId(),
     })
     await this._treatmentPlanRepository.create(newData);
