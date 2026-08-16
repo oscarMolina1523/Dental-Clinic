@@ -11,4 +11,38 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+// ============================================================
+// PAYMENT
+// ============================================================
+
+router.post(
+    "/:id/payment",
+    controller.addPayment
+);
+
+router.post(
+    "/:id/payment/remove",
+    controller.removePayment
+);
+
+
+// ============================================================
+// TOTAL
+// ============================================================
+
+router.put(
+    "/:id/total",
+    controller.changeTotal
+);
+
+
+// ============================================================
+// STATUS
+// ============================================================
+
+router.post(
+    "/:id/cancel",
+    controller.cancel
+);
+
 export default router;
