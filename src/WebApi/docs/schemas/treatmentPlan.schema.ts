@@ -57,5 +57,57 @@ export const TreatmentPlanSchemas = {
       createdAt: { type: "string" },
       
     }
+  },
+
+  // ============================================================
+  // SET SUBTOTAL
+  // ============================================================
+  TreatmentPlanSubtotalRequest: {
+
+    type: "object",
+
+    required: [
+      "amount"
+    ],
+
+    properties: {
+
+      amount: {
+        type: "number",
+        format: "double",
+        minimum: 0,
+        example: 1500,
+        description:
+          "Subtotal calculated from all treatment plan details"
+      }
+
+    }
+  },
+
+
+  // ============================================================
+  // APPLY DISCOUNT
+  // ============================================================
+
+  TreatmentPlanDiscountRequest: {
+
+    type: "object",
+
+    required: [
+      "discount"
+    ],
+
+    properties: {
+
+      discount: {
+        type: "number",
+        format: "double",
+        minimum: 0,
+        example: 100,
+        description:
+          "Discount amount to apply to the treatment plan"
+      }
+
+    }
   }
 };
