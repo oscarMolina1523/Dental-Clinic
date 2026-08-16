@@ -22,10 +22,10 @@ export class PaymentService implements IPaymentService {
   }
   
   async create(data: PaymentDto): Promise<Payment> {
-    const newData: Payment = {
+    const newData: Payment = new Payment({
       ...data,
       id: generateId(), 
-    }
+    });
     await this._paymentRepository.create(newData);
     return newData;
   }
@@ -36,10 +36,11 @@ export class PaymentService implements IPaymentService {
       return null;
     }
 
-    const newData: Payment = {
+    const newData: Payment = new Payment({
       ...data,
       id,
-    }
+    });
+    
     await this._paymentRepository.update(newData);
     return newData;
   }

@@ -1,9 +1,10 @@
+import { PaymentMethods } from "../types/paymentMethods.enum";
 import BaseModel from "./base.model";
 
 export default class Payment extends BaseModel {
   invoice_id: string;
   amount: number;
-  payment_method: string;
+  payment_method: PaymentMethods;
   transaction_reference: string;
   served_by: string;
   payment_date: string;
@@ -22,13 +23,44 @@ export default class Payment extends BaseModel {
     id: string;
     invoice_id: string;
     amount: number;
-    payment_method: string;
+    payment_method: PaymentMethods;
     transaction_reference: string;
     served_by: string;
     payment_date: string;
     installment_id: string;
   }) {
     super(id);
+
+    if (!invoice_id) {
+      throw new Error(
+        "La factura es obligatoria"
+      );
+    }
+
+    if (amount <= 0) {
+      throw new Error(
+        "El monto del pago debe ser mayor que cero"
+      );
+    }
+
+    if (!payment_method) {
+      throw new Error(
+        "El método de pago es obligatorio"
+      );
+    }
+
+    if (!served_by) {
+      throw new Error(
+        "El usuario que registra el pago es obligatorio"
+      );
+    }
+
+    if (!payment_date) {
+      throw new Error(
+        "La fecha del pago es obligatoria"
+      );
+    }
+
     this.invoice_id = invoice_id;
     this.amount = amount;
     this.payment_method = payment_method;
