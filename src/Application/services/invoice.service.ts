@@ -4,6 +4,7 @@ import { IInvoiceRepository } from "../../Domain/repositories/invoiceRepository.
 import { InvoiceDto } from "../dtos/invoice.dto";
 import Invoice from "../../Domain/entities/invoice";
 import { generateId } from "../../shared/utils/generateId";
+import { generateEntityCode } from "../../Infrastructure/utils/codeGenerator";
 
 @injectable()
 export class InvoiceService implements IInvoiceService {
@@ -12,20 +13,27 @@ export class InvoiceService implements IInvoiceService {
   constructor(@inject("IInvoiceRepository") repository: IInvoiceRepository) {
     this._invoiceRepository = repository;
   }
-  
+
   async findAll(page: number = 1, pageSize: number = 100): Promise<Invoice[]> {
     return await this._invoiceRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<Invoice | null> {
+
+  async findById(id: string): Promise<Invoice | null> {
     return await this._invoiceRepository.findById(id);
   }
-  
+
   async create(data: InvoiceDto): Promise<Invoice> {
-    const newData: Invoice = {
+    const invoiceCode = generateEntityCode({
+      prefix: "INV",
+      date: new Date(),
+      uniqueId: data.patientId.substring(0, 8) // Corta los primeros 8 caracteres del ID del paciente
+    });
+
+    const newData: Invoice = new Invoice({
       ...data,
-      id: generateId(), 
-    }
+      invoiceNumber: invoiceCode,
+      id: generateId(),
+    })
     await this._invoiceRepository.create(newData);
     return newData;
   }
@@ -36,19 +44,106 @@ export class InvoiceService implements IInvoiceService {
       return null;
     }
 
-    const newData: Invoice = {
-      ...data,
-      id,
-    }
-    await this._invoiceRepository.update(newData);
-    return newData;
+    existing.changeTotal(data.totalAmount);
+    await this._invoiceRepository.update(existing);
+    return existing;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._invoiceRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._invoiceRepository.delete(existing);
+  }
+
+  // ============================================================
+  // PAYMENT
+  // ============================================================
+
+  async addPayment(
+    id: string,
+    amount: number
+  ): Promise<Invoice | null> {
+
+    const existing =
+      await this._invoiceRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.addPayment(amount);
+
+    await this._invoiceRepository.update(existing);
+
+    return existing;
+  }
+
+
+  async removePayment(
+    id: string,
+    amount: number
+  ): Promise<Invoice | null> {
+
+    const existing =
+      await this._invoiceRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.removePayment(amount);
+
+    await this._invoiceRepository.update(existing);
+
+    return existing;
+  }
+
+
+  // ============================================================
+  // TOTAL
+  // ============================================================
+
+  async changeTotal(
+    id: string,
+    amount: number
+  ): Promise<Invoice | null> {
+
+    const existing =
+      await this._invoiceRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.changeTotal(amount);
+
+    await this._invoiceRepository.update(existing);
+
+    return existing;
+  }
+
+
+  // ============================================================
+  // CANCEL
+  // ============================================================
+
+  async cancel(
+    id: string
+  ): Promise<Invoice | null> {
+
+    const existing =
+      await this._invoiceRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    existing.cancel();
+
+    await this._invoiceRepository.update(existing);
+
+    return existing;
   }
 }

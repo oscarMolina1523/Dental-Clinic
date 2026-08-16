@@ -3,6 +3,6 @@ export interface TreatmentCatalogDto {
   name: string;
   description: string;
   basePrice: number;
-  estimatedDurationMinutes: string;
+  estimatedDurationMinutes: number;
   active: boolean;
 }

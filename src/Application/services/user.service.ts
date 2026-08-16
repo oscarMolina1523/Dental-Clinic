@@ -29,9 +29,12 @@ export class UserService implements IUserService {
       data.password
     );
 
+    const now = new Date();
+
     const newData: User = new User({
       ...data,
       password: passwordHash,
+      createdAt:now,
       id: generateId(),
     })
 

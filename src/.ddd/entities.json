@@ -228,7 +228,7 @@
         },
         {
           "name": "estimatedDurationMinutes",
-          "type": "string"
+          "type": "number"
         },
         {
           "name": "active",
@@ -652,7 +652,7 @@
         },
         {
           "name": "status",
-          "type": "varchar"
+          "type": "string"
         }
       ]
     },

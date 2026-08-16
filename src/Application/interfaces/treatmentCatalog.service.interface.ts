@@ -7,4 +7,22 @@ export interface ITreatmentCatalogService {
   create(data: TreatmentCatalogDto): Promise<TreatmentCatalog>;
   update(id: string, data: TreatmentCatalogDto): Promise<TreatmentCatalog | null>;
   delete(id: string): Promise<void>;
+
+  changePrice(
+    id: string,
+    price: number
+  ): Promise<TreatmentCatalog | null>;
+
+  changeDuration(
+    id: string,
+    minutes: number
+  ): Promise<TreatmentCatalog | null>;
+
+  activate(
+    id: string
+  ): Promise<TreatmentCatalog | null>;
+
+  deactivate(
+    id: string
+  ): Promise<TreatmentCatalog | null>;
 }
