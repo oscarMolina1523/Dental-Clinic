@@ -142,6 +142,8 @@ import { EntitiesService } from "../../Infrastructure/services/entities.service"
 import { IEntitiesService } from "../../Infrastructure/interface/entitiesService.interface";
 import { IPasswordService } from "../../Domain/repositories/passwordService.interface";
 import { PasswordService } from "../../Infrastructure/services/password.service";
+import { IInvoicePaymentService } from "../../Application/interfaces/invoicePayment.service.interface";
+import { InvoicePaymentService } from "../../Application/services/invoicePayment.service";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
@@ -149,6 +151,10 @@ container.registerSingleton<IEntitiesService>('IEntityService', EntitiesService)
 
 //Servicios de cifrado de contraseña
 container.register<IPasswordService>('IPasswordService', {useClass: PasswordService});
+
+//servicio de orquestacion de facturacion
+container.register<IInvoicePaymentService>('IInvoicePaymentService', {useClass: InvoicePaymentService});
+
 
 // AUTO-GENERATED MODULE REGISTRATIONS
 // Appointment
