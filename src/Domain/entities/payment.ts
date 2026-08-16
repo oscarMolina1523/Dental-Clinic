@@ -8,7 +8,7 @@ export default class Payment extends BaseModel {
   transaction_reference?: string;//hace referencia al numero de transaccion ejemplo que da el banco, o el voucher de cuando se paga con tarjeta
   served_by: string;
   payment_date: string;
-  installment_id: string;
+  installment_id?: string;
 
   constructor({
     id,
@@ -27,7 +27,7 @@ export default class Payment extends BaseModel {
     transaction_reference?: string;
     served_by: string;
     payment_date: string;
-    installment_id: string;
+    installment_id?: string;
   }) {
     super(id);
 

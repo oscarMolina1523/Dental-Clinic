@@ -7,9 +7,10 @@ import { generateEntityCode } from "../../Infrastructure/utils/codeGenerator";
 import { AddPaymentToInvoiceDto, CreateInvoiceWithPaymentDto } from "../dtos/invoicePayment.dto";
 import { IInvoiceRepository } from "../../Domain/repositories/invoiceRepository.interface";
 import { IPaymentRepository } from "../../Domain/repositories/paymentRepository.interface";
+import { IInvoicePaymentService } from "../interfaces/invoicePayment.service.interface";
 
 @injectable()
-export class InvoicePaymentService {
+export class InvoicePaymentService implements IInvoicePaymentService{
 
     constructor(
         @inject("IInvoiceRepository")

@@ -52,6 +52,8 @@ import { UserSchemas } from "./schemas/user.schema";
 import { UserPaths } from "./paths/user.path";
 import { RoleSchemas } from "./schemas/role.schema";
 import { RolePaths } from "./paths/role.path";
+import { InvoicePaymentPaths } from "./paths/invoicePayment.path";
+import { InvoicePaymentSchemas } from "./schemas/invoicePayment.schema";
 export const OpenApiSpecification = {
   openapi: "3.0.0",
   info: {
@@ -79,6 +81,7 @@ export const OpenApiSpecification = {
     ...SupplierPaths,
     ...PaymentPaths,
     ...InvoicePaths,
+    ...InvoicePaymentPaths,
     ...PatientAttachmentPaths,
     ...MedicalPrescriptionDetailPaths,
     ...MedicalPrescriptionPaths,
@@ -115,6 +118,7 @@ export const OpenApiSpecification = {
       ...SupplierSchemas,
       ...PaymentSchemas,
       ...InvoiceSchemas,
+      ...InvoicePaymentSchemas,
       ...PatientAttachmentSchemas,
       ...MedicalPrescriptionDetailSchemas,
       ...MedicalPrescriptionSchemas,

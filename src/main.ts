@@ -35,6 +35,7 @@ import userRoutes from "./WebApi/routes/user.routes";
 import roleRoutes from "./WebApi/routes/role.routes";
 //AUTO-IMPORT-OPENAPI
 import { OpenApiSpecification } from "./WebApi/docs/openapi";
+import invoicePaymentRoutes from "./WebApi/routes/invoicePayment.routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -70,6 +71,7 @@ app.use("/product", productRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/invoice", invoiceRoutes);
+app.use("/invoice-payments", invoicePaymentRoutes);
 app.use("/patientAttachment", patientAttachmentRoutes);
 app.use("/medicalPrescriptionDetail", medicalPrescriptionDetailRoutes);
 app.use("/medicalPrescription", medicalPrescriptionRoutes);
