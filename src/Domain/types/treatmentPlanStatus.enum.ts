@@ -14,3 +14,11 @@ export enum TreatmentPlanStatus {
   COMPLETED = "COMPLETED",
   CANCELLED = "CANCELLED"
 }
+
+
+export enum TreatmentPlanDetailStatus {
+  PENDING = "PENDING",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED"
+}

@@ -1,3 +1,5 @@
+import { TreatmentPlanDetailStatus } from "../../Domain/types/treatmentPlanStatus.enum";
+
 export interface TreatmentPlanDetailDto {
   planId: string;
   treatmentId: string;
@@ -5,5 +7,5 @@ export interface TreatmentPlanDetailDto {
   quantity: number;
   unitPrice: number;
   subtotal: number;
-  status: string;
+  status: TreatmentPlanDetailStatus;
 }
