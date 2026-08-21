@@ -3,10 +3,10 @@ import BaseModel from "./base.model";
 
 export default class PaymentPlan extends BaseModel {
   invoiceId: string;
-  private totalAmount: number;
+  private totalAmount: number; //total que se pacto a pagar con el porcentaje de interes aplicado
   private numberOfInstallments: number;
-  private frequencyDays: number;
-  private interestRate: number;
+  private frequencyDays: number; //cada cuantos dias vence una cuota
+  private interestRate: number; //solo guarda el interes pactado
   private lateFreePercentage: number;
   private gracePeriodDays: number;
   private status: PaymentPlanStatus;
@@ -121,16 +121,9 @@ export default class PaymentPlan extends BaseModel {
   // CALCULATIONS
   // ============================================================
 
-  get interestAmount(): number {
-    return this.totalAmount * (this.interestRate / 100);
-  }
-
-  get totalWithInterest(): number {
-    return this.totalAmount + this.interestAmount;
-  }
-
-  get baseInstallmentAmount(): number {
-    return this.totalWithInterest / this.numberOfInstallments;
+  //retorna el pago total de cada cuota cuanto debe ser
+  get installmentAmount(): number {
+    return this.totalAmount / this.numberOfInstallments;
   }
 
   // ============================================================
