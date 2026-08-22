@@ -7,4 +7,20 @@ export interface IPaymentPlanService {
   create(data: PaymentPlanDto): Promise<PaymentPlan>;
   update(id: string, data: PaymentPlanDto): Promise<PaymentPlan | null>;
   delete(id: string): Promise<void>;
+
+  activate(
+    id: string
+  ): Promise<PaymentPlan | null>;
+
+  complete(
+    id: string
+  ): Promise<PaymentPlan | null>;
+
+  cancel(
+    id: string
+  ): Promise<PaymentPlan | null>;
+
+  getInstallmentAmount(
+    id: string
+  ): Promise<number | null>;
 }

@@ -1,3 +1,5 @@
+import { InstallmentStatus } from "../../Domain/types/installmentStatus.enum";
+
 export interface InstallmentDto {
   paymentPlanId: string;
   installmentNumber: number;
@@ -5,5 +7,5 @@ export interface InstallmentDto {
   amount: number;
   lateFeeAmount: number;
   paidAmount: number;
-  status: string;
+  status: InstallmentStatus;
 }

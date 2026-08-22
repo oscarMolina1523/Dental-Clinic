@@ -1,3 +1,5 @@
+import { PaymentPlanStatus } from "../../Domain/types/paymentPlanStatus.enum";
+
 export interface PaymentPlanDto {
   invoiceId: string;
   totalAmount: number;
@@ -6,5 +8,5 @@ export interface PaymentPlanDto {
   interestRate: number;
   lateFreePercentage: number;
   gracePeriodDays: number;
-  status: string;
+  status: PaymentPlanStatus;
 }

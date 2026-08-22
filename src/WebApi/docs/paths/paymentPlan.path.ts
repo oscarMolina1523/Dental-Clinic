@@ -134,5 +134,150 @@ export const PaymentPlanPaths = {
         }
       }
     }
+  },
+   "/paymentPlan/{id}/activate": {
+    post: {
+      summary: "Activate PaymentPlan",
+      description:
+        "Changes the payment plan status from PENDING to ACTIVE.",
+      tags: ["PaymentPlan"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        }
+      ],
+      responses: {
+        200: {
+          description: "PaymentPlan activated successfully",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/PaymentPlan"
+              }
+            }
+          }
+        },
+        400: {
+          description: "PaymentPlan cannot be activated"
+        },
+        404: {
+          description: "PaymentPlan not found"
+        }
+      }
+    }
+  },
+
+  "/paymentPlan/{id}/complete": {
+    post: {
+      summary: "Complete PaymentPlan",
+      description:
+        "Changes the payment plan status from ACTIVE to COMPLETED.",
+      tags: ["PaymentPlan"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        }
+      ],
+      responses: {
+        200: {
+          description: "PaymentPlan completed successfully",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/PaymentPlan"
+              }
+            }
+          }
+        },
+        400: {
+          description: "PaymentPlan cannot be completed"
+        },
+        404: {
+          description: "PaymentPlan not found"
+        }
+      }
+    }
+  },
+
+  "/paymentPlan/{id}/cancel": {
+    post: {
+      summary: "Cancel PaymentPlan",
+      description:
+        "Changes the payment plan status to CANCELLED.",
+      tags: ["PaymentPlan"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        }
+      ],
+      responses: {
+        200: {
+          description: "PaymentPlan cancelled successfully",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/PaymentPlan"
+              }
+            }
+          }
+        },
+        400: {
+          description: "PaymentPlan cannot be cancelled"
+        },
+        404: {
+          description: "PaymentPlan not found"
+        }
+      }
+    }
+  },
+
+  "/paymentPlan/{id}/installment-amount": {
+    get: {
+      summary: "Get installment amount",
+      description:
+        "Returns the amount that must be paid for each installment according to the payment plan.",
+      tags: ["PaymentPlan"],
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        }
+      ],
+      responses: {
+        200: {
+          description: "Installment amount calculated successfully",
+          content: {
+            "application/json": {
+              schema: {
+                type: "number",
+                example: 250
+              }
+            }
+          }
+        },
+        404: {
+          description: "PaymentPlan not found"
+        }
+      }
+    }
   }
 };

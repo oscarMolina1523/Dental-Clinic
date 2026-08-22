@@ -11,4 +11,31 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+// Activar plan
+router.post(
+  "/:id/activate",
+  controller.activate
+);
+
+
+// Completar plan
+router.post(
+  "/:id/complete",
+  controller.complete
+);
+
+
+// Cancelar plan
+router.post(
+  "/:id/cancel",
+  controller.cancel
+);
+
+// Obtener monto de cada cuota
+router.get(
+  "/:id/installment-amount",
+  controller.getInstallmentAmount
+);
+
+
 export default router;

@@ -11,4 +11,55 @@ router.get("/:id", controller.getById);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 
+// ============================================================
+// PAYMENT
+// ============================================================
+
+router.post(
+  "/:id/payment",
+  controller.addPayment
+);
+
+// ============================================================
+// LATE FEE
+// ============================================================
+
+router.post(
+  "/:id/late-fee",
+  controller.addLateFee
+);
+
+// ============================================================
+// STATUS
+// ============================================================
+
+router.post(
+  "/:id/overdue",
+  controller.markAsOverdue
+);
+
+router.post(
+  "/:id/cancel",
+  controller.cancel
+);
+
+// ============================================================
+// CALCULATIONS
+// ============================================================
+
+router.get(
+  "/:id/total-amount",
+  controller.getTotalAmount
+);
+
+router.get(
+  "/:id/pending-amount",
+  controller.getPendingAmount
+);
+
+router.get(
+  "/:id/is-paid",
+  controller.isPaid
+);
+
 export default router;
