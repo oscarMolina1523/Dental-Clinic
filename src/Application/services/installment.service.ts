@@ -35,17 +35,30 @@ export class InstallmentService implements IInstallmentService {
   }
 
   async update(id: string, data: InstallmentDto): Promise<Installment | null> {
-    const existing = await this._installmentRepository.findById(id);
+    // const existing = await this._installmentRepository.findById(id);
+    // if (!existing) {
+    //   return null;
+    // }
+
+    // const newData: Installment = new Installment({
+    //   ...data,
+    //   id,
+    // })
+    // await this._installmentRepository.update(newData);
+    // return newData;
+
+    //por ahora no permitiremos modificaciones aca ya que hay otros servicios
+    //dedicados
+    const existing =
+      await this._installmentRepository.findById(id);
+
     if (!existing) {
       return null;
     }
 
-    const newData: Installment = new Installment({
-      ...data,
-      id,
-    })
-    await this._installmentRepository.update(newData);
-    return newData;
+    throw new Error(
+      "Las cuotas no pueden modificarse directamente. Utilice las operaciones de negocio correspondientes."
+    );
   }
 
   async delete(id: string): Promise<void> {
