@@ -7,7 +7,7 @@ export default class PaymentPlan extends BaseModel {
   private numberOfInstallments: number;
   private frequencyDays: number; //cada cuantos dias vence una cuota
   private interestRate: number; //solo guarda el interes pactado
-  private lateFreePercentage: number;
+  private lateFreePercentage: number; //hace referncia a la tolerancia de un pago minimo, es decir si la cuota vale 100 y nos dan 50 segun el negocio puede tolerarlo y asi
   private gracePeriodDays: number;
   private status: PaymentPlanStatus;
 
