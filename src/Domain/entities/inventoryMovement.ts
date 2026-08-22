@@ -1,9 +1,10 @@
+import { InventoryMovementStatus } from "../types/inventoryMovementsStatus.enum";
 import BaseModel from "./base.model";
 
 export default class InventoryMovement extends BaseModel {
   productId: string;
-  type: string;
-  quantity: number;
+  type: InventoryMovementStatus;
+  private quantity: number;
   userId: string;
   observation: string;
 
@@ -17,16 +18,65 @@ export default class InventoryMovement extends BaseModel {
   }: {
     id: string;
     productId: string;
-    type: string;
+    type: InventoryMovementStatus;
     quantity: number;
     userId: string;
     observation: string;
   }) {
     super(id);
+
+     if (!productId) {
+      throw new Error(
+        "El producto es obligatorio"
+      );
+    }
+
+    if (!type) {
+      throw new Error(
+        "El tipo de movimiento es obligatorio"
+      );
+    }
+
+    if (!Number.isFinite(quantity)) {
+      throw new Error(
+        "La cantidad debe ser un número válido"
+      );
+    }
+
+    if (quantity <= 0) {
+      throw new Error(
+        "La cantidad debe ser mayor que cero"
+      );
+    }
+
+    if (!userId) {
+      throw new Error(
+        "El usuario es obligatorio"
+      );
+    }
+
+    if (
+      observation !== undefined &&
+      observation !== null &&
+      typeof observation !== "string"
+    ) {
+      throw new Error(
+        "La observación debe ser un texto válido"
+      );
+    }
+
     this.productId = productId;
     this.type = type;
     this.quantity = quantity;
     this.userId = userId;
-    this.observation = observation;
+    this.observation = observation?.trim() ?? "";
+  }
+
+  // ============================================================
+  // INFORMATION
+  // ============================================================
+
+  get currentQuantity(): number {
+    return this.quantity;
   }
 }
