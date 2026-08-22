@@ -54,6 +54,8 @@ import { RoleSchemas } from "./schemas/role.schema";
 import { RolePaths } from "./paths/role.path";
 import { InvoicePaymentPaths } from "./paths/invoicePayment.path";
 import { InvoicePaymentSchemas } from "./schemas/invoicePayment.schema";
+import { PaymentPlanOrchestratorPaths } from "./paths/paymentPlanOrchestrator";
+import { PaymentPlanOrchestratorSchemas } from "./schemas/paymentPlanOrchestrator.shema";
 export const OpenApiSpecification = {
   openapi: "3.0.0",
   info: {
@@ -72,6 +74,7 @@ export const OpenApiSpecification = {
     ...PaymentNotificationPaths,
     ...InstallmentPaths,
     ...PaymentPlanPaths,
+    ...PaymentPlanOrchestratorPaths,
     ...InventoryMovementPaths,
     ...InventoryPaths,
     ...InventoryLotePaths,
@@ -109,6 +112,7 @@ export const OpenApiSpecification = {
       ...PaymentNotificationSchemas,
       ...InstallmentSchemas,
       ...PaymentPlanSchemas,
+      ...PaymentPlanOrchestratorSchemas,
       ...InventoryMovementSchemas,
       ...InventorySchemas,
       ...InventoryLoteSchemas,

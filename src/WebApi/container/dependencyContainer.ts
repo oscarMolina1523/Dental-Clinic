@@ -143,7 +143,9 @@ import { IEntitiesService } from "../../Infrastructure/interface/entitiesService
 import { IPasswordService } from "../../Domain/repositories/passwordService.interface";
 import { PasswordService } from "../../Infrastructure/services/password.service";
 import { IInvoicePaymentService } from "../../Application/interfaces/invoicePayment.service.interface";
-import { InvoicePaymentService } from "../../Application/services/invoicePayment.service";
+import { InvoicePaymentService } from "../../Application/workflows/invoicePayment.service";
+import { IPaymentPlanOrchestratorService } from "../../Application/interfaces/paymentPlanOrchestrator.interface";
+import { PaymentPlanOrchestratorService } from "../../Application/workflows/paymentPlanOrchestrator.service";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
@@ -154,6 +156,7 @@ container.register<IPasswordService>('IPasswordService', {useClass: PasswordServ
 
 //servicio de orquestacion de facturacion
 container.register<IInvoicePaymentService>('IInvoicePaymentService', {useClass: InvoicePaymentService});
+container.register<IPaymentPlanOrchestratorService>('IPaymentPlanOrchestratorService', {useClass: PaymentPlanOrchestratorService});
 
 
 // AUTO-GENERATED MODULE REGISTRATIONS
