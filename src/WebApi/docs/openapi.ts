@@ -56,6 +56,8 @@ import { InvoicePaymentPaths } from "./paths/invoicePayment.path";
 import { InvoicePaymentSchemas } from "./schemas/invoicePayment.schema";
 import { PaymentPlanOrchestratorPaths } from "./paths/paymentPlanOrchestrator";
 import { PaymentPlanOrchestratorSchemas } from "./schemas/paymentPlanOrchestrator.shema";
+import { InventoryOrchestratorSchemas } from "./schemas/inventoryOrchestrator.schema";
+import { InventoryOrchestratorPaths } from "./paths/inventoryOrchestrator.path";
 export const OpenApiSpecification = {
   openapi: "3.0.0",
   info: {
@@ -78,6 +80,7 @@ export const OpenApiSpecification = {
     ...InventoryMovementPaths,
     ...InventoryPaths,
     ...InventoryLotePaths,
+    ...InventoryOrchestratorPaths,
     ...MeasurementUnitPaths,
     ...CategoryPaths,
     ...ProductPaths,
@@ -116,6 +119,7 @@ export const OpenApiSpecification = {
       ...InventoryMovementSchemas,
       ...InventorySchemas,
       ...InventoryLoteSchemas,
+      ...InventoryOrchestratorSchemas,
       ...MeasurementUnitSchemas,
       ...CategorySchemas,
       ...ProductSchemas,

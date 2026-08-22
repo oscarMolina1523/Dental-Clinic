@@ -37,6 +37,7 @@ import roleRoutes from "./WebApi/routes/role.routes";
 import { OpenApiSpecification } from "./WebApi/docs/openapi";
 import invoicePaymentRoutes from "./WebApi/routes/invoicePayment.routes";
 import paymentPlanOrchestratorRoutes from "./WebApi/routes/paymentPlanOrchestrator.routes";
+import inventoryOrchestratorRoutes from "./WebApi/routes/inventoryOrchestrator.routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +68,7 @@ app.use("/paymentPlanOrchestrator", paymentPlanOrchestratorRoutes);
 app.use("/inventoryMovement", inventoryMovementRoutes);
 app.use("/inventory", inventoryRoutes);
 app.use("/inventoryLote", inventoryLoteRoutes);
+app.use("/inventoryOrchestrator", inventoryOrchestratorRoutes);
 app.use("/measurementUnit", measurementUnitRoutes);
 app.use("/category", categoryRoutes);
 app.use("/product", productRoutes);
