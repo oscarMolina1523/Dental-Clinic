@@ -25,6 +25,14 @@ export class InventoryLoteService implements IInventoryLoteService {
     const newData: InventoryLote = new InventoryLote ({
       ...data,
       id: generateId(), 
+      // JSON -> Date
+      entryDate: new Date(data.entryDate),
+
+      // JSON -> Date | null
+      dueDate:
+        data.dueDate
+          ? new Date(data.dueDate)
+          : null
     })
 
     await this._inventoryLoteRepository.create(newData);

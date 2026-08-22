@@ -5,7 +5,7 @@ export default class InventoryLote extends BaseModel {
   supplierId: string;
   loteNumber: string;
   private quantity: number;
-  dueDate: Date;
+  dueDate: Date | null;
   entryDate: Date;
 
   constructor({
@@ -22,8 +22,8 @@ export default class InventoryLote extends BaseModel {
     supplierId: string;
     loteNumber: string;
     quantity: number;
-    dueDate: Date;
-    entryDate: Date;
+    dueDate: Date | string | null;
+    entryDate: Date | string;
   }) {
     super(id);
 
@@ -51,9 +51,25 @@ export default class InventoryLote extends BaseModel {
       );
     }
 
-    if (!dueDate) {
+    const normalizedEntryDate =
+      entryDate instanceof Date
+        ? entryDate
+        : new Date(entryDate);
+
+    const normalizedDueDate =
+      dueDate === null
+        ? null
+        : dueDate instanceof Date
+          ? dueDate
+          : new Date(dueDate);
+
+     if (
+      isNaN(
+        normalizedEntryDate.getTime()
+      )
+    ) {
       throw new Error(
-        "La fecha de vencimiento es obligatoria"
+        "La fecha de entrada no es válida"
       );
     }
 
@@ -63,19 +79,23 @@ export default class InventoryLote extends BaseModel {
       );
     }
 
-    if (isNaN(dueDate.getTime())) {
+    // Solo validamos dueDate si existe
+    if (
+      normalizedDueDate !== null &&
+      isNaN(
+        normalizedDueDate.getTime()
+      )
+    ) {
       throw new Error(
         "La fecha de vencimiento no es válida"
       );
     }
 
-    if (isNaN(entryDate.getTime())) {
-      throw new Error(
-        "La fecha de entrada no es válida"
-      );
-    }
-
-    if (dueDate < entryDate) {
+    // Solo comparamos fechas si existe vencimiento
+    if (
+      dueDate !== null &&
+      dueDate < entryDate
+    ) {
       throw new Error(
         "La fecha de vencimiento no puede ser anterior a la fecha de entrada"
       );
@@ -85,8 +105,8 @@ export default class InventoryLote extends BaseModel {
     this.supplierId = supplierId;
     this.loteNumber = loteNumber;
     this.quantity = quantity;
-    this.dueDate = dueDate;
-    this.entryDate = entryDate;
+    this.dueDate = normalizedDueDate;
+    this.entryDate = normalizedEntryDate;
   }
 
   get currentQuantity(): number {
@@ -165,6 +185,10 @@ export default class InventoryLote extends BaseModel {
    */
   get isExpired(): boolean {
 
+    if (this.dueDate === null) {
+      return false;
+    }
+
     return new Date() > this.dueDate;
   }
 
@@ -197,7 +221,11 @@ export default class InventoryLote extends BaseModel {
    *
    * Si ya expiró devuelve 0.
    */
-  get daysUntilExpiration(): number {
+  get daysUntilExpiration(): number | null {
+
+    if (this.dueDate === null) {
+      return null;
+    }
 
     const now = new Date();
 
