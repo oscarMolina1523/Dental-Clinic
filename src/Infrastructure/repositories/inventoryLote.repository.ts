@@ -39,15 +39,15 @@ export class InventoryLoteRepository implements IInventoryLoteRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new InventoryLote({
-        id: row["ID"],
-        productId: row["PRODUCTID"],
-        supplierId: row["SUPPLIERID"],
-        loteNumber: row["LOTENUMBER"],
-        quantity: row["QUANTITY"],
-        dueDate: row["DUEDATE"],
-        entryDate: row["ENTRYDATE"],
-      })
+        new InventoryLote({
+          id: row["ID"],
+          productId: row["PRODUCTID"],
+          supplierId: row["SUPPLIERID"],
+          loteNumber: row["LOTENUMBER"],
+          quantity: row["QUANTITY"],
+          dueDate: row["DUEDATE"],
+          entryDate: row["ENTRYDATE"],
+        })
     );
   }
 
@@ -61,7 +61,7 @@ export class InventoryLoteRepository implements IInventoryLoteRepository {
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;
 
-    return new InventoryLote ({
+    return new InventoryLote({
       id: row["ID"],
       productId: row["PRODUCTID"],
       supplierId: row["SUPPLIERID"],

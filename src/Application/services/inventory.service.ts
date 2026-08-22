@@ -21,6 +21,10 @@ export class InventoryService implements IInventoryService {
     return await this._inventoryRepository.findById(id);
   }
 
+  async findByProduct(id: string): Promise<Inventory | null> {
+    return await this._inventoryRepository.findByProduct(id);
+  }
+
   async create(data: InventoryDto): Promise<Inventory> {
     const newData: Inventory = new Inventory({
       ...data,

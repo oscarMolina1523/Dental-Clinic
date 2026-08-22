@@ -56,7 +56,7 @@ export class InventoryOrchestratorService
   }> {
 
     const inventory =
-      await this._inventoryService.findById(
+      await this._inventoryService.findByProduct(
         data.productId
       );
 
@@ -156,7 +156,7 @@ export class InventoryOrchestratorService
 
 
     const inventory =
-      await this._inventoryService.findById(
+      await this._inventoryService.findByProduct(
         lote.productId
       );
 
@@ -258,7 +258,7 @@ export class InventoryOrchestratorService
 
 
     const inventory =
-      await this._inventoryService.findById(
+      await this._inventoryService.findByProduct(
         lote.productId
       );
 
@@ -377,7 +377,7 @@ export class InventoryOrchestratorService
 
 
     const inventory =
-      await this._inventoryService.findById(
+      await this._inventoryService.findByProduct(
         lote.productId
       );
 
