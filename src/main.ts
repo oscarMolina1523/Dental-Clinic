@@ -38,6 +38,7 @@ import { OpenApiSpecification } from "./WebApi/docs/openapi";
 import invoicePaymentRoutes from "./WebApi/routes/invoicePayment.routes";
 import paymentPlanOrchestratorRoutes from "./WebApi/routes/paymentPlanOrchestrator.routes";
 import inventoryOrchestratorRoutes from "./WebApi/routes/inventoryOrchestrator.routes";
+import dentalChartOrchestratorRoutes from "./WebApi/routes/dentalChartOrchestrator.routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -85,6 +86,7 @@ app.use("/treatmentPlan", treatmentPlanRoutes);
 app.use("/treatmentCatalog", treatmentCatalogRoutes);
 app.use("/dentalChartDetail", dentalChartDetailRoutes);
 app.use("/dentalChart", dentalChartRoutes);
+app.use("/dentalChartOrchestrator", dentalChartOrchestratorRoutes);
 app.use("/patientDisease", patientDiseaseRoutes);
 app.use("/disease", diseaseRoutes);
 app.use("/patient", patientRoutes);
