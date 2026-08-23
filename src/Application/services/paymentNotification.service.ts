@@ -4,6 +4,7 @@ import { IPaymentNotificationRepository } from "../../Domain/repositories/paymen
 import { PaymentNotificationDto } from "../dtos/paymentNotification.dto";
 import PaymentNotification from "../../Domain/entities/paymentNotification";
 import { generateId } from "../../shared/utils/generateId";
+import { PaymentNotificationStatus } from "../../Domain/types/paymentNotificationStatus.enum";
 
 @injectable()
 export class PaymentNotificationService implements IPaymentNotificationService {
@@ -22,10 +23,11 @@ export class PaymentNotificationService implements IPaymentNotificationService {
   }
   
   async create(data: PaymentNotificationDto): Promise<PaymentNotification> {
-    const newData: PaymentNotification = {
+    const newData: PaymentNotification = new PaymentNotification({
       ...data,
       id: generateId(), 
-    }
+      status:PaymentNotificationStatus.PENDING
+    })
     await this._paymentNotificationRepository.create(newData);
     return newData;
   }
@@ -36,12 +38,17 @@ export class PaymentNotificationService implements IPaymentNotificationService {
       return null;
     }
 
-    const newData: PaymentNotification = {
-      ...data,
-      id,
-    }
-    await this._paymentNotificationRepository.update(newData);
-    return newData;
+    existing.update({
+      scheduledDate: data.scheduledDate,
+      sendAt: data.sendAt,
+      notificationType:
+        data.notificationType,
+      channel:
+        data.channel
+    });
+
+    await this._paymentNotificationRepository.update(existing);
+    return existing;
   }
 
   async delete(id: string) : Promise<void> {
@@ -51,4 +58,162 @@ export class PaymentNotificationService implements IPaymentNotificationService {
     }
     return await this._paymentNotificationRepository.delete(existing);
   }
+
+  async updateStatus(
+    id: string,
+    status: PaymentNotificationStatus
+  ): Promise<PaymentNotification | null> {
+
+    const existing =
+      await this._paymentNotificationRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.updateStatus(status);
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._paymentNotificationRepository.update(
+      existing
+    );
+
+    return existing;
+  }
+
+  // ============================================================
+  // RESCHEDULE
+  // ============================================================
+
+  async reschedule(
+    id: string,
+    sendAt: Date | string
+  ): Promise<PaymentNotification | null> {
+
+    const existing =
+      await this._paymentNotificationRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.reschedule(sendAt);
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._paymentNotificationRepository.update(
+      existing
+    );
+
+    return existing;
+  }
+
+  // ============================================================
+  // MARK AS SENT
+  // ============================================================
+
+  async markAsSent(
+    id: string
+  ): Promise<PaymentNotification | null> {
+
+    const existing =
+      await this._paymentNotificationRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.markAsSent();
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._paymentNotificationRepository.update(
+      existing
+    );
+
+    return existing;
+  }
+
+  // ============================================================
+  // MARK AS FAILED
+  // ============================================================
+
+  async markAsFailed(
+    id: string
+  ): Promise<PaymentNotification | null> {
+
+    const existing =
+      await this._paymentNotificationRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.markAsFailed();
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._paymentNotificationRepository.update(
+      existing
+    );
+
+    return existing;
+  }
+
+  // ============================================================
+  // CANCEL
+  // ============================================================
+
+  async cancel(
+    id: string
+  ): Promise<PaymentNotification | null> {
+
+    const existing =
+      await this._paymentNotificationRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.cancel();
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._paymentNotificationRepository.update(
+      existing
+    );
+
+    return existing;
+  }
+
 }
