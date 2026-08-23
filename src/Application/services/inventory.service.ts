@@ -26,6 +26,17 @@ export class InventoryService implements IInventoryService {
   }
 
   async create(data: InventoryDto): Promise<Inventory> {
+    const existing =
+      await this._inventoryRepository.findByProduct(
+        data.productId
+      );
+
+    if (existing) {
+      throw new Error(
+        "El producto ya tiene un inventario registrado"
+      );
+    }
+
     const newData: Inventory = new Inventory({
       ...data,
       id: generateId(),
