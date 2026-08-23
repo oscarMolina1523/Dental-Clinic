@@ -39,6 +39,7 @@ import invoicePaymentRoutes from "./WebApi/routes/invoicePayment.routes";
 import paymentPlanOrchestratorRoutes from "./WebApi/routes/paymentPlanOrchestrator.routes";
 import inventoryOrchestratorRoutes from "./WebApi/routes/inventoryOrchestrator.routes";
 import dentalChartOrchestratorRoutes from "./WebApi/routes/dentalChartOrchestrator.routes";
+import treatmentPlanOrchestratorRoutes from "./WebApi/routes/treatmentPlanOrchestrator.routes";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -83,6 +84,7 @@ app.use("/medicalPrescription", medicalPrescriptionRoutes);
 app.use("/clinicalProgres", clinicalProgresRoutes);
 app.use("/treatmentPlanDetail", treatmentPlanDetailRoutes);
 app.use("/treatmentPlan", treatmentPlanRoutes);
+app.use("/treatmentPlanOrchestrator", treatmentPlanOrchestratorRoutes);
 app.use("/treatmentCatalog", treatmentCatalogRoutes);
 app.use("/dentalChartDetail", dentalChartDetailRoutes);
 app.use("/dentalChart", dentalChartRoutes);
