@@ -6,5 +6,11 @@ export interface IDentalChartService {
   findById(id: string): Promise<DentalChart | null>;
   create(data: DentalChartDto): Promise<DentalChart>;
   update(id: string, data: DentalChartDto): Promise<DentalChart | null>;
+
+  updateObservations(
+    id: string,
+    observations: string
+  ): Promise<DentalChart | null>;
+  
   delete(id: string): Promise<void>;
 }

@@ -22,10 +22,10 @@ export class DentalChartService implements IDentalChartService {
   }
   
   async create(data: DentalChartDto): Promise<DentalChart> {
-    const newData: DentalChart = {
+    const newData: DentalChart = new DentalChart({
       ...data,
       id: generateId(), 
-    }
+    })
     await this._dentalChartRepository.create(newData);
     return newData;
   }
@@ -36,12 +36,48 @@ export class DentalChartService implements IDentalChartService {
       return null;
     }
 
-    const newData: DentalChart = {
-      ...data,
-      id,
+    existing.update({
+      evaluationDate: data.evaluationDate,
+      observations: data.observations,
+    });
+
+    await this._dentalChartRepository.update(existing);
+    return existing;
+  }
+
+  // ============================================================
+  // UPDATE OBSERVATIONS
+  // ============================================================
+
+  async updateObservations(
+    id: string,
+    observations: string
+  ): Promise<DentalChart | null> {
+
+    const existing =
+      await this._dentalChartRepository.findById(id);
+
+    if (!existing) {
+      return null;
     }
-    await this._dentalChartRepository.update(newData);
-    return newData;
+
+    // ============================================================
+    // DOMAIN
+    // ============================================================
+
+    existing.updateObservations(
+      observations
+    );
+
+    // ============================================================
+    // PERSISTENCE
+    // ============================================================
+
+    await this._dentalChartRepository.update(
+      existing
+    );
+
+    return existing;
   }
 
   async delete(id: string) : Promise<void> {
