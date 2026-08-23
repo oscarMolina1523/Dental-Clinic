@@ -150,12 +150,24 @@ import { IInventoryOrchestratorService } from "../../Application/interfaces/inve
 import { InventoryOrchestratorService } from "../../Application/workflows/inventoryOrchestrator.service";
 import { IDentalChartOrchestratorService } from "../../Application/interfaces/dentalChartOrchestrator.interface";
 import { DentalChartOrchestratorService } from "../../Application/workflows/dentalChartOrchestrator";
-import { ITreatmentPlanOrchestratorService } from "../../Application/interfaces/treatmentPLanOrchestrator.interface";
 import { TreatmentPlanOrchestratorService } from "../../Application/workflows/treatmentPlanOrchestrator.service";
+import { ITreatmentPlanOrchestratorService } from "../../Application/interfaces/treatmentPLanOrchestrator.interface";
+import TokenRepository from "../../Infrastructure/repositories/token.repository";
+import { ITokenRepository } from "../../Domain/repositories/tokenRepository.interface";
+import { IAuthService } from "../../Application/interfaces/auth.service";
+import AuthService from "../../Application/services/auth.service";
+import AuthController from "../controllers/auth.controller";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
 container.registerSingleton<IEntitiesService>('IEntityService', EntitiesService);
+
+//token service
+container.register<ITokenRepository>('ITokenRepository', {useClass: TokenRepository});
+
+//auth dependencies
+container.register<IAuthService>('IAuthService', { useClass: AuthService });
+container.register<AuthController>('AuthController', { useClass: AuthController });
 
 //Servicios de cifrado de contraseña
 container.register<IPasswordService>('IPasswordService', {useClass: PasswordService});

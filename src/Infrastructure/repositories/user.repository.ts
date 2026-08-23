@@ -39,19 +39,19 @@ export class UserRepository implements IUserRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new User ({
-        id: row["ID"],
-        roleId: row["ROLEID"],
-        fullName: row["FULLNAME"],
-        image: row["IMAGE"],
-        email: row["EMAIL"],
-        password: row["PASSWORD"],
-        phoneNumber: row["PHONENUMBER"],
-        membershipNumber: row["MEMBERSHIPNUMBER"],
-        active: row["ACTIVE"],
-        createdAt: row["CREATEDAT"],
-        updatedAt: row["UPDATEDAT"],
-      })
+        new User({
+          id: row["ID"],
+          roleId: row["ROLEID"],
+          fullName: row["FULLNAME"],
+          image: row["IMAGE"],
+          email: row["EMAIL"],
+          password: row["PASSWORD"],
+          phoneNumber: row["PHONENUMBER"],
+          membershipNumber: row["MEMBERSHIPNUMBER"],
+          active: row["ACTIVE"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+        })
     );
   }
 
@@ -61,6 +61,32 @@ export class UserRepository implements IUserRepository {
       .WithOperation(SqlReadOperation.SelectById)
       .WithId(id)
       .BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new User({
+      id: row["ID"],
+      roleId: row["ROLEID"],
+      fullName: row["FULLNAME"],
+      image: row["IMAGE"],
+      email: row["EMAIL"],
+      password: row["PASSWORD"],
+      phoneNumber: row["PHONENUMBER"],
+      membershipNumber: row["MEMBERSHIPNUMBER"],
+      active: row["ACTIVE"],
+      createdAt: row["CREATEDAT"],
+      updatedAt: row["UPDATEDAT"],
+    });
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.User)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("email", email).BuildReader();
 
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;
