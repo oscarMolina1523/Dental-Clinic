@@ -148,6 +148,8 @@ import { IPaymentPlanOrchestratorService } from "../../Application/interfaces/pa
 import { PaymentPlanOrchestratorService } from "../../Application/workflows/paymentPlanOrchestrator.service";
 import { IInventoryOrchestratorService } from "../../Application/interfaces/inventoryOrchestrator.interface";
 import { InventoryOrchestratorService } from "../../Application/workflows/inventoryOrchestrator.service";
+import { IDentalChartOrchestratorService } from "../../Application/interfaces/dentalChartOrchestrator.interface";
+import { DentalChartOrchestratorService } from "../../Application/workflows/dentalChartOrchestrator";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
@@ -160,6 +162,7 @@ container.register<IPasswordService>('IPasswordService', {useClass: PasswordServ
 container.register<IInvoicePaymentService>('IInvoicePaymentService', {useClass: InvoicePaymentService});
 container.register<IPaymentPlanOrchestratorService>('IPaymentPlanOrchestratorService', {useClass: PaymentPlanOrchestratorService});
 container.register<IInventoryOrchestratorService>('IInventoryOrchestratorService', {useClass: InventoryOrchestratorService});
+container.register<IDentalChartOrchestratorService>('IDentalChartOrchestratorService', {useClass: DentalChartOrchestratorService});
 
 
 // AUTO-GENERATED MODULE REGISTRATIONS

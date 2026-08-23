@@ -134,5 +134,52 @@ export const DentalChartPaths = {
         }
       }
     }
-  }
+  },
+
+  "/dentalChart/{id}/observations": {
+    patch: {
+      summary: "Update DentalChart observations",
+      tags: ["DentalChart"],
+
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          }
+        }
+      ],
+
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              $ref:
+                "#/components/schemas/DentalChartObservationsRequest"
+            }
+          }
+        }
+      },
+
+      responses: {
+        200: {
+          description: "DentalChart observations updated",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/DentalChart"
+              }
+            }
+          }
+        },
+
+        404: {
+          description: "DentalChart not found"
+        }
+      }
+    }
+  },
 };
