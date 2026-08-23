@@ -35,9 +35,9 @@ export class TreatmentPlanService implements ITreatmentPlanService {
       ...data,
       createdAt: now,
       code: treatmentCode,
-      totalAmount: 0,
-      discount: 0,
-      status: TreatmentPlanStatus.DRAFT,
+      // totalAmount: 0,
+      // discount: 0,
+      // status: TreatmentPlanStatus.DRAFT,
       id: generateId(),
     })
     await this._treatmentPlanRepository.create(newData);
