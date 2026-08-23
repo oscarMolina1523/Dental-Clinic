@@ -5,6 +5,10 @@ import { UserDto } from "../dtos/user.dto";
 import User from "../../Domain/entities/user";
 import { generateId } from "../../shared/utils/generateId";
 import { IPasswordService } from "../../Domain/repositories/passwordService.interface";
+import { UserRequest } from "../dtos/request/user.request";
+import { ServiceResult } from "../utils/serviceResult.type";
+import { UserResponse } from "../dtos/response/user.response";
+import { UserMapper } from "../mappers/user.mapper";
 
 @injectable()
 export class UserService implements IUserService {
@@ -24,6 +28,19 @@ export class UserService implements IUserService {
     return await this._userRepository.findById(id);
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    return await this._userRepository.findByEmail(email);
+  }
+
+  async registerUser(user: UserRequest): Promise<ServiceResult<UserResponse>> {
+    const newUser = UserMapper.toEntity(user, "system");
+    await this._userRepository.create(newUser);
+    const response =
+      UserMapper.toPublic(newUser);
+
+    return { success: true, message: "User registered", data: response };
+  }
+
   async create(data: UserDto): Promise<User> {
     const passwordHash = await this._passwordService.hash(
       data.password
@@ -34,7 +51,7 @@ export class UserService implements IUserService {
     const newData: User = new User({
       ...data,
       password: passwordHash,
-      createdAt:now,
+      createdAt: now,
       id: generateId(),
     })
 

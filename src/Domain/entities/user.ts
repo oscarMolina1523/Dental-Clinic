@@ -50,6 +50,10 @@ export default class User extends BaseModel {
     this.updatedAt = updatedAt;
   }
 
+  getActive(): boolean {
+    return this.active;
+  }
+
   //activar un usuario
   activate(): void {
     this.active = true;
