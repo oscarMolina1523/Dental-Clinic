@@ -39,12 +39,12 @@ export class InventoryRepository implements IInventoryRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new Inventory ({
-        id: row["ID"],
-        productId: row["PRODUCTID"],
-        currentStock: row["CURRENTSTOCK"],
-        minimumStock: row["MINIMUMSTOCK"],
-      })
+        new Inventory({
+          id: row["ID"],
+          productId: row["PRODUCTID"],
+          currentStock: row["CURRENTSTOCK"],
+          minimumStock: row["MINIMUMSTOCK"],
+        })
     );
   }
 
@@ -54,6 +54,25 @@ export class InventoryRepository implements IInventoryRepository {
       .WithOperation(SqlReadOperation.SelectById)
       .WithId(id)
       .BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new Inventory({
+      id: row["ID"],
+      productId: row["PRODUCTID"],
+      currentStock: row["CURRENTSTOCK"],
+      minimumStock: row["MINIMUMSTOCK"],
+    });
+  }
+
+  async findByProduct(id: string): Promise<Inventory | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.Inventory)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("productId", id).BuildReader();
 
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;

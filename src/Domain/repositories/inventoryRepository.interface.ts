@@ -6,4 +6,6 @@ export interface IInventoryRepository {
   create(data: Inventory): Promise<void>;
   update(data: Inventory): Promise<void>;
   delete(data: Inventory): Promise<void>;
+
+  findByProduct(id: string): Promise<Inventory | null>
 }

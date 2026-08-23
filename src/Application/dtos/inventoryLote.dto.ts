@@ -3,6 +3,6 @@ export interface InventoryLoteDto {
   supplierId: string;
   loteNumber: string;
   quantity: number;
-  dueDate: Date;
+  dueDate: Date | null;
   entryDate: Date;
 }

@@ -22,26 +22,49 @@ export class InventoryLoteService implements IInventoryLoteService {
   }
   
   async create(data: InventoryLoteDto): Promise<InventoryLote> {
-    const newData: InventoryLote = {
+    const newData: InventoryLote = new InventoryLote ({
       ...data,
       id: generateId(), 
-    }
+      // JSON -> Date
+      entryDate: new Date(data.entryDate),
+
+      // JSON -> Date | null
+      dueDate:
+        data.dueDate
+          ? new Date(data.dueDate)
+          : null
+    })
+
     await this._inventoryLoteRepository.create(newData);
     return newData;
   }
 
   async update(id: string, data: InventoryLoteDto): Promise<InventoryLote | null> {
-    const existing = await this._inventoryLoteRepository.findById(id);
+    // const existing = await this._inventoryLoteRepository.findById(id);
+    // if (!existing) {
+    //   return null;
+    // }
+
+    // const newData: InventoryLote = new InventoryLote({
+    //   ...data,
+    //   id,
+    // })
+
+    // await this._inventoryLoteRepository.update(newData);
+    // return newData;
+
+    //por ahora no permitiremos modificaciones aca ya que hay otros servicios
+    //dedicados
+    const existing =
+      await this._inventoryLoteRepository.findById(id);
+
     if (!existing) {
       return null;
     }
 
-    const newData: InventoryLote = {
-      ...data,
-      id,
-    }
-    await this._inventoryLoteRepository.update(newData);
-    return newData;
+    throw new Error(
+      "Los lotes de inventario no pueden modificarse directamente. Utilice las operaciones de negocio correspondientes."
+    );
   }
 
   async delete(id: string) : Promise<void> {
@@ -50,5 +73,153 @@ export class InventoryLoteService implements IInventoryLoteService {
       return ;
     }
     return await this._inventoryLoteRepository.delete(existing);
+  }
+
+  // ============================================================
+  // STOCK
+  // ============================================================
+
+  async increaseStock(
+    id: string,
+    quantity: number
+  ): Promise<InventoryLote | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    lote.increase(quantity);
+
+    await this._inventoryLoteRepository
+      .update(lote);
+
+    return lote;
+  }
+
+
+  async decreaseStock(
+    id: string,
+    quantity: number
+  ): Promise<InventoryLote | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    lote.decrease(quantity);
+
+    await this._inventoryLoteRepository
+      .update(lote);
+
+    return lote;
+  }
+
+
+  // ============================================================
+  // INFORMATION
+  // ============================================================
+
+  async getQuantity(
+    id: string
+  ): Promise<number | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.currentQuantity;
+  }
+
+
+  //para saber si el lote ya expiro
+  async isExpired(
+    id: string
+  ): Promise<boolean | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.isExpired;
+  }
+
+
+  async isValid(
+    id: string
+  ): Promise<boolean | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.isValid;
+  }
+
+
+  async isEmpty(
+    id: string
+  ): Promise<boolean | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.isEmpty;
+  }
+
+
+  async hasStock(
+    id: string
+  ): Promise<boolean | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.hasStock;
+  }
+
+
+  async getDaysUntilExpiration(
+    id: string
+  ): Promise<number | null> {
+
+    const lote =
+      await this._inventoryLoteRepository
+        .findById(id);
+
+    if (!lote) {
+      return null;
+    }
+
+    return lote.daysUntilExpiration;
   }
 }
