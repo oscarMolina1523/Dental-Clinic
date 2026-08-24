@@ -44,7 +44,7 @@ import authRoutes from "./WebApi/routes/auth.routes";
 import { validateToken } from "./WebApi/middlewares/auth.middleware";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -98,12 +98,18 @@ app.use("/patient", validateToken, patientRoutes);
 app.use("/user", validateToken, userRoutes);
 app.use("/role", validateToken, roleRoutes);
 
-async function startServer() {
-  // await initializeDatabase();
+app.get("/", (req, res) => {
+  res.send("Dental clinic System API working!");
+});
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+// async function startServer() {
+//   // await initializeDatabase();
 
-startServer();
+//   app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+//   });
+// }
+
+// startServer();
+
+export default app;

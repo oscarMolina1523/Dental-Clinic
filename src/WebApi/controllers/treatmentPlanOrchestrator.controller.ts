@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 import {
   ITreatmentPlanOrchestratorService
-} from "../../Application/interfaces/treatmentPLanOrchestrator.interface";
+} from "../../Application/interfaces/treatmentPlanOrchestrator.interface";
 
 
 @injectable()
