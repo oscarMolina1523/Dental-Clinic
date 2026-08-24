@@ -151,7 +151,7 @@ import { InventoryOrchestratorService } from "../../Application/workflows/invent
 import { IDentalChartOrchestratorService } from "../../Application/interfaces/dentalChartOrchestrator.interface";
 import { DentalChartOrchestratorService } from "../../Application/workflows/dentalChartOrchestrator";
 import { TreatmentPlanOrchestratorService } from "../../Application/workflows/treatmentPlanOrchestrator.service";
-import { ITreatmentPlanOrchestratorService } from "../../Application/interfaces/treatmentPLanOrchestrator.interface";
+import { ITreatmentPlanOrchestratorService } from "../../Application/interfaces/treatmentPlanOrchestrator.interface";
 import TokenRepository from "../../Infrastructure/repositories/token.repository";
 import { ITokenRepository } from "../../Domain/repositories/tokenRepository.interface";
 import { IAuthService } from "../../Application/interfaces/auth.service";

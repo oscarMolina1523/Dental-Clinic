@@ -17,7 +17,7 @@ import TreatmentPlan
 
 import TreatmentPlanDetail 
   from "../../Domain/entities/treatmentPlanDetail";
-import { ITreatmentPlanOrchestratorService } from "../interfaces/treatmentPLanOrchestrator.interface";
+import { ITreatmentPlanOrchestratorService } from "../interfaces/treatmentPlanOrchestrator.interface";
 
 
 export interface CreateTreatmentPlanResult {
