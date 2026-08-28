@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import cors from "cors";
 //AUTO-IMPORT-DOTENV
 import "dotenv/config";
 import express from "express";
@@ -45,6 +46,8 @@ import { validateToken } from "./WebApi/middlewares/auth.middleware";
 
 const app = express();
 // const PORT = process.env.PORT || 3000;
+
+app.use(cors({ origin: '*' }));//por ahora lo dejare habilitado a aceptar cualquier peticion
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
