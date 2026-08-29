@@ -48,11 +48,16 @@ export class UserService implements IUserService {
 
     const now = new Date();
 
+    const DEFAULT_IMAGE = "https://sites.utexas.edu/weiwli/wp-content/uploads/sites/5648/2026/04/To-be-updated.jpg";
+    const DEFAULT_ROLE_ID = "VIEWER";
+
     const newData: User = new User({
       ...data,
       password: passwordHash,
       createdAt: now,
       active: true,
+      image: data.image || DEFAULT_IMAGE,
+      roleId: data.roleId || DEFAULT_ROLE_ID,
       id: generateId(),
     })
 
