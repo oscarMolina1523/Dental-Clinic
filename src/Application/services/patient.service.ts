@@ -31,12 +31,15 @@ export class PatientService implements IPatientService {
       uniqueId: data.idCard                        // Ej: Cédula
     });
 
+    const DEFAULT_IMAGE = "https://sites.utexas.edu/weiwli/wp-content/uploads/sites/5648/2026/04/To-be-updated.jpg";
+
     const newData: Patient = new Patient({
       ...data,
       createdAt: now,
       patientCode,
       active: true, //activamos el paciente por default
       id: generateId(),
+      image: data.image || DEFAULT_IMAGE,
     })
     await this._patientRepository.create(newData);
     return newData;
