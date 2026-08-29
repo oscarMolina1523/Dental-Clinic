@@ -52,6 +52,7 @@ export class UserService implements IUserService {
       ...data,
       password: passwordHash,
       createdAt: now,
+      active: true,
       id: generateId(),
     })
 
