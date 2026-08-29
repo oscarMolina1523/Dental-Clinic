@@ -35,6 +35,7 @@ export class PatientService implements IPatientService {
       ...data,
       createdAt: now,
       patientCode,
+      active: true, //activamos el paciente por default
       id: generateId(),
     })
     await this._patientRepository.create(newData);
