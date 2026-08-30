@@ -3,7 +3,7 @@ import BaseModel from "./base.model";
 export default class Product extends BaseModel {
   barcode?: string;
   name: string;
-  description: string;
+  description?: string;
   category_id: string;
   measurement_unit_id: string;
 
@@ -18,7 +18,7 @@ export default class Product extends BaseModel {
     id: string;
     barcode?: string;
     name: string;
-    description: string;
+    description?: string;
     category_id: string;
     measurement_unit_id: string;
   }) {
