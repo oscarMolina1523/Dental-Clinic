@@ -34,6 +34,7 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
       ...data,
       code:treatmentCode,
       id: generateId(),
+      active: true
     })
     await this._treatmentCatalogRepository.create(newData);
     return newData;
@@ -44,13 +45,14 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
     if (!existing) {
       return null;
     }
+    //solo actualizamos el nombre y al descripcion
+    if (data.name !== undefined) { existing.name = data.name; } 
 
-    const newData: TreatmentCatalog = new TreatmentCatalog({
-      ...data,
-      id,
-    })
-    await this._treatmentCatalogRepository.update(newData);
-    return newData;
+    if (data.description !== undefined) { existing.description = data.description; } 
+
+    await this._treatmentCatalogRepository.update(existing);
+
+    return existing;
   }
 
   async delete(id: string): Promise<void> {
