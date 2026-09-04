@@ -585,6 +585,10 @@
           "type": "string"
         },
         {
+          "name": "productName",
+          "type": "string"
+        },
+        {
           "name": "currentStock",
           "type": "number"
         },

@@ -1,15 +1,16 @@
 import { createClient } from "@libsql/client";
 
-const dbUrl = process.env.TURSO_DB_URL || "not-found";
-const token = process.env.TURSO_DB_AUTH_TOKEN || "not-found";
 
 export async function initializeDatabase(): Promise<void> {
-  const db = createClient({ url: dbUrl, authToken: token });
-
-  try {
+    const dbUrl = process.env.TURSO_DB_URL || "not-found";
+    const token = process.env.TURSO_DB_AUTH_TOKEN || "not-found";
     
+    const db = createClient({ url: dbUrl, authToken: token });
 
-  await db.execute(`
+    try {
+
+
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS ROLES (
         ID TEXT PRIMARY KEY,
         NAME TEXT,
@@ -18,8 +19,8 @@ export async function initializeDatabase(): Promise<void> {
     );
 `);
 
-console.log("✔ Role ready");
-await db.execute(`
+        console.log("✔ Role ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS USERS (
         ID TEXT PRIMARY KEY,
         ROLEID TEXT,
@@ -35,8 +36,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ User ready");
-await db.execute(`
+        console.log("✔ User ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PATIENTS (
         ID TEXT PRIMARY KEY,
         PATIENTCODE TEXT,
@@ -58,8 +59,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Patient ready");
-await db.execute(`
+        console.log("✔ Patient ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS DISEASES (
         ID TEXT PRIMARY KEY,
         NAME TEXT,
@@ -67,8 +68,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Disease ready");
-await db.execute(`
+        console.log("✔ Disease ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PATIENTDISEASES (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -77,8 +78,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ PatientDisease ready");
-await db.execute(`
+        console.log("✔ PatientDisease ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS DENTALCHARTS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -88,8 +89,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ DentalChart ready");
-await db.execute(`
+        console.log("✔ DentalChart ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS DENTALCHARTDETAILS (
         ID TEXT PRIMARY KEY,
         DENTALCHARTID TEXT,
@@ -100,8 +101,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ DentalChartDetail ready");
-await db.execute(`
+        console.log("✔ DentalChartDetail ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS TREATMENTCATALOGS (
         ID TEXT PRIMARY KEY,
         CODE TEXT,
@@ -113,8 +114,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ TreatmentCatalog ready");
-await db.execute(`
+        console.log("✔ TreatmentCatalog ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS TREATMENTPLANS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -127,8 +128,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ TreatmentPlan ready");
-await db.execute(`
+        console.log("✔ TreatmentPlan ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS TREATMENTPLANDETAILS (
         ID TEXT PRIMARY KEY,
         PLANID TEXT,
@@ -141,8 +142,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ TreatmentPlanDetail ready");
-await db.execute(`
+        console.log("✔ TreatmentPlanDetail ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS CLINICALPROGRESS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -155,8 +156,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ ClinicalProgres ready");
-await db.execute(`
+        console.log("✔ ClinicalProgres ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS MEDICALPRESCRIPTIONS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -166,8 +167,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ MedicalPrescription ready");
-await db.execute(`
+        console.log("✔ MedicalPrescription ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS MEDICALPRESCRIPTIONDETAILS (
         ID TEXT PRIMARY KEY,
         MEDICALPRESCRIPTIONID TEXT,
@@ -178,8 +179,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ MedicalPrescriptionDetail ready");
-await db.execute(`
+        console.log("✔ MedicalPrescriptionDetail ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PATIENTATTACHMENTS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -192,8 +193,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ PatientAttachment ready");
-await db.execute(`
+        console.log("✔ PatientAttachment ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS INVOICES (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -206,8 +207,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Invoice ready");
-await db.execute(`
+        console.log("✔ Invoice ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PAYMENTS (
         ID TEXT PRIMARY KEY,
         INVOICE_ID TEXT,
@@ -220,8 +221,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Payment ready");
-await db.execute(`
+        console.log("✔ Payment ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS SUPPLIERS (
         ID TEXT PRIMARY KEY,
         NAME TEXT,
@@ -231,8 +232,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Supplier ready");
-await db.execute(`
+        console.log("✔ Supplier ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PRODUCTS (
         ID TEXT PRIMARY KEY,
         BARCODE TEXT,
@@ -243,16 +244,16 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Product ready");
-await db.execute(`
+        console.log("✔ Product ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS CATEGORIES (
         ID TEXT PRIMARY KEY,
         NAME TEXT
     );
 `);
 
-console.log("✔ Category ready");
-await db.execute(`
+        console.log("✔ Category ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS MEASUREMENTUNITS (
         ID TEXT PRIMARY KEY,
         NAME TEXT,
@@ -260,8 +261,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ MeasurementUnit ready");
-await db.execute(`
+        console.log("✔ MeasurementUnit ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS INVENTORYLOTES (
         ID TEXT PRIMARY KEY,
         PRODUCTID TEXT,
@@ -273,18 +274,19 @@ await db.execute(`
     );
 `);
 
-console.log("✔ InventoryLote ready");
-await db.execute(`
+        console.log("✔ InventoryLote ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS INVENTORIES (
         ID TEXT PRIMARY KEY,
         PRODUCTID TEXT,
+        PRODUCTNAME TEXT,
         CURRENTSTOCK INTEGER,
         MINIMUMSTOCK INTEGER
     );
 `);
 
-console.log("✔ Inventory ready");
-await db.execute(`
+        console.log("✔ Inventory ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS INVENTORYMOVEMENTS (
         ID TEXT PRIMARY KEY,
         PRODUCTID TEXT,
@@ -295,8 +297,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ InventoryMovement ready");
-await db.execute(`
+        console.log("✔ InventoryMovement ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PAYMENTPLANS (
         ID TEXT PRIMARY KEY,
         INVOICEID TEXT,
@@ -310,8 +312,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ PaymentPlan ready");
-await db.execute(`
+        console.log("✔ PaymentPlan ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS INSTALLMENTS (
         ID TEXT PRIMARY KEY,
         PAYMENTPLANID TEXT,
@@ -324,8 +326,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Installment ready");
-await db.execute(`
+        console.log("✔ Installment ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS PAYMENTNOTIFICATIONS (
         ID TEXT PRIMARY KEY,
         INSTALLMENTID TEXT,
@@ -338,8 +340,8 @@ await db.execute(`
     );
 `);
 
-console.log("✔ PaymentNotification ready");
-await db.execute(`
+        console.log("✔ PaymentNotification ready");
+        await db.execute(`
     CREATE TABLE IF NOT EXISTS APPOINTMENTS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
@@ -354,12 +356,12 @@ await db.execute(`
     );
 `);
 
-console.log("✔ Appointment ready");
+        console.log("✔ Appointment ready");
 
 
-  } catch (error) {
-    console.error("Database init error:", error);
-  } finally {
-    await db.close();
-  }
+    } catch (error) {
+        console.error("Database init error:", error);
+    } finally {
+        await db.close();
+    }
 }

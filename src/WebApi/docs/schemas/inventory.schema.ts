@@ -14,6 +14,8 @@ export const InventorySchemas = {
 
       productId: { type: "string" },
 
+      productName: { type: "string" },
+
       currentStock: { type: "number" },
 
       minimumStock: { type: "number" },
@@ -27,6 +29,8 @@ export const InventorySchemas = {
       id: { type: "string" },
 
       productId: { type: "string" },
+
+      productName: { type: "string" },
 
       currentStock: { type: "number" },
 

@@ -324,6 +324,7 @@ export class EntitiesService implements IEntitiesService {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PRODUCTID", "productId", false),
+            new SqlColumnSettings("PRODUCTNAME", "productName", false),
             new SqlColumnSettings("CURRENTSTOCK", "currentStock", false),
             new SqlColumnSettings("MINIMUMSTOCK", "minimumStock", false),
         ];
