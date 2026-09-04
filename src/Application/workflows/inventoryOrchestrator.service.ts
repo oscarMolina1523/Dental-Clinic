@@ -46,7 +46,7 @@ export class InventoryOrchestratorService
     supplierId: string;
     loteNumber: string;
     quantity: number;
-    dueDate: Date | null;
+    dueDate?: Date | null;
     entryDate: Date;
     userId: string;
     observation?: string;
@@ -79,7 +79,7 @@ export class InventoryOrchestratorService
         supplierId: data.supplierId,
         loteNumber: data.loteNumber,
         quantity: data.quantity,
-        dueDate: data.dueDate ,
+        dueDate: data.dueDate ?? null,
         entryDate: data.entryDate
       });
 

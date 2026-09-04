@@ -10,10 +10,11 @@ export interface IInventoryOrchestratorService {
 
   createLote(data: {
     productId: string;
+    productName: string;
     supplierId: string;
     loteNumber: string;
     quantity: number;
-    dueDate: Date | null;
+    dueDate?: Date | null;
     entryDate: Date;
     userId: string;
     observation?: string;
