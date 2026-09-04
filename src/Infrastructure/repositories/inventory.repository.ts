@@ -42,6 +42,7 @@ export class InventoryRepository implements IInventoryRepository {
         new Inventory({
           id: row["ID"],
           productId: row["PRODUCTID"],
+          productName: row["PRODUCTNAME"],
           currentStock: row["CURRENTSTOCK"],
           minimumStock: row["MINIMUMSTOCK"],
         })
@@ -61,6 +62,7 @@ export class InventoryRepository implements IInventoryRepository {
     return new Inventory({
       id: row["ID"],
       productId: row["PRODUCTID"],
+      productName: row["PRODUCTNAME"],
       currentStock: row["CURRENTSTOCK"],
       minimumStock: row["MINIMUMSTOCK"],
     });
@@ -80,6 +82,7 @@ export class InventoryRepository implements IInventoryRepository {
     return new Inventory({
       id: row["ID"],
       productId: row["PRODUCTID"],
+      productName: row["PRODUCTNAME"],
       currentStock: row["CURRENTSTOCK"],
       minimumStock: row["MINIMUMSTOCK"],
     });

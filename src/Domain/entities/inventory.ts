@@ -2,17 +2,20 @@ import BaseModel from "./base.model";
 
 export default class Inventory extends BaseModel {
   productId: string;
+  productName: string;
   private currentStock: number;
   minimumStock: number;
 
   constructor({
     id,
     productId,
+    productName,
     currentStock,
     minimumStock,
   }: {
     id: string;
     productId: string;
+    productName: string;
     currentStock: number;
     minimumStock: number;
   }) {
@@ -20,6 +23,7 @@ export default class Inventory extends BaseModel {
     this.productId = productId;
     this.currentStock = currentStock;
     this.minimumStock = minimumStock;
+    this.productName = productName;
   }
 
   //obtener cantidad de stock actual
