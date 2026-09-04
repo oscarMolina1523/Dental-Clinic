@@ -59,15 +59,26 @@ export class InventoryOrchestratorController {
       observation
     } = req.body;
 
-    const result =
-      await this._inventoryOrchestratorService.increaseLoteStock(
-        loteId,
-        quantity,
-        userId,
-        observation
-      );
+    try {
+      const result =
+        await this._inventoryOrchestratorService.increaseLoteStock(
+          loteId,
+          quantity,
+          userId,
+          observation
+        );
 
-    res.json(result);
+      return res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el lote"
+      });
+    }
+
   };
 
 
@@ -88,15 +99,26 @@ export class InventoryOrchestratorController {
       observation
     } = req.body;
 
-    const result =
-      await this._inventoryOrchestratorService.decreaseLoteStock(
-        loteId,
-        quantity,
-        userId,
-        observation
-      );
+    try {
+      const result =
+        await this._inventoryOrchestratorService.decreaseLoteStock(
+          loteId,
+          quantity,
+          userId,
+          observation
+        );
 
-    res.json(result);
+      return res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el lote"
+      });
+    }
+
   };
 
 
@@ -116,14 +138,24 @@ export class InventoryOrchestratorController {
       observation
     } = req.body;
 
-    const result =
-      await this._inventoryOrchestratorService.expireLote(
-        loteId,
-        userId,
-        observation
-      );
+    try {
+      const result =
+        await this._inventoryOrchestratorService.expireLote(
+          loteId,
+          userId,
+          observation
+        );
 
-    res.json(result);
+      return res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el lote"
+      });
+    }
   };
 
 }
