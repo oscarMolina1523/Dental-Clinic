@@ -24,15 +24,23 @@ export class InventoryOrchestratorController {
     req: Request,
     res: Response
   ) => {
+    try {
+      const result =
+        await this._inventoryOrchestratorService.createLote(
+          req.body
+        );
 
-    const result =
-      await this._inventoryOrchestratorService.createLote(
-        req.body
-      );
+      return res.status(201).json(result);
 
-    res.status(201).json(result);
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el lote"
+      });
+    }
   };
-
 
   // ============================================================
   // INCREASE LOT STOCK
