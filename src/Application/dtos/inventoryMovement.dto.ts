@@ -2,6 +2,7 @@ import { InventoryMovementStatus } from "../../Domain/types/inventoryMovementsSt
 
 export interface InventoryMovementDto {
   productId: string;
+  productName: string;
   type: InventoryMovementStatus;
   quantity: number;
   userId: string;

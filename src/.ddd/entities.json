@@ -556,6 +556,10 @@
           "type": "string"
         },
         {
+          "name": "productName",
+          "type": "string"
+        },
+        {
           "name": "supplierId",
           "type": "string"
         },
@@ -603,6 +607,10 @@
       "fields": [
         {
           "name": "productId",
+          "type": "string"
+        },
+        {
+          "name": "productName",
           "type": "string"
         },
         {

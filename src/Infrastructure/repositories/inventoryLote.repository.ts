@@ -42,6 +42,7 @@ export class InventoryLoteRepository implements IInventoryLoteRepository {
         new InventoryLote({
           id: row["ID"],
           productId: row["PRODUCTID"],
+          productName: row["PRODUCTNAME"],
           supplierId: row["SUPPLIERID"],
           loteNumber: row["LOTENUMBER"],
           quantity: row["QUANTITY"],
@@ -64,6 +65,7 @@ export class InventoryLoteRepository implements IInventoryLoteRepository {
     return new InventoryLote({
       id: row["ID"],
       productId: row["PRODUCTID"],
+      productName: row["PRODUCTNAME"],
       supplierId: row["SUPPLIERID"],
       loteNumber: row["LOTENUMBER"],
       quantity: row["QUANTITY"],

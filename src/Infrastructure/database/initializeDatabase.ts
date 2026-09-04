@@ -266,6 +266,7 @@ export async function initializeDatabase(): Promise<void> {
     CREATE TABLE IF NOT EXISTS INVENTORYLOTES (
         ID TEXT PRIMARY KEY,
         PRODUCTID TEXT,
+        PRODUCTNAME TEXT,
         SUPPLIERID TEXT,
         LOTENUMBER TEXT,
         QUANTITY INTEGER,
@@ -290,6 +291,7 @@ export async function initializeDatabase(): Promise<void> {
     CREATE TABLE IF NOT EXISTS INVENTORYMOVEMENTS (
         ID TEXT PRIMARY KEY,
         PRODUCTID TEXT,
+        PRODUCTNAME TEXT,
         TYPE TEXT,
         QUANTITY INTEGER,
         USERID TEXT,

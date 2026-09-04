@@ -4,6 +4,8 @@ export const InventoryMovementSchemas = {
     required: [
       
         "productId",
+
+        "productName",
       
         "type",
       
@@ -17,6 +19,8 @@ export const InventoryMovementSchemas = {
     properties: {
       
       productId: { type: "string" },
+
+      productName: { type: "string" },
       
       type: { type: "string" },
       
@@ -35,6 +39,8 @@ export const InventoryMovementSchemas = {
       id: { type: "string" },
       
       productId: { type: "string" },
+      
+      productName: { type: "string" },
       
       type: { type: "string" },
       

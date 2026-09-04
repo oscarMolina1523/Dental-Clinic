@@ -311,6 +311,7 @@ export class EntitiesService implements IEntitiesService {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PRODUCTID", "productId", false),
+            new SqlColumnSettings("PRODUCTNAME", "productName", false),
             new SqlColumnSettings("SUPPLIERID", "supplierId", false),
             new SqlColumnSettings("LOTENUMBER", "loteNumber", false),
             new SqlColumnSettings("QUANTITY", "quantity", false),
@@ -335,6 +336,7 @@ export class EntitiesService implements IEntitiesService {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PRODUCTID", "productId", false),
+            new SqlColumnSettings("PRODUCTNAME", "productName", false),
             new SqlColumnSettings("TYPE", "type", false),
             new SqlColumnSettings("QUANTITY", "quantity", false),
             new SqlColumnSettings("USERID", "userId", false),

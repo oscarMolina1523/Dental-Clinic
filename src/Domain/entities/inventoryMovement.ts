@@ -3,6 +3,7 @@ import BaseModel from "./base.model";
 
 export default class InventoryMovement extends BaseModel {
   productId: string;
+  productName: string;
   type: InventoryMovementStatus;
   private quantity: number;
   userId: string;
@@ -11,6 +12,7 @@ export default class InventoryMovement extends BaseModel {
   constructor({
     id,
     productId,
+    productName,
     type,
     quantity,
     userId,
@@ -18,6 +20,7 @@ export default class InventoryMovement extends BaseModel {
   }: {
     id: string;
     productId: string;
+    productName: string;
     type: InventoryMovementStatus;
     quantity: number;
     userId: string;
@@ -66,6 +69,7 @@ export default class InventoryMovement extends BaseModel {
     }
 
     this.productId = productId;
+    this.productName = productName;
     this.type = type;
     this.quantity = quantity;
     this.userId = userId;
