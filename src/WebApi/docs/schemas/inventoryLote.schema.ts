@@ -4,6 +4,8 @@ export const InventoryLoteSchemas = {
     required: [
       
         "productId",
+
+        "productName",
       
         "supplierId",
       
@@ -17,6 +19,8 @@ export const InventoryLoteSchemas = {
     properties: {
       
       productId: { type: "string" },
+
+      productName: { type: "string" },
       
       supplierId: { type: "string" },
       
@@ -37,6 +41,8 @@ export const InventoryLoteSchemas = {
       id: { type: "string" },
       
       productId: { type: "string" },
+
+      productName: { type: "string" },
       
       supplierId: { type: "string" },
       

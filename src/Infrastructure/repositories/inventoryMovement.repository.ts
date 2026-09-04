@@ -42,6 +42,7 @@ export class InventoryMovementRepository implements IInventoryMovementRepository
       new InventoryMovement({
         id: row["ID"],
         productId: row["PRODUCTID"],
+        productName: row["PRODUCTNAME"],
         type: row["TYPE"],
         quantity: row["QUANTITY"],
         userId: row["USERID"],
@@ -63,6 +64,7 @@ export class InventoryMovementRepository implements IInventoryMovementRepository
     return new InventoryMovement({
       id: row["ID"],
       productId: row["PRODUCTID"],
+      productName: row["PRODUCTNAME"],
       type: row["TYPE"],
       quantity: row["QUANTITY"],
       userId: row["USERID"],

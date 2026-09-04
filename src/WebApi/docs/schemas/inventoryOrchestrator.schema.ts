@@ -8,6 +8,7 @@ export const InventoryOrchestratorSchemas = {
     type: "object",
     required: [
       "productId",
+      "productName",
       "supplierId",
       "loteNumber",
       "quantity",
@@ -19,6 +20,11 @@ export const InventoryOrchestratorSchemas = {
       productId: {
         type: "string",
         example: "product-123"
+      },
+
+      productName: {
+        type: "string",
+        example: "cafe"
       },
 
       supplierId: {
@@ -158,6 +164,10 @@ export const InventoryOrchestratorSchemas = {
         type: "string"
       },
 
+      productName: {
+        type: "string"
+      },
+
       minimumStock: {
         type: "number"
       }
@@ -178,6 +188,10 @@ export const InventoryOrchestratorSchemas = {
       },
 
       productId: {
+        type: "string"
+      },
+
+      productName: {
         type: "string"
       },
 

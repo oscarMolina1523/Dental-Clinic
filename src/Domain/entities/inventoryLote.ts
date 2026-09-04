@@ -2,6 +2,7 @@ import BaseModel from "./base.model";
 
 export default class InventoryLote extends BaseModel {
   productId: string;
+  productName: string;
   supplierId: string;
   loteNumber: string;
   private quantity: number;
@@ -11,6 +12,7 @@ export default class InventoryLote extends BaseModel {
   constructor({
     id,
     productId,
+    productName,
     supplierId,
     loteNumber,
     quantity,
@@ -19,6 +21,7 @@ export default class InventoryLote extends BaseModel {
   }: {
     id: string;
     productId: string;
+    productName: string;
     supplierId: string;
     loteNumber: string;
     quantity: number;
@@ -102,6 +105,7 @@ export default class InventoryLote extends BaseModel {
     }
 
     this.productId = productId;
+    this.productName = productName;
     this.supplierId = supplierId;
     this.loteNumber = loteNumber;
     this.quantity = quantity;

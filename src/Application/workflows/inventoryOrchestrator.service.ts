@@ -42,6 +42,7 @@ export class InventoryOrchestratorService
 
   async createLote(data: {
     productId: string;
+    productName: string;
     supplierId: string;
     loteNumber: string;
     quantity: number;
@@ -74,6 +75,7 @@ export class InventoryOrchestratorService
     const lote =
       await this._inventoryLoteService.create({
         productId: data.productId,
+        productName: data.productName,
         supplierId: data.supplierId,
         loteNumber: data.loteNumber,
         quantity: data.quantity,
@@ -107,6 +109,7 @@ export class InventoryOrchestratorService
       await this._inventoryMovementService.create({
 
         productId: data.productId,
+        productName: data.productName,
 
         type: InventoryMovementStatus.ENTRY,
 
@@ -209,6 +212,7 @@ export class InventoryOrchestratorService
       await this._inventoryMovementService.create({
 
         productId: lote.productId,
+        productName: lote.productName,
 
         type: InventoryMovementStatus.ENTRY,
 
@@ -311,6 +315,7 @@ export class InventoryOrchestratorService
       await this._inventoryMovementService.create({
 
         productId: lote.productId,
+        productName: lote.productName,
 
         type: InventoryMovementStatus.EXIT,
 
@@ -430,6 +435,7 @@ export class InventoryOrchestratorService
       await this._inventoryMovementService.create({
 
         productId: lote.productId,
+        productName: lote.productName,
 
         type: InventoryMovementStatus.EXPIRED,
 
