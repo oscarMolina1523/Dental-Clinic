@@ -42,7 +42,9 @@ export class AppointmentRepository implements IAppointmentRepository {
       new Appointment({
         id: row["ID"],
         patientId: row["PATIENTID"],
+        patientFullName: row["PATIENTFULLNAME"],
         dentistId: row["DENTISTID"],
+        dentistFullName: row["DENTISTFULLNAME"],
         startAppointmentTime: row["STARTAPPOINTMENTTIME"],
         endAppointmentTime: row["ENDAPPOINTMENTTIME"],
         reason: row["REASON"],
@@ -67,7 +69,9 @@ export class AppointmentRepository implements IAppointmentRepository {
     return new Appointment({
       id: row["ID"],
       patientId: row["PATIENTID"],
+      patientFullName: row["PATIENTFULLNAME"],
       dentistId: row["DENTISTID"],
+      dentistFullName: row["DENTISTFULLNAME"],
       startAppointmentTime: row["STARTAPPOINTMENTTIME"],
       endAppointmentTime: row["ENDAPPOINTMENTTIME"],
       reason: row["REASON"],

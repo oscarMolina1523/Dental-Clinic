@@ -4,7 +4,9 @@ export const AppointmentSchemas = {
     type: "object",
     required: [
       "patientId",
+      "patientFullName",
       "dentistId",
+      "dentistFullName",
       "startAppointmentTime",
       "endAppointmentTime",
       "reason",
@@ -20,9 +22,19 @@ export const AppointmentSchemas = {
         example: "patient-123"
       },
 
+      patientFullName: {
+        type: "string",
+        example: "John Doe"
+      },
+
       dentistId: {
         type: "string",
         example: "dentist-456"
+      },
+
+      dentistFullName: {
+        type: "string",
+        example: "Dr. Jane Smith"
       },
 
       startAppointmentTime: {
@@ -79,9 +91,19 @@ export const AppointmentSchemas = {
         example: "patient-123"
       },
 
+      patientFullName: {
+        type: "string",
+        example: "John Doe"
+      },
+
       dentistId: {
         type: "string",
         example: "dentist-456"
+      },
+
+      dentistFullName: {
+        type: "string",
+        example: "Dr. Jane Smith"
       },
 
       startAppointmentTime: {

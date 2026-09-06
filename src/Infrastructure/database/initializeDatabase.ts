@@ -347,7 +347,9 @@ export async function initializeDatabase(): Promise<void> {
     CREATE TABLE IF NOT EXISTS APPOINTMENTS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
+        PATIENTFULLNAME TEXT,
         DENTISTID TEXT,
+        DENTISTFULLNAME TEXT,
         STARTAPPOINTMENTTIME TEXT,
         ENDAPPOINTMENTTIME TEXT,
         REASON TEXT,
