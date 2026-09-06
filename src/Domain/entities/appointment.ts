@@ -3,7 +3,9 @@ import BaseModel from "./base.model";
 
 export default class Appointment extends BaseModel {
   patientId: string;
+  patientFullName: string;
   dentistId: string;
+  dentistFullName: string;
   startAppointmentTime: Date;
   endAppointmentTime: Date;
   reason: string;
@@ -15,7 +17,9 @@ export default class Appointment extends BaseModel {
   constructor({
     id,
     patientId,
+    patientFullName,
     dentistId,
+    dentistFullName,
     startAppointmentTime,
     endAppointmentTime,
     reason,
@@ -26,7 +30,9 @@ export default class Appointment extends BaseModel {
   }: {
     id: string;
     patientId: string;
+    patientFullName: string;
     dentistId: string;
+    dentistFullName: string;
     startAppointmentTime: Date | string;
     endAppointmentTime: Date | string;
     reason: string;
@@ -169,7 +175,9 @@ export default class Appointment extends BaseModel {
     }
 
     this.patientId = patientId;
+    this.patientFullName = patientFullName;
     this.dentistId = dentistId;
+    this.dentistFullName = dentistFullName;
     this.startAppointmentTime = normalizedStartAppointmentTime;
     this.endAppointmentTime = normalizedEndAppointmentTime;
     this.reason = reason;
