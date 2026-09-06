@@ -34,7 +34,7 @@ export class AppointmentService implements IAppointmentService {
         data.createdAt
           ? new Date(data.createdAt)
           : new Date(),
-          status: AppointmentStatus.SCHEDULED
+      status: AppointmentStatus.SCHEDULED
     })
     await this._appointmentRepository.create(newData);
     return newData;
