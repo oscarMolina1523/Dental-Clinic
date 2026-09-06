@@ -48,7 +48,9 @@ export class AppointmentService implements IAppointmentService {
 
     existing.update({
     patientId: data.patientId,
+    patientFullName: data.patientFullName,
     dentistId: data.dentistId,
+    dentistFullName: data.dentistFullName,
 
     startAppointmentTime:
       new Date(data.startAppointmentTime),

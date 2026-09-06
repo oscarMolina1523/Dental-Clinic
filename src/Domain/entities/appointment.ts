@@ -314,13 +314,17 @@ export default class Appointment extends BaseModel {
 
   update({
     patientId,
+    patientFullName,
     dentistId,
+    dentistFullName,
     startAppointmentTime,
     endAppointmentTime,
     reason,
   }: {
     patientId: string;
+    patientFullName: string;
     dentistId: string;
+    dentistFullName: string;
     startAppointmentTime: Date;
     endAppointmentTime: Date;
     reason: string;
