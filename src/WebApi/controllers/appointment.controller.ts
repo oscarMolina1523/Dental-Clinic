@@ -19,8 +19,19 @@ export class AppointmentController {
   }
 
   create = async (req: Request, res: Response) => {
-    const result = await this._appointmentService.create(req.body);
-    res.status(201).json(result);
+    try{
+
+      const result = await this._appointmentService.create(req.body);
+      res.status(201).json(result);
+
+    }catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear la cita"
+      });
+    }
   }
 
   getById = async (req: Request, res: Response) => {
@@ -53,10 +64,21 @@ export class AppointmentController {
     const id =
       req.params.id as string;
 
-    const result =
-      await this._appointmentService.confirm(id);
+    try {
 
-    res.json(result);
+      const result =
+        await this._appointmentService.confirm(id);
+
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo confirmar la cita"
+      });
+    }
   };
 
   start = async (
@@ -67,10 +89,22 @@ export class AppointmentController {
     const id =
       req.params.id as string;
 
-    const result =
-      await this._appointmentService.start(id);
+    try {
 
-    res.json(result);
+      const result =
+        await this._appointmentService.start(id);
+
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo iniciar la cita"
+      });
+    }
+
   };
 
   complete = async (
@@ -81,10 +115,22 @@ export class AppointmentController {
     const id =
       req.params.id as string;
 
-    const result =
-      await this._appointmentService.complete(id);
+    try {
 
-    res.json(result);
+      const result =
+        await this._appointmentService.complete(id);
+
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo completar la cita"
+      });
+    }
+
   };
 
   cancel = async (
@@ -97,13 +143,24 @@ export class AppointmentController {
 
     const { notes } = req.body;
 
-    const result =
-      await this._appointmentService.cancel(
-        id,
-        notes
-      );
+    try{
 
-    res.json(result);
+      const result =
+        await this._appointmentService.cancel(
+          id,
+          notes
+        );
+  
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo cancelar la cita"
+      });
+    }
   };
 
   markAsNoShow = async (
@@ -114,12 +171,23 @@ export class AppointmentController {
     const id =
       req.params.id as string;
 
-    const result =
-      await this._appointmentService.markAsNoShow(
-        id
-      );
+      try{
 
-    res.json(result);
+        const result =
+          await this._appointmentService.markAsNoShow(
+            id
+          );
+    
+        res.json(result);
+
+      } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo marcar como no atendida la cita"
+      });
+    }
   };
 
   // ============================================================
