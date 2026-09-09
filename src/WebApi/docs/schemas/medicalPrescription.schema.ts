@@ -4,8 +4,12 @@ export const MedicalPrescriptionSchemas = {
     required: [
       
         "patientId",
+
+        "patientFullName",
       
         "dentistId",
+
+        "dentistFullName",
       
         "date",
       
@@ -15,8 +19,12 @@ export const MedicalPrescriptionSchemas = {
     properties: {
       
       patientId: { type: "string" },
+
+      patientFullName: { type: "string" },
       
       dentistId: { type: "string" },
+
+      dentistFullName: { type: "string" },
       
       date: { type: "string" },
       
@@ -31,8 +39,12 @@ export const MedicalPrescriptionSchemas = {
       id: { type: "string" },
       
       patientId: { type: "string" },
+
+      patientFullName: { type: "string" },
       
       dentistId: { type: "string" },
+
+      dentistFullName: { type: "string" },
       
       date: { type: "string" },
       

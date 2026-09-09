@@ -43,6 +43,7 @@ import dentalChartOrchestratorRoutes from "./WebApi/routes/dentalChartOrchestrat
 import treatmentPlanOrchestratorRoutes from "./WebApi/routes/treatmentPlanOrchestrator.routes";
 import authRoutes from "./WebApi/routes/auth.routes";
 import { validateToken } from "./WebApi/middlewares/auth.middleware";
+import medicalPrescriptionOrchestratorRoutes from "./WebApi/routes/medicalPrescriptionOrchestrator.routes";
 
 const app = express();
 // const PORT = process.env.PORT || 3000;
@@ -87,6 +88,7 @@ app.use("/invoice-payments", validateToken, invoicePaymentRoutes);
 app.use("/patientAttachment", validateToken, patientAttachmentRoutes);
 app.use("/medicalPrescriptionDetail", validateToken, medicalPrescriptionDetailRoutes);
 app.use("/medicalPrescription", validateToken, medicalPrescriptionRoutes);
+app.use("/medicalPrescriptionOrchestrator", validateToken, medicalPrescriptionOrchestratorRoutes);
 app.use("/clinicalProgres", validateToken, clinicalProgresRoutes);
 app.use("/treatmentPlanDetail", validateToken, treatmentPlanDetailRoutes);
 app.use("/treatmentPlan", validateToken, treatmentPlanRoutes);

@@ -63,6 +63,8 @@ import { DentalChartOrchestratorSchemas } from "./schemas/dentalChartOrchestrato
 import { TreatmentPlanOrchestratorSchemas } from "./schemas/treatmentPlanOrchestrator.schema";
 import { TreatmentPlanOrchestratorPaths } from "./paths/treatmentPlanOrchestrator.path";
 import { AuthPaths } from "./paths/auth.path";
+import { MedicalPrescriptionOrchestratorPaths } from "./paths/medicalPrescriptionOrchestrator.path";
+import { MedicalPrescriptionOrchestratorSchemas } from "./schemas/medicalPrescriptionOrchestrator.schema";
 export const OpenApiSpecification = {
   openapi: "3.0.0",
   info: {
@@ -97,6 +99,7 @@ export const OpenApiSpecification = {
     ...PatientAttachmentPaths,
     ...MedicalPrescriptionDetailPaths,
     ...MedicalPrescriptionPaths,
+    ...MedicalPrescriptionOrchestratorPaths,
     ...ClinicalProgresPaths,
     ...TreatmentPlanDetailPaths,
     ...TreatmentPlanPaths,
@@ -138,6 +141,7 @@ export const OpenApiSpecification = {
       ...PatientAttachmentSchemas,
       ...MedicalPrescriptionDetailSchemas,
       ...MedicalPrescriptionSchemas,
+      ...MedicalPrescriptionOrchestratorSchemas,
       ...ClinicalProgresSchemas,
       ...TreatmentPlanDetailSchemas,
       ...TreatmentPlanSchemas,

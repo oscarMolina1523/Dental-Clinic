@@ -343,7 +343,15 @@
           "type": "string"
         },
         {
+          "name": "patientFullName",
+          "type": "string"
+        },
+        {
           "name": "dentistId",
+          "type": "string"
+        },
+        {
+          "name": "dentistFullName",
           "type": "string"
         },
         {
