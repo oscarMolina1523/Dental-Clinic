@@ -20,6 +20,11 @@ export class MedicalPrescriptionDetailService implements IMedicalPrescriptionDet
   async findById(id: string) : Promise<MedicalPrescriptionDetail | null> {
     return await this._medicalPrescriptionDetailRepository.findById(id);
   }
+
+  //el id a recibir es el medical prescription id
+  async findByIdMedicalPrescriptionId(id: string) : Promise<MedicalPrescriptionDetail[] | null> {
+    return await this._medicalPrescriptionDetailRepository.findByMedicalPrescriptionId(id);
+  }
   
   async create(data: MedicalPrescriptionDetailDto): Promise<MedicalPrescriptionDetail> {
     const newData: MedicalPrescriptionDetail = {

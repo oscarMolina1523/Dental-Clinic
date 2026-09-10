@@ -4,6 +4,7 @@ import { MedicalPrescriptionDetailDto } from './../dtos/medicalPrescriptionDetai
 export interface IMedicalPrescriptionDetailService {
   findAll(page: number, pageSize: number): Promise<MedicalPrescriptionDetail[]>;
   findById(id: string): Promise<MedicalPrescriptionDetail | null>;
+  findByIdMedicalPrescriptionId(id: string) : Promise<MedicalPrescriptionDetail[] | null>;
   create(data: MedicalPrescriptionDetailDto): Promise<MedicalPrescriptionDetail>;
   update(id: string, data: MedicalPrescriptionDetailDto): Promise<MedicalPrescriptionDetail | null>;
   delete(id: string): Promise<void>;

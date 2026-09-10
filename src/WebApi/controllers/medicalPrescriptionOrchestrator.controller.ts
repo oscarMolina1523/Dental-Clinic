@@ -18,6 +18,36 @@ export class MedicalPrescriptionOrchestratorController {
       service;
   }
 
+  getAll = async (req: Request, res: Response) => {
+
+    try {
+
+      const page =
+        Number(req.query.page) || 1;
+
+      const pageSize =
+        Number(req.query.pageSize) || 100;
+
+
+      const result =
+        await this._medicalPrescriptionOrchestratorService.getAll(
+          page,
+          pageSize
+        );
+
+
+      return res.json(result);
+
+    } catch (error) {
+
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudieron obtener las recetas médicas"
+      });
+    }
+  };
 
   // ============================================================
   // GET COMPLETE MEDICAL PRESCRIPTION

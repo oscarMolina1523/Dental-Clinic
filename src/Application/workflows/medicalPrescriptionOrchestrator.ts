@@ -31,6 +31,40 @@ export class MedicalPrescriptionOrchestratorService
       medicalPrescriptionDetailService;
   }
 
+  // ============================================================
+  // GET ALL COMPLETE MEDICAL PRESCRIPTIONS
+  // ============================================================
+
+  async getAll(
+    page: number = 1,
+    pageSize: number = 100
+  ): Promise<MedicalPrescriptionWithDetails[]> {
+
+    const medicalPrescriptions =
+      await this._medicalPrescriptionService.findAll(
+        page,
+        pageSize
+      );
+
+    const result: MedicalPrescriptionWithDetails[] = [];
+
+    for (const medicalPrescription of medicalPrescriptions) {
+
+      const details =
+        await this._medicalPrescriptionDetailService
+          .findByIdMedicalPrescriptionId(
+            medicalPrescription.id
+          ) ?? [];
+
+      result.push({
+        medicalPrescription,
+        details
+      });
+    }
+
+    return result;
+  }
+
 
   // ============================================================
   // GET COMPLETE MEDICAL PRESCRIPTION
@@ -47,25 +81,12 @@ export class MedicalPrescriptionOrchestratorService
       return null;
     }
 
-
-    const details =
-      await this._medicalPrescriptionDetailService.findAll(
-        1,
-        1000
-      );
-
-
-    const medicalPrescriptionDetails =
-      details.filter(
-        detail =>
-          detail.medicalPrescriptionId ===
-          medicalPrescription.id
-      );
+    const medicalPrescriptionDetails = await this._medicalPrescriptionDetailService.findByIdMedicalPrescriptionId(medicalPrescription.id);
 
 
     return {
       medicalPrescription,
-      details: medicalPrescriptionDetails
+      details: medicalPrescriptionDetails ?? []
     };
   }
 
@@ -151,18 +172,7 @@ export class MedicalPrescriptionOrchestratorService
     // GET EXISTING DETAILS
     // ------------------------------------------------------------
 
-    const existingDetails =
-      await this._medicalPrescriptionDetailService.findAll(
-        1,
-        1000
-      );
-
-
-    const currentDetails =
-      existingDetails.filter(
-        detail =>
-          detail.medicalPrescriptionId === id
-      );
+    const currentDetails = await this._medicalPrescriptionDetailService.findByIdMedicalPrescriptionId(medicalPrescription.id) ?? [];
 
 
     // ------------------------------------------------------------
@@ -274,18 +284,8 @@ export class MedicalPrescriptionOrchestratorService
     // GET DETAILS
     // ------------------------------------------------------------
 
-    const details =
-      await this._medicalPrescriptionDetailService.findAll(
-        1,
-        1000
-      );
-
-
     const medicalPrescriptionDetails =
-      details.filter(
-        detail =>
-          detail.medicalPrescriptionId === id
-      );
+      await this._medicalPrescriptionDetailService.findByIdMedicalPrescriptionId(medicalPrescription.id) ?? [];
 
 
     // ------------------------------------------------------------
