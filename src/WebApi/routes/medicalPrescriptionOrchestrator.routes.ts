@@ -21,6 +21,12 @@ const controller =
 // ============================================================
 
 
+// GET ALL
+router.get(
+  "/",
+  controller.getAll
+);
+
 // Obtener receta médica completa
 
 router.get(

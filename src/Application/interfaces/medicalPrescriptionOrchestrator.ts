@@ -11,6 +11,11 @@ export interface MedicalPrescriptionWithDetails {
 
 export interface IMedicalPrescriptionOrchestratorService {
 
+  getAll(
+    page?: number,
+    pageSize?: number
+  ): Promise<MedicalPrescriptionWithDetails[]>;
+  
   getById(
     id: string
   ): Promise<MedicalPrescriptionWithDetails | null>;
