@@ -17,7 +17,7 @@ import TreatmentPlan
 
 import TreatmentPlanDetail 
   from "../../Domain/entities/treatmentPlanDetail";
-import { ITreatmentPlanOrchestratorService } from "../interfaces/treatmentPlanOrchestrator.interface";
+import { ITreatmentPlanOrchestratorService, TreatmentPlanWithDetails } from "../interfaces/treatmentPlanOrchestrator.interface";
 
 
 export interface CreateTreatmentPlanResult {
@@ -41,6 +41,52 @@ export class TreatmentPlanOrchestratorService
       ITreatmentPlanDetailService
 
   ) {}
+
+
+  async getAll(
+        page: number = 1,
+        pageSize: number = 100
+    ): Promise<TreatmentPlanWithDetails[]> {
+
+        // --------------------------------------------------------
+        // GET TREATMENT PLANS
+        // --------------------------------------------------------
+
+        const treatmentPlans =
+            await this._treatmentPlanService.findAll(
+                page,
+                pageSize
+            );
+
+
+        // --------------------------------------------------------
+        // GET DETAILS FOR EACH PLAN
+        // --------------------------------------------------------
+
+        const result: TreatmentPlanWithDetails[] = [];
+
+
+        for (const treatmentPlan of treatmentPlans) {
+
+            const details =
+                await this._treatmentPlanDetailService
+                    .findByPlanId(
+                        treatmentPlan.id
+                    ) ?? [];
+
+
+            result.push({
+
+                treatmentPlan,
+
+                details
+
+            });
+        }
+
+
+        return result;
+    }
 
 
   async create(

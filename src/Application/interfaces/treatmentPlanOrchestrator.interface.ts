@@ -8,7 +8,18 @@ export interface CreateTreatmentPlanResult {
   details: TreatmentPlanDetail[];
 }
 
+export interface TreatmentPlanWithDetails {
+    treatmentPlan: TreatmentPlan;
+    details: TreatmentPlanDetail[];
+}
+
 export interface ITreatmentPlanOrchestratorService {
+
+  getAll(
+        page?: number,
+        pageSize?: number
+    ): Promise<TreatmentPlanWithDetails[]>;
+
 
   create(
     treatmentPlanData: TreatmentPlanDto,

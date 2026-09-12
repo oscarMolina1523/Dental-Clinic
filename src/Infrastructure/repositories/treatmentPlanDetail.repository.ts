@@ -39,16 +39,16 @@ export class TreatmentPlanDetailRepository implements ITreatmentPlanDetailReposi
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new TreatmentPlanDetail({
-        id: row["ID"],
-        planId: row["PLANID"],
-        treatmentId: row["TREATMENTID"],
-        toothNumber: row["TOOTHNUMBER"],
-        quantity: row["QUANTITY"],
-        unitPrice: row["UNITPRICE"],
-        subtotal: row["SUBTOTAL"],
-        status: row["STATUS"],
-      })
+        new TreatmentPlanDetail({
+          id: row["ID"],
+          planId: row["PLANID"],
+          treatmentId: row["TREATMENTID"],
+          toothNumber: row["TOOTHNUMBER"],
+          quantity: row["QUANTITY"],
+          unitPrice: row["UNITPRICE"],
+          subtotal: row["SUBTOTAL"],
+          status: row["STATUS"],
+        })
     );
   }
 
@@ -72,6 +72,32 @@ export class TreatmentPlanDetailRepository implements ITreatmentPlanDetailReposi
       subtotal: row["SUBTOTAL"],
       status: row["STATUS"],
     });
+  }
+
+  async findByPlanId(treatmentPlanId: string): Promise<TreatmentPlanDetail[] | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.TreatmentPlanDetail)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("planId", treatmentPlanId).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows) return null;
+
+    return rows.map(
+      (row) =>
+        new TreatmentPlanDetail({
+          id: row["ID"],
+          planId: row["PLANID"],
+          treatmentId: row["TREATMENTID"],
+          toothNumber: row["TOOTHNUMBER"],
+          quantity: row["QUANTITY"],
+          unitPrice: row["UNITPRICE"],
+          subtotal: row["SUBTOTAL"],
+          status: row["STATUS"],
+        })
+    );
   }
 
   async create(entity: TreatmentPlanDetail): Promise<void> {

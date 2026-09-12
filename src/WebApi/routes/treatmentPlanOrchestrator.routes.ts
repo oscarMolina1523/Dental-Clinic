@@ -15,6 +15,12 @@ const controller =
   );
 
 
+  router.get(
+  "/",
+  controller.getAll
+);
+
+
 router.post(
   "/",
   controller.create

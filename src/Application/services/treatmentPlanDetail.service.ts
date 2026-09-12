@@ -22,6 +22,10 @@ export class TreatmentPlanDetailService implements ITreatmentPlanDetailService {
     return await this._treatmentPlanDetailRepository.findById(id);
   }
 
+  async findByPlanId(treatmentPlanId: string): Promise<TreatmentPlanDetail[] | null>{
+    return await this._treatmentPlanDetailRepository.findByPlanId(treatmentPlanId);
+  };
+
   async create(data: TreatmentPlanDetailDto): Promise<TreatmentPlanDetail> {
     const newData: TreatmentPlanDetail = new TreatmentPlanDetail({
       ...data,
