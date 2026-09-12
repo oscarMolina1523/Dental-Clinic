@@ -61,14 +61,25 @@ export class TreatmentPlanOrchestratorController {
       ...treatmentPlanData
     } = req.body;
 
+    try {
 
-    const result =
-      await this._treatmentPlanOrchestrator.create(
-        treatmentPlanData,
-        details
-      );
+      const result =
+        await this._treatmentPlanOrchestrator.create(
+          treatmentPlanData,
+          details
+        );
 
 
-    res.status(201).json(result);
-  };
+      return res.status(201).json(result);
+
+    } catch (error) {
+
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el plan de tratamientos"
+      });
+    };
+  }
 }
