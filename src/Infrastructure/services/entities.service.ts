@@ -181,6 +181,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PLANID", "planId", false),
             new SqlColumnSettings("TREATMENTID", "treatmentId", false),
+            new SqlColumnSettings("TREATMENTNAME", "treatmentName", false),
             new SqlColumnSettings("TOOTHNUMBER", "toothNumber", false),
             new SqlColumnSettings("QUANTITY", "quantity", false),
             new SqlColumnSettings("UNITPRICE", "unitPrice", false),

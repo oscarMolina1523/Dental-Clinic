@@ -6,6 +6,7 @@ export const TreatmentPlanDetailSchemas = {
       "planId",
 
       "treatmentId",
+      "treatmentName",
 
       "toothNumber",
 
@@ -23,6 +24,7 @@ export const TreatmentPlanDetailSchemas = {
       planId: { type: "string" },
 
       treatmentId: { type: "string" },
+      treatmentName: { type: "string" },
 
       toothNumber: { type: "number" },
 
@@ -45,6 +47,7 @@ export const TreatmentPlanDetailSchemas = {
       planId: { type: "string" },
 
       treatmentId: { type: "string" },
+      treatmentName: { type: "string" },
 
       toothNumber: { type: "number" },
 

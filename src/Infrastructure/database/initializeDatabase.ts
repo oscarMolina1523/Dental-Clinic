@@ -136,6 +136,7 @@ export async function initializeDatabase(): Promise<void> {
         ID TEXT PRIMARY KEY,
         PLANID TEXT,
         TREATMENTID TEXT,
+        TREATMENTNAME TEXT,
         TOOTHNUMBER INTEGER,
         QUANTITY INTEGER,
         UNITPRICE INTEGER,

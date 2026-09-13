@@ -3,6 +3,7 @@ import { TreatmentPlanDetailStatus } from "../../Domain/types/treatmentPlanStatu
 export interface TreatmentPlanDetailDto {
   planId: string;
   treatmentId: string;
+  treatmentName: string;
   toothNumber: number;
   quantity: number;
   unitPrice: number;

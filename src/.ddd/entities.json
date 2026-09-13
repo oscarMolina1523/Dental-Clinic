@@ -289,6 +289,10 @@
           "type": "string"
         },
         {
+          "name": "treatmentName",
+          "type": "string"
+        },
+        {
           "name": "toothNumber",
           "type": "number"
         },

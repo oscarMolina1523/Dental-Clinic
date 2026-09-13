@@ -31,11 +31,6 @@ export const TreatmentPlanOrchestratorSchemas = {
         example: "dentist-456"
       },
 
-      code: {
-        type: "string",
-        example: ""
-      },
-
       status: {
         type: "string",
         example: "DRAFT"
@@ -51,12 +46,6 @@ export const TreatmentPlanOrchestratorSchemas = {
         example: 0
       },
 
-      createdAt: {
-        type: "string",
-        format: "date-time",
-        example: "2026-08-23T18:00:00.000Z"
-      },
-
       details: {
         type: "array",
 
@@ -66,6 +55,7 @@ export const TreatmentPlanOrchestratorSchemas = {
           required: [
             "planId",
             "treatmentId",
+            "treatmentName",
             "toothNumber",
             "quantity",
             "unitPrice",
@@ -75,12 +65,11 @@ export const TreatmentPlanOrchestratorSchemas = {
 
           properties: {
 
-            planId: {
-              type: "string",
-              example: ""
-            },
-
             treatmentId: {
+              type: "string",
+              example: "treatment-123"
+            },
+            treatmentName: {
               type: "string",
               example: "treatment-123"
             },
@@ -150,11 +139,6 @@ export const TreatmentPlanOrchestratorSchemas = {
             example: "dentist-456"
           },
 
-          code: {
-            type: "string",
-            example: "TRT-20260823-PATIENT"
-          },
-
           status: {
             type: "string",
             example: "DRAFT"
@@ -169,11 +153,6 @@ export const TreatmentPlanOrchestratorSchemas = {
             type: "number",
             example: 0
           },
-
-          createdAt: {
-            type: "string",
-            format: "date-time"
-          }
 
         }
       },
@@ -191,12 +170,11 @@ export const TreatmentPlanOrchestratorSchemas = {
               example: "detail-123"
             },
 
-            planId: {
-              type: "string",
-              example: "plan-123"
-            },
-
             treatmentId: {
+              type: "string",
+              example: "treatment-123"
+            },
+            treatmentName: {
               type: "string",
               example: "treatment-123"
             },
