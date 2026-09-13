@@ -145,4 +145,48 @@ export class TreatmentPlanOrchestratorService
 
     };
   }
+
+  // ============================================================
+  // DELETE COMPLETE TREATMENT PLAN
+  // ============================================================
+
+  async delete(
+    planId: string
+  ): Promise<boolean> {
+
+    // ------------------------------------------------------------
+    // 1. BUSCAR TODOS LOS DETAILS DEL PLAN
+    // ------------------------------------------------------------
+
+    const details =
+      await this._treatmentPlanDetailService
+        .findByPlanId(planId) ?? [];
+
+
+    // ------------------------------------------------------------
+    // 2. ELIMINAR TODOS LOS DETAILS
+    // ------------------------------------------------------------
+
+    for (const detail of details) {
+
+      await this._treatmentPlanDetailService
+        .delete(detail.id);
+
+    }
+
+
+    // ------------------------------------------------------------
+    // 3. ELIMINAR EL TREATMENT PLAN
+    // ------------------------------------------------------------
+
+    await this._treatmentPlanService
+      .delete(planId);
+
+
+    // ------------------------------------------------------------
+    // 4. TODO CORRECTO
+    // ------------------------------------------------------------
+
+    return true;
+  }
 }

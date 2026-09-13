@@ -184,6 +184,112 @@ export const TreatmentPlanOrchestratorPaths = {
 
     }
 
+  },
+
+   // ============================================================
+  // DELETE COMPLETE TREATMENT PLAN
+  // ============================================================
+
+  "/treatmentPlanOrchestrator/{id}": {
+
+    delete: {
+
+      summary: "Delete Treatment Plan",
+
+      description:
+        "Deletes a treatment plan and all of its associated details using the treatment plan ID.",
+
+      tags: [
+        "Treatment Plan Orchestrator"
+      ],
+
+      parameters: [
+
+        {
+
+          name: "id",
+
+          in: "path",
+
+          required: true,
+
+          description:
+            "Treatment plan ID",
+
+          schema: {
+
+            type: "string"
+
+          },
+
+          example:
+            "plan-123"
+
+        }
+
+      ],
+
+      responses: {
+
+        200: {
+
+          description:
+            "Treatment plan deleted successfully.",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+
+                type: "object",
+
+                properties: {
+
+                  message: {
+
+                    type: "string",
+
+                    example:
+                      "Treatment plan eliminado correctamente."
+
+                  }
+
+                }
+
+              }
+
+            }
+
+          }
+
+        },
+
+        400: {
+
+          description:
+            "Treatment plan ID is required."
+
+        },
+
+        404: {
+
+          description:
+            "Treatment plan not found."
+
+        },
+
+        500: {
+
+          description:
+            "Internal server error."
+
+        }
+
+      }
+
+    }
+
   }
 
 };

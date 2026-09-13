@@ -5,7 +5,9 @@ export const TreatmentPlanOrchestratorSchemas = {
 
     required: [
       "patientId",
+      "patientFullName",
       "dentistId",
+      "dentistFullName",
       "details"
     ],
 
@@ -15,8 +17,16 @@ export const TreatmentPlanOrchestratorSchemas = {
         type: "string",
         example: "patient-123"
       },
+      patientFullName: {
+        type: "string",
+        example: "patient-123"
+      },
 
       dentistId: {
+        type: "string",
+        example: "dentist-456"
+      },
+      dentistFullName: {
         type: "string",
         example: "dentist-456"
       },
@@ -126,8 +136,16 @@ export const TreatmentPlanOrchestratorSchemas = {
             type: "string",
             example: "patient-123"
           },
+          patientFullName: {
+            type: "string",
+            example: "patient-123"
+          },
 
           dentistId: {
+            type: "string",
+            example: "dentist-456"
+          },
+          dentistFullName: {
             type: "string",
             example: "dentist-456"
           },

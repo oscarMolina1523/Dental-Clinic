@@ -42,7 +42,9 @@ export class TreatmentPlanRepository implements ITreatmentPlanRepository {
       new TreatmentPlan({
         id: row["ID"],
         patientId: row["PATIENTID"],
+        patientFullName: row["PATIENTFULLNAME"],
         dentistId: row["DENTISTID"],
+        dentistFullName: row["DENTISTFULLNAME"],
         code: row["CODE"],
         status: row["STATUS"],
         totalAmount: row["TOTALAMOUNT"],
@@ -65,7 +67,9 @@ export class TreatmentPlanRepository implements ITreatmentPlanRepository {
     return new TreatmentPlan ({
       id: row["ID"],
       patientId: row["PATIENTID"],
+      patientFullName: row["PATIENTFULLNAME"],
       dentistId: row["DENTISTID"],
+      dentistFullName: row["DENTISTFULLNAME"],
       code: row["CODE"],
       status: row["STATUS"],
       totalAmount: row["TOTALAMOUNT"],

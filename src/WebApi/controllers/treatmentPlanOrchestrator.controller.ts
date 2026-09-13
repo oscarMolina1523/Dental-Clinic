@@ -82,4 +82,47 @@ export class TreatmentPlanOrchestratorController {
       });
     };
   }
+
+  delete = async (req: Request, res: Response) => {
+
+    try {
+
+      const { id } = req.params;
+
+
+      // Validar que sea un string
+      if (typeof id !== "string" || !id.trim()) {
+
+        return res.status(400).json({
+
+          message: "El planId es requerido."
+
+        });
+      }
+
+      await this._treatmentPlanOrchestrator.delete(id);
+
+
+      return res.status(200).json({
+
+        message: "Treatment plan eliminado correctamente."
+
+      });
+
+    } catch (error) {
+
+      console.error(
+        "Error deleting treatment plan:",
+        error
+      );
+
+
+      return res.status(500).json({
+
+        message: "Error al eliminar el treatment plan."
+
+      });
+
+    }
+  }
 }

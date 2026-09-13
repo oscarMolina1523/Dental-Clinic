@@ -25,4 +25,8 @@ export interface ITreatmentPlanOrchestratorService {
     treatmentPlanData: TreatmentPlanDto,
     details: TreatmentPlanDetailDto[]
   ): Promise<CreateTreatmentPlanResult>;
+
+  delete(
+    planId: string
+  ): Promise<boolean>;
 }
