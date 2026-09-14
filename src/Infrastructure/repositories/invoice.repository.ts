@@ -42,6 +42,7 @@ export class InvoiceRepository implements IInvoiceRepository {
       new Invoice({
         id: row["ID"],
         patientId: row["PATIENTID"],
+        patientFullName: row["PATIENTFULLNAME"],
         treatmentPlanId: row["TREATMENTPLANID"],
         invoiceNumber: row["INVOICENUMBER"],
         totalAmount: row["TOTALAMOUNT"],
@@ -65,6 +66,7 @@ export class InvoiceRepository implements IInvoiceRepository {
     return new Invoice({
       id: row["ID"],
       patientId: row["PATIENTID"],
+      patientFullName: row["PATIENTFULLNAME"],
       treatmentPlanId: row["TREATMENTPLANID"],
       invoiceNumber: row["INVOICENUMBER"],
       totalAmount: row["TOTALAMOUNT"],

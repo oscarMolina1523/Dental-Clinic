@@ -442,6 +442,10 @@
           "type": "string"
         },
         {
+          "name": "patientFullName",
+          "type": "string"
+        },
+        {
           "name": "treatmentPlanId",
           "type": "string"
         },

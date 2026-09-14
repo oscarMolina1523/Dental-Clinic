@@ -4,6 +4,7 @@ export const InvoiceSchemas = {
     required: [
       
         "patientId",
+        "patientFullName",
       
         "treatmentPlanId",
       
@@ -21,6 +22,7 @@ export const InvoiceSchemas = {
     properties: {
       
       patientId: { type: "string" },
+      patientFullName: { type: "string" },
       
       treatmentPlanId: { type: "string" },
       
@@ -43,6 +45,7 @@ export const InvoiceSchemas = {
       id: { type: "string" },
       
       patientId: { type: "string" },
+      patientFullName: { type: "string" },
       
       treatmentPlanId: { type: "string" },
       

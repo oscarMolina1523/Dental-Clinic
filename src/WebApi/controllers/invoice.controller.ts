@@ -56,13 +56,25 @@ export class InvoiceController {
     const amount =
       Number(req.body.amount);
 
-    const result =
-      await this._invoiceService.addPayment(
-        id,
-        amount
-      );
+    try {
 
-    res.json(result);
+      const result =
+        await this._invoiceService.addPayment(
+          id,
+          amount
+        );
+
+      return res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el lote"
+      });
+    }
+
   };
 
 

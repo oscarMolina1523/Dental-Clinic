@@ -248,6 +248,7 @@ export class EntitiesService implements IEntitiesService {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PATIENTID", "patientId", false),
+            new SqlColumnSettings("PATIENTFULLNAME", "patientFullName", false),
             new SqlColumnSettings("TREATMENTPLANID", "treatmentPlanId", false),
             new SqlColumnSettings("INVOICENUMBER", "invoiceNumber", false),
             new SqlColumnSettings("TOTALAMOUNT", "totalAmount", false),

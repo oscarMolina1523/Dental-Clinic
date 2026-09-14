@@ -3,6 +3,7 @@ import BaseModel from "./base.model";
 
 export default class Invoice extends BaseModel {
   patientId: string;
+  patientFullName:string;
   treatmentPlanId: string;
   invoiceNumber: string;
   private totalAmount: number;
@@ -13,6 +14,7 @@ export default class Invoice extends BaseModel {
   constructor({
     id,
     patientId,
+    patientFullName,
     treatmentPlanId,
     invoiceNumber,
     totalAmount,
@@ -22,6 +24,7 @@ export default class Invoice extends BaseModel {
   }: {
     id: string;
     patientId: string;
+    patientFullName: string;
     treatmentPlanId: string;
     invoiceNumber: string;
     totalAmount: number;
@@ -92,6 +95,7 @@ export default class Invoice extends BaseModel {
     }
 
     this.patientId = patientId;
+    this.patientFullName = patientFullName;
     this.treatmentPlanId = treatmentPlanId;
     this.invoiceNumber = invoiceNumber;
     this.totalAmount = totalAmount;

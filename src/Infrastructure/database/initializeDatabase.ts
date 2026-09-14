@@ -203,6 +203,7 @@ export async function initializeDatabase(): Promise<void> {
     CREATE TABLE IF NOT EXISTS INVOICES (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
+        PATIENTFULLNAME TEXT,
         TREATMENTPLANID TEXT,
         INVOICENUMBER TEXT,
         TOTALAMOUNT INTEGER,
