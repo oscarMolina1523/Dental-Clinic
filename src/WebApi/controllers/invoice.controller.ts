@@ -71,7 +71,7 @@ export class InvoiceController {
         message:
           error instanceof Error
             ? error.message
-            : "No se pudo crear el lote"
+            : "No se pudo crear la factura"
       });
     }
 
@@ -136,9 +136,18 @@ export class InvoiceController {
     const id =
       req.params.id as string;
 
-    const result =
-      await this._invoiceService.cancel(id);
+    try {
+      const result =
+        await this._invoiceService.cancel(id);
 
-    res.json(result);
+      return res.json(result);
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo cancelar la factura"
+      });
+    }
   };
 }
