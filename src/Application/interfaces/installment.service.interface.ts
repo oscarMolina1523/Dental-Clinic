@@ -4,6 +4,7 @@ import { InstallmentDto } from './../dtos/installment.dto';
 export interface IInstallmentService {
   findAll(page: number, pageSize: number): Promise<Installment[]>;
   findById(id: string): Promise<Installment | null>;
+  findByPaymentPlanId(id: string): Promise<Installment[]>;
   create(data: InstallmentDto): Promise<Installment>;
   update(id: string, data: InstallmentDto): Promise<Installment | null>;
   delete(id: string): Promise<void>;

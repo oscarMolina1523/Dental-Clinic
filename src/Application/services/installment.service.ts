@@ -23,6 +23,10 @@ export class InstallmentService implements IInstallmentService {
     return await this._installmentRepository.findById(id);
   }
 
+  async findByPaymentPlanId(id: string): Promise<Installment[]> {
+    return await this._installmentRepository.findByPaymentPlanId(id);
+  }
+
   async create(data: InstallmentDto): Promise<Installment> {
 
     const newData: Installment = new Installment({

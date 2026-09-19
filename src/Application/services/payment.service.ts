@@ -20,6 +20,10 @@ export class PaymentService implements IPaymentService {
   async findById(id: string) : Promise<Payment | null> {
     return await this._paymentRepository.findById(id);
   }
+
+  async findByInvoiceId(id: string) : Promise<Payment[]> {
+    return await this._paymentRepository.findByInvoiceId(id);
+  }
   
   async create(data: PaymentDto): Promise<Payment> {
     const newData: Payment = new Payment({

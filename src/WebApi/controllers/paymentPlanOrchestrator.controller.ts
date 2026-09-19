@@ -16,6 +16,41 @@ export class PaymentPlanOrchestratorController {
   }
 
   // ============================================================
+  // GET PAYMENT PLAN BY ID
+  // ============================================================
+
+  getPaymentPlanById = async (
+    req: Request,
+    res: Response
+  ) => {
+
+    const { id } = req.params;
+
+    if (!id || Array.isArray(id)) {
+      return res.status(400).json({
+        message: "El ID del plan de pago es requerido"
+      });
+    }
+
+    try{
+
+      const result =
+        await this._paymentPlanOrchestratorService
+          .getPaymentPlanById(id);
+  
+      return res.status(200).json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo obtener el detalle de este plan de pago"
+      });
+    }
+  };
+
+  // ============================================================
   // CREATE PAYMENT PLAN
   // ============================================================
 
@@ -41,11 +76,22 @@ export class PaymentPlanOrchestratorController {
     res: Response
   ) => {
 
-    const result =
-      await this._paymentPlanOrchestratorService
-        .registerPayment(req.body);
+    try{
 
-    res.status(201).json(result);
+      const result =
+        await this._paymentPlanOrchestratorService
+          .registerPayment(req.body);
+  
+      return res.status(201).json(result);
+    
+    }catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el detalle de este plan de pago"
+      });
+    }
   };
 
 }

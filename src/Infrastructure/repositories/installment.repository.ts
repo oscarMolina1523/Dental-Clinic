@@ -39,16 +39,16 @@ export class InstallmentRepository implements IInstallmentRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new Installment({
-        id: row["ID"],
-        paymentPlanId: row["PAYMENTPLANID"],
-        installmentNumber: row["INSTALLMENTNUMBER"],
-        dueDate: row["DUEDATE"],
-        amount: row["AMOUNT"],
-        lateFeeAmount: row["LATEFEEAMOUNT"],
-        paidAmount: row["PAIDAMOUNT"],
-        status: row["STATUS"],
-      })
+        new Installment({
+          id: row["ID"],
+          paymentPlanId: row["PAYMENTPLANID"],
+          installmentNumber: row["INSTALLMENTNUMBER"],
+          dueDate: row["DUEDATE"],
+          amount: row["AMOUNT"],
+          lateFeeAmount: row["LATEFEEAMOUNT"],
+          paidAmount: row["PAIDAMOUNT"],
+          status: row["STATUS"],
+        })
     );
   }
 
@@ -62,7 +62,7 @@ export class InstallmentRepository implements IInstallmentRepository {
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;
 
-    return new Installment ({
+    return new Installment({
       id: row["ID"],
       paymentPlanId: row["PAYMENTPLANID"],
       installmentNumber: row["INSTALLMENTNUMBER"],
@@ -72,6 +72,32 @@ export class InstallmentRepository implements IInstallmentRepository {
       paidAmount: row["PAIDAMOUNT"],
       status: row["STATUS"],
     });
+  }
+
+  async findByPaymentPlanId(id: string): Promise<Installment[]> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.Installment)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("paymentPlanId", id).BuildReader();
+
+    const rows = await this._connection.executeQuery(readCommand);
+    if (!rows) return [];
+
+    return rows.map(
+      (row) =>
+        new Installment({
+          id: row["ID"],
+          paymentPlanId: row["PAYMENTPLANID"],
+          installmentNumber: row["INSTALLMENTNUMBER"],
+          dueDate: row["DUEDATE"],
+          amount: row["AMOUNT"],
+          lateFeeAmount: row["LATEFEEAMOUNT"],
+          paidAmount: row["PAIDAMOUNT"],
+          status: row["STATUS"],
+        })
+    );
   }
 
   async create(entity: Installment): Promise<void> {

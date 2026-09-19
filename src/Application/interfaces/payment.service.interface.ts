@@ -4,6 +4,7 @@ import { PaymentDto } from './../dtos/payment.dto';
 export interface IPaymentService {
   findAll(page: number, pageSize: number): Promise<Payment[]>;
   findById(id: string): Promise<Payment | null>;
+  findByInvoiceId(id: string): Promise<Payment[]>;
   create(data: PaymentDto): Promise<Payment>;
   update(id: string, data: PaymentDto): Promise<Payment | null>;
   delete(id: string): Promise<void>;

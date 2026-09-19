@@ -13,6 +13,8 @@ import { InstallmentStatus } from "../../Domain/types/installmentStatus.enum";
 import { PaymentPlanStatus } from "../../Domain/types/paymentPlanStatus.enum";
 import { PaymentMethods } from "../../Domain/types/paymentMethods.enum";
 import { IPaymentPlanOrchestratorService } from "../interfaces/paymentPlanOrchestrator.interface";
+import Invoice from "../../Domain/entities/invoice";
+import { PaymentPlanDetailsResponse } from "../dtos/response/paymentPlanOrchestrator";
 
 @injectable()
 export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorService {
@@ -32,6 +34,71 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
         private readonly _paymentService: IPaymentService
 
     ) { }
+
+
+    // ============================================================
+    // GET PAYMENT PLAN BY ID
+    // ============================================================
+
+    async getPaymentPlanById(id: string): Promise<PaymentPlanDetailsResponse> {
+
+        // ----------------------------------------------------------
+        // 1. Buscar PaymentPlan
+        // ----------------------------------------------------------
+
+        const paymentPlan =
+            await this._paymentPlanService.findById(id);
+
+        if (!paymentPlan) {
+            throw new Error(
+                "El plan de pago no existe"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 2. Buscar factura
+        // ----------------------------------------------------------
+
+        const invoice =
+            await this._invoiceService.findById(
+                paymentPlan.invoiceId
+            );
+
+        if (!invoice) {
+            throw new Error(
+                "La factura asociada al plan no existe"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 3. Buscar cuotas
+        // ----------------------------------------------------------
+
+        const installments =
+            await this._installmentService.findByPaymentPlanId(
+                paymentPlan.id
+            );
+
+        // ----------------------------------------------------------
+        // 4. Buscar pagos
+        // ----------------------------------------------------------
+
+        const payments =
+            await this._paymentService.findByInvoiceId(
+                paymentPlan.invoiceId
+            );
+
+        // ----------------------------------------------------------
+        // 5. Retornar toda la información
+        // ----------------------------------------------------------
+
+        return {
+            paymentPlan,
+            invoice,
+            installments,
+            payments
+        };
+    }
 
     // ============================================================
     // CREATE PAYMENT PLAN

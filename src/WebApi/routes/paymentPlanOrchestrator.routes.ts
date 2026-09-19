@@ -16,6 +16,12 @@ const controller =
 // PAYMENT PLAN
 // ============================================================
 
+// Obtiene el plan, factura, cuotas, pagos y resumen
+router.get(
+  "/:id",
+  controller.getPaymentPlanById
+);
+
 // Crea el plan y todas sus cuotas
 router.post(
   "/",

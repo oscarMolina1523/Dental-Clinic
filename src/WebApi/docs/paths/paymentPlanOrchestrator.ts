@@ -147,6 +147,93 @@ export const PaymentPlanOrchestratorPaths = {
         }
       }
     }
+  },
+
+  // ============================================================
+  // GET PAYMENT PLAN BY ID
+  // ============================================================
+
+  "/paymentPlanOrchestrator/{id}": {
+
+    get: {
+
+      summary:
+        "Get payment plan details by ID",
+
+      description:
+        "Returns the complete payment plan information, including the associated invoice, installments, payments and a summary with the total amount, total paid, pending balance, installment counts and the next pending installment.",
+
+      tags: [
+        "PaymentPlanOrchestrator"
+      ],
+
+      parameters: [
+
+        {
+
+          name: "id",
+
+          in: "path",
+
+          required: true,
+
+          description:
+            "Unique identifier of the payment plan",
+
+          schema: {
+
+            type: "string",
+
+            example:
+              "plan-123456"
+
+          }
+        }
+
+      ],
+
+      responses: {
+
+        200: {
+
+          description:
+            "Payment plan details retrieved successfully",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+
+                $ref:
+                  "#/components/schemas/GetPaymentPlanByIdResponse"
+
+              }
+
+            }
+
+          }
+
+        },
+
+        400: {
+
+          description:
+            "Invalid payment plan ID"
+
+        },
+
+        404: {
+
+          description:
+            "Payment plan or associated invoice not found"
+
+        }
+
+      }
+
+    }
+
   }
 
 };

@@ -2,6 +2,7 @@ import Installment from "../../Domain/entities/installment";
 import Payment from "../../Domain/entities/payment";
 import PaymentPlan from "../../Domain/entities/paymentPlan";
 import { PaymentMethods } from "../../Domain/types/paymentMethods.enum";
+import { PaymentPlanDetailsResponse } from "../dtos/response/paymentPlanOrchestrator";
 
 export interface IPaymentPlanOrchestratorService {
     createPaymentPlan(data: {
@@ -16,6 +17,10 @@ export interface IPaymentPlanOrchestratorService {
         paymentPlan: PaymentPlan;
         installments: Installment[];
     }>;
+
+    getPaymentPlanById(
+        id: string
+    ): Promise<PaymentPlanDetailsResponse>;
 
     registerPayment(data: {
         installmentId: string;
