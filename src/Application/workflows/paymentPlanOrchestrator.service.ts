@@ -93,6 +93,19 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
         const paymentPlanTotal =
             invoiceTotal + interestAmount;
 
+        //actualizamos el monto total en la fatcura con el interes aplicado
+        const updatedInvoice =
+            await this._invoiceService.changeTotal(
+                data.invoiceId,
+                paymentPlanTotal
+            );
+
+        if (!updatedInvoice) {
+            throw new Error(
+                "No se pudo actualizar el total de la factura"
+            );
+        }
+
         // ----------------------------------------------------------
         // 4. Crear PaymentPlan
         // ----------------------------------------------------------
