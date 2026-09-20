@@ -185,7 +185,7 @@ export const PaymentPlanOrchestratorPaths = {
             type: "string",
 
             example:
-              "plan-123456"
+              "invoice-123456"
 
           }
         }

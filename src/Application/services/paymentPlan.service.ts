@@ -22,6 +22,10 @@ export class PaymentPlanService implements IPaymentPlanService {
     return await this._paymentPlanRepository.findById(id);
   }
 
+  async findByInvoiceId(id: string): Promise<PaymentPlan | null> {
+    return await this._paymentPlanRepository.findByInvoiceId(id);
+  }
+
   async create(data: PaymentPlanDto): Promise<PaymentPlan> {
     const newData: PaymentPlan = new PaymentPlan({
       ...data,

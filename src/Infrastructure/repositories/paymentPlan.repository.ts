@@ -39,17 +39,17 @@ export class PaymentPlanRepository implements IPaymentPlanRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new PaymentPlan({
-        id: row["ID"],
-        invoiceId: row["INVOICEID"],
-        totalAmount: row["TOTALAMOUNT"],
-        numberOfInstallments: row["NUMBEROFINSTALLMENTS"],
-        frequencyDays: row["FREQUENCYDAYS"],
-        interestRate: row["INTERESTRATE"],
-        lateFreePercentage: row["LATEFREEPERCENTAGE"],
-        gracePeriodDays: row["GRACEPERIODDAYS"],
-        status: row["STATUS"],
-      })
+        new PaymentPlan({
+          id: row["ID"],
+          invoiceId: row["INVOICEID"],
+          totalAmount: row["TOTALAMOUNT"],
+          numberOfInstallments: row["NUMBEROFINSTALLMENTS"],
+          frequencyDays: row["FREQUENCYDAYS"],
+          interestRate: row["INTERESTRATE"],
+          lateFreePercentage: row["LATEFREEPERCENTAGE"],
+          gracePeriodDays: row["GRACEPERIODDAYS"],
+          status: row["STATUS"],
+        })
     );
   }
 
@@ -59,6 +59,30 @@ export class PaymentPlanRepository implements IPaymentPlanRepository {
       .WithOperation(SqlReadOperation.SelectById)
       .WithId(id)
       .BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new PaymentPlan({
+      id: row["ID"],
+      invoiceId: row["INVOICEID"],
+      totalAmount: row["TOTALAMOUNT"],
+      numberOfInstallments: row["NUMBEROFINSTALLMENTS"],
+      frequencyDays: row["FREQUENCYDAYS"],
+      interestRate: row["INTERESTRATE"],
+      lateFreePercentage: row["LATEFREEPERCENTAGE"],
+      gracePeriodDays: row["GRACEPERIODDAYS"],
+      status: row["STATUS"],
+    });
+  }
+
+  async findByInvoiceId(id: string): Promise<PaymentPlan | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.PaymentPlan)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("invoiceId", id).BuildReader();
 
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;

@@ -40,35 +40,55 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
     // GET PAYMENT PLAN BY ID
     // ============================================================
 
-    async getPaymentPlanById(id: string): Promise<PaymentPlanDetailsResponse> {
+    async getPaymentPlanById(invoiceId: string): Promise<PaymentPlanDetailsResponse> {
+
+        // ============================================================
+        // 1. BUSCAR LA FACTURA
+        // ============================================================
+
+        const invoice =
+            await this._invoiceService.findById(invoiceId);
+
+        if (!invoice) {
+            throw new Error("La factura no existe");
+        }
 
         // ----------------------------------------------------------
         // 1. Buscar PaymentPlan
         // ----------------------------------------------------------
 
-        const paymentPlan =
-            await this._paymentPlanService.findById(id);
+        // const paymentPlan =
+        //     await this._paymentPlanService.findById(id);
 
+        // if (!paymentPlan) {
+        //     throw new Error(
+        //         "El plan de pago no existe"
+        //     );
+        // }
+
+        const paymentPlan =
+            await this._paymentPlanService.findByInvoiceId(invoiceId);
+
+        // La factura existe pero no tiene plan
         if (!paymentPlan) {
-            throw new Error(
+             throw new Error(
                 "El plan de pago no existe"
             );
         }
-
         // ----------------------------------------------------------
         // 2. Buscar factura
         // ----------------------------------------------------------
 
-        const invoice =
-            await this._invoiceService.findById(
-                paymentPlan.invoiceId
-            );
+        // const invoice =
+        //     await this._invoiceService.findById(
+        //         paymentPlan.invoiceId
+        //     );
 
-        if (!invoice) {
-            throw new Error(
-                "La factura asociada al plan no existe"
-            );
-        }
+        // if (!invoice) {
+        //     throw new Error(
+        //         "La factura asociada al plan no existe"
+        //     );
+        // }
 
         // ----------------------------------------------------------
         // 3. Buscar cuotas
