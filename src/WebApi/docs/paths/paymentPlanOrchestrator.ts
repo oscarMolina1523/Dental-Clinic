@@ -234,6 +234,94 @@ export const PaymentPlanOrchestratorPaths = {
 
     }
 
+  },
+
+   // ============================================================
+  // CANCEL PAYMENT PLAN
+  // ============================================================
+
+  "/paymentPlanOrchestrator/cancel/{invoiceId}": {
+
+    delete: {
+
+      summary:
+        "Cancel payment plan by invoice ID",
+
+      description:
+        "Cancels the payment plan associated with the specified invoice, including all installments belonging to the plan, and cancels the invoice. Existing payment records are preserved for historical purposes.",
+
+      tags: [
+        "PaymentPlanOrchestrator"
+      ],
+
+      parameters: [
+
+        {
+
+          name: "invoiceId",
+
+          in: "path",
+
+          required: true,
+
+          description:
+            "Unique identifier of the invoice whose associated payment plan will be cancelled",
+
+          schema: {
+
+            type: "string",
+
+            example:
+              "invoice-123456"
+
+          }
+
+        }
+
+      ],
+
+      responses: {
+
+        200: {
+
+          description:
+            "Payment plan, installments and invoice cancelled successfully",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+
+                $ref:
+                  "#/components/schemas/CancelPaymentPlanResponse"
+
+              }
+
+            }
+
+          }
+
+        },
+
+        400: {
+
+          description:
+            "Unable to cancel the payment plan, installments or invoice"
+
+        },
+
+        404: {
+
+          description:
+            "Invoice or payment plan not found"
+
+        }
+
+      }
+
+    }
+
   }
 
 };

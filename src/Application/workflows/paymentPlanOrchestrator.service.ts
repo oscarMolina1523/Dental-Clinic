@@ -396,4 +396,125 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
             installment: updatedInstallment
         };
     }
+
+    // ============================================================
+    // CANCEL PAYMENT PLAN
+    // ============================================================
+
+    async cancelPaymentPlan(invoiceId: string): Promise<{
+        invoice: Invoice;
+        paymentPlan: PaymentPlan;
+        installments: Installment[];
+    }> {
+
+        // ----------------------------------------------------------
+        // 1. Buscar factura
+        // ----------------------------------------------------------
+
+        const invoice =
+            await this._invoiceService.findById(invoiceId);
+
+        if (!invoice) {
+            throw new Error(
+                "La factura no existe"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 2. Buscar PaymentPlan por invoiceId
+        // ----------------------------------------------------------
+
+        const paymentPlan =
+            await this._paymentPlanService.findByInvoiceId(
+                invoiceId
+            );
+
+        if (!paymentPlan) {
+            throw new Error(
+                "La factura no tiene un plan de pago asociado"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 3. Buscar cuotas del plan
+        // ----------------------------------------------------------
+
+        const installments =
+            await this._installmentService.findByPaymentPlanId(
+                paymentPlan.id
+            );
+
+        // ----------------------------------------------------------
+        // 4. Cancelar cuotas
+        // ----------------------------------------------------------
+
+        const cancelledInstallments: Installment[] = [];
+
+        for (const installment of installments) {
+
+            // Si ya está cancelada no es necesario volver a cancelarla
+            if (
+                installment.currentStatus ===
+                InstallmentStatus.CANCELLED
+            ) {
+                cancelledInstallments.push(installment);
+                continue;
+            }
+
+            const cancelledInstallment =
+                await this._installmentService.cancel(
+                    installment.id
+                );
+
+            if (!cancelledInstallment) {
+                throw new Error(
+                    `No se pudo cancelar la cuota ${installment.id}`
+                );
+            }
+
+            cancelledInstallments.push(
+                cancelledInstallment
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 5. Cancelar PaymentPlan
+        // ----------------------------------------------------------
+
+        const cancelledPaymentPlan =
+            await this._paymentPlanService.cancel(
+                paymentPlan.id
+            );
+
+        if (!cancelledPaymentPlan) {
+            throw new Error(
+                "No se pudo cancelar el plan de pago"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 6. Cancelar Invoice
+        // ----------------------------------------------------------
+
+        const cancelledInvoice =
+            await this._invoiceService.cancel(
+                invoiceId
+            );
+
+        if (!cancelledInvoice) {
+            throw new Error(
+                "No se pudo cancelar la factura"
+            );
+        }
+
+        // ----------------------------------------------------------
+        // 7. Retornar resultado
+        // ----------------------------------------------------------
+
+        return {
+            invoice: cancelledInvoice,
+            paymentPlan: cancelledPaymentPlan,
+            installments: cancelledInstallments
+        };
+    }
 }

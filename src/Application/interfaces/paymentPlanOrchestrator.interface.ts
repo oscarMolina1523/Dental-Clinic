@@ -1,4 +1,5 @@
 import Installment from "../../Domain/entities/installment";
+import Invoice from "../../Domain/entities/invoice";
 import Payment from "../../Domain/entities/payment";
 import PaymentPlan from "../../Domain/entities/paymentPlan";
 import { PaymentMethods } from "../../Domain/types/paymentMethods.enum";
@@ -32,5 +33,13 @@ export interface IPaymentPlanOrchestratorService {
     }): Promise<{
         payment: Payment;
         installment: Installment;
+    }>;
+
+    cancelPaymentPlan(
+        invoiceId: string
+    ): Promise<{
+        invoice: Invoice;
+        paymentPlan: PaymentPlan;
+        installments: Installment[];
     }>;
 }

@@ -38,4 +38,9 @@ router.post(
   controller.registerPayment
 );
 
+router.delete(
+  "/cancel/:invoiceId",
+  controller.cancelPaymentPlan
+);
+
 export default router;

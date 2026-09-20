@@ -94,4 +94,40 @@ export class PaymentPlanOrchestratorController {
     }
   };
 
+  // ============================================================
+  // CANCEL PAYMENT PLAN
+  // ============================================================
+
+  cancelPaymentPlan = async (
+    req: Request,
+    res: Response
+  ) => {
+
+    const { invoiceId } = req.params;
+
+    if (!invoiceId || Array.isArray(invoiceId)) {
+      return res.status(400).json({
+        message: "El ID de la factura es requerido"
+      });
+    }
+
+    try {
+
+      const result =
+        await this._paymentPlanOrchestratorService
+          .cancelPaymentPlan(invoiceId);
+
+      return res.status(200).json(result);
+
+    } catch (error) {
+
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo cancelar el plan de pago"
+      });
+    }
+  };
+
 }
