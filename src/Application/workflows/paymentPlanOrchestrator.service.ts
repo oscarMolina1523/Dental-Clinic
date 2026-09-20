@@ -71,7 +71,7 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
 
         // La factura existe pero no tiene plan
         if (!paymentPlan) {
-             throw new Error(
+            throw new Error(
                 "El plan de pago no existe"
             );
         }
@@ -380,6 +380,17 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
 
             });
 
+        const updatedInvoice =
+            await this._invoiceService.addPayment(
+                paymentPlan.invoiceId,
+                data.amount
+            );
+
+        if (!updatedInvoice) {
+            throw new Error(
+                "No se pudo actualizar el monto pendiente de la factura"
+            );
+        }
         return {
             payment,
             installment: updatedInstallment
