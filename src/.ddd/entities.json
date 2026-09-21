@@ -351,6 +351,10 @@
       "name": "MedicalPrescription",
       "fields": [
         {
+          "name": "clinicalProgressId",
+          "type": "string"
+        },
+        {
           "name": "patientId",
           "type": "string"
         },
@@ -406,6 +410,10 @@
       "fields": [
         {
           "name": "patientId",
+          "type": "string"
+        },
+        {
+          "name": "clinicalProgressId",
           "type": "string"
         },
         {

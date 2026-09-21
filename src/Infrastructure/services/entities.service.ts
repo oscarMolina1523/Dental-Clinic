@@ -208,6 +208,7 @@ export class EntitiesService implements IEntitiesService {
     private getMedicalPrescriptionSettings(): SqlEntitySettings {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
+            new SqlColumnSettings("CLINICALPROGRESSID", "clinicalProgressId", false),
             new SqlColumnSettings("PATIENTID", "patientId", false),
             new SqlColumnSettings("PATIENTFULLNAME", "patientFullName", false),
             new SqlColumnSettings("DENTISTID", "dentistId", false),
@@ -233,6 +234,7 @@ export class EntitiesService implements IEntitiesService {
     private getPatientAttachmentSettings(): SqlEntitySettings {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
+            new SqlColumnSettings("CLINICALPROGRESSID", "clinicalProgressId", false),
             new SqlColumnSettings("PATIENTID", "patientId", false),
             new SqlColumnSettings("FILETYPE", "fileType", false),
             new SqlColumnSettings("FILEURL", "fileUrl", false),
