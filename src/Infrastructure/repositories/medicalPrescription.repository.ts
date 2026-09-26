@@ -41,6 +41,7 @@ export class MedicalPrescriptionRepository implements IMedicalPrescriptionReposi
       (row) =>
       ({
         id: row["ID"],
+        clinicalProgressId: row["CLINICALPROGRESSID"],
         patientId: row["PATIENTID"],
         patientFullName: row["PATIENTFULLNAME"],
         dentistId: row["DENTISTID"],
@@ -63,6 +64,7 @@ export class MedicalPrescriptionRepository implements IMedicalPrescriptionReposi
 
     return {
       id: row["ID"],
+      clinicalProgressId: row["CLINICALPROGRESSID"],
       patientId: row["PATIENTID"],
       patientFullName: row["PATIENTFULLNAME"],
       dentistId: row["DENTISTID"],

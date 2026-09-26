@@ -3,6 +3,7 @@ export const PatientAttachmentSchemas = {
     type: "object",
     required: [
       
+        "clinicalProgressId",
         "patientId",
       
         "fileType",
@@ -20,6 +21,7 @@ export const PatientAttachmentSchemas = {
     ],
     properties: {
       
+      clinicalProgressId: { type: "string" },
       patientId: { type: "string" },
       
       fileType: { type: "string" },
@@ -42,6 +44,7 @@ export const PatientAttachmentSchemas = {
     properties: {
       id: { type: "string" },
       
+      clinicalProgressId: { type: "string" },
       patientId: { type: "string" },
       
       fileType: { type: "string" },

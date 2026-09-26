@@ -4,6 +4,7 @@ export const DentalChartSchemas = {
     required: [
 
       "patientId",
+      "clinicalProgressId",
 
       "evaluationDate",
 
@@ -14,6 +15,7 @@ export const DentalChartSchemas = {
     ],
     properties: {
 
+      clinicalProgressId: { type: "string" },
       patientId: { type: "string" },
 
       evaluationDate: { type: "string" },
@@ -30,6 +32,7 @@ export const DentalChartSchemas = {
     properties: {
       id: { type: "string" },
 
+      clinicalProgressId: { type: "string" },
       patientId: { type: "string" },
 
       evaluationDate: { type: "string" },

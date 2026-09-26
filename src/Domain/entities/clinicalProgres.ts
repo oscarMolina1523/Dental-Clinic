@@ -2,7 +2,7 @@ import BaseModel from "./base.model";
 
 export default class ClinicalProgres extends BaseModel {
   patientId: string;
-  dateId: string;
+  dateId: string; //hace referencia a la cita 
   dentistId: string;
   diagnosis: string;
   treatmentId: string;

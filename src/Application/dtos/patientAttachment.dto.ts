@@ -1,4 +1,5 @@
 export interface PatientAttachmentDto {
+  clinicalProgressId: string;
   patientId: string;
   fileType: string;
   fileUrl: string;

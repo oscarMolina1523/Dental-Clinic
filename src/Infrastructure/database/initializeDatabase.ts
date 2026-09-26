@@ -83,6 +83,7 @@ export async function initializeDatabase(): Promise<void> {
     CREATE TABLE IF NOT EXISTS DENTALCHARTS (
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
+        CLINICALPROGRESSID TEXT,
         EVALUATIONDATE TEXT,
         DENTISTID TEXT,
         OBSERVATIONS TEXT
@@ -163,6 +164,7 @@ export async function initializeDatabase(): Promise<void> {
         await db.execute(`
     CREATE TABLE IF NOT EXISTS MEDICALPRESCRIPTIONS (
         ID TEXT PRIMARY KEY,
+        CLINICALPROGRESSID TEXT,
         PATIENTID TEXT,
         PATIENTFULLNAME TEXT,
         DENTISTID TEXT,
@@ -188,6 +190,7 @@ export async function initializeDatabase(): Promise<void> {
         await db.execute(`
     CREATE TABLE IF NOT EXISTS PATIENTATTACHMENTS (
         ID TEXT PRIMARY KEY,
+        CLINICALPROGRESSID TEXT,
         PATIENTID TEXT,
         FILETYPE TEXT,
         FILEURL TEXT,

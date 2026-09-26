@@ -3,6 +3,7 @@ export const MedicalPrescriptionSchemas = {
     type: "object",
     required: [
       
+        "clinicalProgressId",
         "patientId",
 
         "patientFullName",
@@ -18,6 +19,7 @@ export const MedicalPrescriptionSchemas = {
     ],
     properties: {
       
+      clinicalProgressId : { type: "string" },
       patientId: { type: "string" },
 
       patientFullName: { type: "string" },
@@ -38,6 +40,7 @@ export const MedicalPrescriptionSchemas = {
     properties: {
       id: { type: "string" },
       
+      clinicalProgressId: { type: "string" },
       patientId: { type: "string" },
 
       patientFullName: { type: "string" },

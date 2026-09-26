@@ -1,6 +1,7 @@
 import BaseModel from "./base.model";
 
 export default class PatientAttachment extends BaseModel {
+  clinicalProgressId: string;
   patientId: string;
   fileType: string;
   fileUrl: string;
@@ -11,6 +12,7 @@ export default class PatientAttachment extends BaseModel {
 
   constructor({
     id,
+    clinicalProgressId,
     patientId,
     fileType,
     fileUrl,
@@ -20,6 +22,7 @@ export default class PatientAttachment extends BaseModel {
     createdAt,
   }: {
     id: string;
+    clinicalProgressId: string;
     patientId: string;
     fileType: string;
     fileUrl: string;
@@ -29,6 +32,7 @@ export default class PatientAttachment extends BaseModel {
     createdAt: string;
   }) {
     super(id);
+    this.clinicalProgressId = clinicalProgressId;
     this.patientId = patientId;
     this.fileType = fileType;
     this.fileUrl = fileUrl;
