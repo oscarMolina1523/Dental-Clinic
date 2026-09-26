@@ -127,6 +127,7 @@ export class EntitiesService implements IEntitiesService {
     private getDentalChartSettings(): SqlEntitySettings {
         const columns: SqlColumnSettings[] = [
             new SqlColumnSettings("ID", "id", true),
+            new SqlColumnSettings("CLINICALPROGRESSID", "clinicalProgressId", false),
             new SqlColumnSettings("PATIENTID", "patientId", false),
             new SqlColumnSettings("EVALUATIONDATE", "evaluationDate", false),
             new SqlColumnSettings("DENTISTID", "dentistId", false),

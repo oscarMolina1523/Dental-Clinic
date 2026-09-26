@@ -41,6 +41,7 @@ export class DentalChartRepository implements IDentalChartRepository {
       (row) =>
       new DentalChart({
         id: row["ID"],
+        clinicalProgressId: row["CLINICALPROGRESSID"],
         patientId: row["PATIENTID"],
         evaluationDate: row["EVALUATIONDATE"],
         dentistId: row["DENTISTID"],
@@ -62,6 +63,7 @@ export class DentalChartRepository implements IDentalChartRepository {
     return new DentalChart({
       id: row["ID"],
       patientId: row["PATIENTID"],
+      clinicalProgressId: row["CLINICALPROGRESSID"],
       evaluationDate: row["EVALUATIONDATE"],
       dentistId: row["DENTISTID"],
       observations: row["OBSERVATIONS"],

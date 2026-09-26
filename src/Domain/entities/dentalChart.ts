@@ -1,6 +1,7 @@
 import BaseModel from "./base.model";
 
 export default class DentalChart extends BaseModel {
+  clinicalProgressId: string;
   patientId: string;
   evaluationDate: Date;
   dentistId: string;
@@ -8,12 +9,14 @@ export default class DentalChart extends BaseModel {
 
   constructor({
     id,
+    clinicalProgressId,
     patientId,
     evaluationDate,
     dentistId,
     observations,
   }: {
     id: string;
+    clinicalProgressId: string;
     patientId: string;
     evaluationDate: Date;
     dentistId: string;
@@ -83,6 +86,7 @@ export default class DentalChart extends BaseModel {
     // ============================================================
 
     this.patientId = patientId;
+    this.clinicalProgressId = clinicalProgressId;
     this.evaluationDate = evaluationDate;
     this.dentistId = dentistId;
     this.observations = observations;
