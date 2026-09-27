@@ -39,14 +39,14 @@ export class DentalChartRepository implements IDentalChartRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new DentalChart({
-        id: row["ID"],
-        clinicalProgressId: row["CLINICALPROGRESSID"],
-        patientId: row["PATIENTID"],
-        evaluationDate: row["EVALUATIONDATE"],
-        dentistId: row["DENTISTID"],
-        observations: row["OBSERVATIONS"],
-      })
+        new DentalChart({
+          id: row["ID"],
+          clinicalProgressId: row["CLINICALPROGRESSID"],
+          patientId: row["PATIENTID"],
+          evaluationDate: row["EVALUATIONDATE"],
+          dentistId: row["DENTISTID"],
+          observations: row["OBSERVATIONS"],
+        })
     );
   }
 
@@ -62,6 +62,27 @@ export class DentalChartRepository implements IDentalChartRepository {
 
     return new DentalChart({
       id: row["ID"],
+      patientId: row["PATIENTID"],
+      clinicalProgressId: row["CLINICALPROGRESSID"],
+      evaluationDate: row["EVALUATIONDATE"],
+      dentistId: row["DENTISTID"],
+      observations: row["OBSERVATIONS"],
+    });
+  }
+
+  async findByClinicalProgressId(id: string): Promise<DentalChart | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.DentalChart)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("clinicalProgressId", id).BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new DentalChart({
+     id: row["ID"],
       patientId: row["PATIENTID"],
       clinicalProgressId: row["CLINICALPROGRESSID"],
       evaluationDate: row["EVALUATIONDATE"],

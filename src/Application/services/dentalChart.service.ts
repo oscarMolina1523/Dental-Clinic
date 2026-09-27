@@ -20,6 +20,10 @@ export class DentalChartService implements IDentalChartService {
   async findById(id: string) : Promise<DentalChart | null> {
     return await this._dentalChartRepository.findById(id);
   }
+
+  async findByClinicalProgressId(id: string) : Promise<DentalChart | null> {
+    return await this._dentalChartRepository.findByClinicalProgressId(id);
+  }
   
   async create(data: DentalChartDto): Promise<DentalChart> {
     const newData: DentalChart = new DentalChart({

@@ -62,6 +62,41 @@ export class DentalChartOrchestratorService
   }
 
   // ============================================================
+  // GET COMPLETE DENTAL CHART BY CLINICAL PROGRESS ID
+  // ============================================================
+
+  async getByClinicalProgressId(
+    clinicalProgressId: string
+  ): Promise<DentalChartWithDetails | null> {
+
+    const dentalChart =
+      await this._dentalChartService.findByClinicalProgressId(
+        clinicalProgressId
+      );
+
+    if (!dentalChart) {
+      return null;
+    }
+
+    const details =
+      await this._dentalChartDetailService.findAll(
+        1,
+        1000
+      );
+
+    const dentalChartDetails =
+      details.filter(
+        detail =>
+          detail.dentalChartId === dentalChart.id
+      );
+
+    return {
+      dentalChart,
+      details: dentalChartDetails
+    };
+  }
+
+  // ============================================================
   // CREATE COMPLETE DENTAL CHART
   // ============================================================
 
@@ -160,9 +195,9 @@ export class DentalChartOrchestratorService
         currentDetails.find(
           existing =>
             existing.toothNumber ===
-              detail.toothNumber &&
+            detail.toothNumber &&
             existing.face ===
-              detail.face
+            detail.face
         );
 
       if (existingDetail) {

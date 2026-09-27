@@ -76,6 +76,30 @@ export class PatientAttachmentRepository implements IPatientAttachmentRepository
     } as PatientAttachment;
   }
 
+  async findByClinicalProgressId(id: string): Promise<PatientAttachment | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.PatientAttachment)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField("clinicalProgressId", id).BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new PatientAttachment({
+      id: row["ID"],
+      clinicalProgressId: row["CLINICALPROGRESSID"],
+      patientId: row["PATIENTID"],
+      fileType: row["FILETYPE"],
+      fileUrl: row["FILEURL"],
+      fileName: row["FILENAME"],
+      description: row["DESCRIPTION"],
+      uploadedBy: row["UPLOADEDBY"],
+      createdAt: row["CREATEDAT"],
+    });
+  }
+
   async create(entity: PatientAttachment): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.PatientAttachment, entity)

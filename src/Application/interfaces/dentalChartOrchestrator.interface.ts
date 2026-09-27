@@ -18,6 +18,10 @@ export interface IDentalChartOrchestratorService {
     id: string
   ): Promise<DentalChartWithDetails | null>;
 
+  getByClinicalProgressId(
+    clinicalProgressId: string
+  ): Promise<DentalChartWithDetails | null>;
+
   // ============================================================
   // CREATE COMPLETE DENTAL CHART
   // ============================================================

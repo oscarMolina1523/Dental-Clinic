@@ -3,9 +3,11 @@ import { inject, injectable } from "tsyringe";
 import { IClinicalProgresService } from "../interfaces/clinicalProgres.service.interface";
 import {
   IMedicalPrescriptionOrchestratorService,
+  MedicalPrescriptionWithDetails,
 } from "../interfaces/medicalPrescriptionOrchestrator";
 
 import {
+  DentalChartWithDetails,
   IDentalChartOrchestratorService,
 } from "../interfaces/dentalChartOrchestrator.interface";
 
@@ -21,6 +23,7 @@ import {
 import {
   CreateClinicalProgressOrchestratorDto,
 } from "../dtos/clinicalProgressOrchestrator.dto";
+import PatientAttachment from "../../Domain/entities/patientAttachment";
 
 @injectable()
 export class ClinicalProgressOrchestratorService
@@ -87,7 +90,7 @@ export class ClinicalProgressOrchestratorService
      * ============================================================
      */
 
-    let medicalPrescription;
+    let medicalPrescription: MedicalPrescriptionWithDetails | null = null;
 
     if (data.medicalPrescription) {
 
@@ -108,7 +111,7 @@ export class ClinicalProgressOrchestratorService
      * ============================================================
      */
 
-    let dentalChart;
+    let dentalChart: DentalChartWithDetails | null = null;
 
     if (data.dentalChart) {
 
@@ -129,7 +132,7 @@ export class ClinicalProgressOrchestratorService
      * ============================================================
      */
 
-    let patientAttachment;
+    let patientAttachment: PatientAttachment | null = null;
 
     if (data.patientAttachment) {
 
@@ -155,5 +158,46 @@ export class ClinicalProgressOrchestratorService
       dentalChart,
       patientAttachment,
     };
+  }
+
+  async getAll(): Promise<ClinicalProgressOrchestratorResult[]> {
+
+    const clinicalProgresses =
+      await this._clinicalProgressService.findAll(1, 100);
+
+    return Promise.all(
+      clinicalProgresses.map(
+        async (clinicalProgress) => {
+
+          const [
+            medicalPrescription,
+            dentalChart,
+            patientAttachment,
+          ] = await Promise.all([
+            this._medicalPrescriptionOrchestrator
+              .getByClinicalProgressId(
+                clinicalProgress.id
+              ),
+
+            this._dentalChartOrchestrator
+              .getByClinicalProgressId(
+                clinicalProgress.id
+              ),
+
+            this._patientAttachmentService
+              .findByClinicalProgressId(
+                clinicalProgress.id
+              ),
+          ]);
+
+          return {
+            clinicalProgress,
+            medicalPrescription,
+            dentalChart,
+            patientAttachment,
+          };
+        }
+      )
+    );
   }
 }

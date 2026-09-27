@@ -74,6 +74,29 @@ export class MedicalPrescriptionRepository implements IMedicalPrescriptionReposi
     } as MedicalPrescription;
   }
 
+  async findByClinicalProgressId(id: string): Promise<MedicalPrescription | null> {
+      const builder = this._operationBuilder
+        .Initialize(EntityType.MedicalPrescription)
+        .WithOperation(SqlReadOperation.SelectByField);
+  
+      if (!builder.WithField) throw new Error("WithField no implementado");
+      const readCommand = builder.WithField("clinicalProgressId", id).BuildReader();
+  
+      const row = await this._connection.executeScalar(readCommand);
+      if (!row) return null;
+  
+      return new MedicalPrescription({
+        id: row["ID"],
+      clinicalProgressId: row["CLINICALPROGRESSID"],
+      patientId: row["PATIENTID"],
+      patientFullName: row["PATIENTFULLNAME"],
+      dentistId: row["DENTISTID"],
+      dentistFullName: row["DENTISTFULLNAME"],
+      date: row["DATE"],
+      generalInstructions: row["GENERALINSTRUCTIONS"],
+      });
+    }
+
   async create(entity: MedicalPrescription): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.MedicalPrescription, entity)

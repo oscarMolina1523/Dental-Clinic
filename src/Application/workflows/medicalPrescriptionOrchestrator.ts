@@ -66,6 +66,32 @@ export class MedicalPrescriptionOrchestratorService
   }
 
 
+  async getByClinicalProgressId(
+    clinicalProgressId: string
+  ): Promise<MedicalPrescriptionWithDetails | null> {
+
+    const medicalPrescription =
+      await this._medicalPrescriptionService
+        .findByClinicalProgressId(
+          clinicalProgressId
+        );
+
+    if (!medicalPrescription) {
+      return null;
+    }
+
+    const details =
+      await this._medicalPrescriptionDetailService
+        .findByIdMedicalPrescriptionId(
+          medicalPrescription.id
+        ) ?? [];
+
+    return {
+      medicalPrescription,
+      details
+    };
+  }
+
   // ============================================================
   // GET COMPLETE MEDICAL PRESCRIPTION
   // ============================================================

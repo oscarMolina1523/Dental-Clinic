@@ -15,9 +15,13 @@ export interface IMedicalPrescriptionOrchestratorService {
     page?: number,
     pageSize?: number
   ): Promise<MedicalPrescriptionWithDetails[]>;
-  
+
   getById(
     id: string
+  ): Promise<MedicalPrescriptionWithDetails | null>;
+
+  getByClinicalProgressId(
+    clinicalProgressId: string
   ): Promise<MedicalPrescriptionWithDetails | null>;
 
   create(

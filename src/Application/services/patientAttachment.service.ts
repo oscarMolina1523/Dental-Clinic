@@ -20,6 +20,10 @@ export class PatientAttachmentService implements IPatientAttachmentService {
   async findById(id: string) : Promise<PatientAttachment | null> {
     return await this._patientAttachmentRepository.findById(id);
   }
+
+  async findByClinicalProgressId(id: string) : Promise<PatientAttachment | null> {
+    return await this._patientAttachmentRepository.findByClinicalProgressId(id);
+  }
   
   async create(data: PatientAttachmentDto): Promise<PatientAttachment> {
     const newData: PatientAttachment = {

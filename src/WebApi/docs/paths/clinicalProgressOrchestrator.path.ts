@@ -6,6 +6,64 @@ export const ClinicalProgressOrchestratorPaths = {
 
   "/clinicalProgressOrchestrator": {
 
+
+      // ==========================================================
+      // GET ALL
+      // ==========================================================
+
+      get: {
+
+        summary: "Get All Clinical Progress",
+
+        description:
+          "Returns all clinical progress records with their related medical prescription, dental chart, and patient attachment.",
+
+        tags: [
+          "Clinical Progress Orchestrator"
+        ],
+
+        responses: {
+
+          200: {
+
+            description:
+              "Clinical progress records retrieved successfully.",
+
+            content: {
+
+              "application/json": {
+
+                schema: {
+
+                  type: "array",
+
+                  items: {
+
+                    $ref:
+                      "#/components/schemas/ClinicalProgressOrchestrator"
+
+                  }
+
+                }
+
+              }
+
+            }
+
+          },
+
+          500: {
+
+            description:
+              "Internal server error."
+
+          }
+
+        }
+
+    },
+
+
     post: {
 
       summary: "Create Clinical Progress",
