@@ -126,5 +126,90 @@ export const ClinicalProgressOrchestratorPaths = {
         }
       }
     }
+  },
+  "/clinicalProgressOrchestrator/patient/{patientId}": {
+
+    get: {
+
+      summary: "Get Clinical Progress By Patient",
+
+      description:
+        "Returns all clinical progress records for a specific patient with their related medical prescription, dental chart, and patient attachment.",
+
+      tags: [
+        "Clinical Progress Orchestrator"
+      ],
+
+      parameters: [
+
+        {
+
+          name: "patientId",
+
+          in: "path",
+
+          required: true,
+
+          description:
+            "Unique identifier of the patient.",
+
+          schema: {
+
+            type: "string"
+
+          }
+
+        }
+
+      ],
+
+      responses: {
+
+        200: {
+
+          description:
+            "Clinical progress records for the patient retrieved successfully.",
+
+          content: {
+
+            "application/json": {
+
+              schema: {
+
+                type: "array",
+
+                items: {
+
+                  $ref:
+                    "#/components/schemas/ClinicalProgressOrchestrator"
+
+                }
+
+              }
+
+            }
+
+          }
+
+        },
+
+        400: {
+
+          description:
+            "Invalid patient ID."
+
+        },
+
+        500: {
+
+          description:
+            "Internal server error."
+
+        }
+
+      }
+
+    }
   }
+  
 };

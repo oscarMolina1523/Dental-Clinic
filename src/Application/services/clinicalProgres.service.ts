@@ -20,6 +20,10 @@ export class ClinicalProgresService implements IClinicalProgresService {
   async findById(id: string) : Promise<ClinicalProgres | null> {
     return await this._clinicalProgresRepository.findById(id);
   }
+
+  async findByPatientId(id: string) : Promise<ClinicalProgres[] | null> {
+    return await this._clinicalProgresRepository.findByPatientId(id);
+  }
   
   async create(data: ClinicalProgresDto): Promise<ClinicalProgres> {
     const newData: ClinicalProgres = {

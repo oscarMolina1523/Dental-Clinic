@@ -9,16 +9,16 @@ export interface ClinicalProgressOrchestratorResult {
   clinicalProgress: ClinicalProgres;
 
   medicalPrescription:
-    | MedicalPrescriptionWithDetails
-    | null;
+  | MedicalPrescriptionWithDetails
+  | null;
 
   dentalChart:
-    | DentalChartWithDetails
-    | null;
+  | DentalChartWithDetails
+  | null;
 
   patientAttachment:
-    | PatientAttachment
-    | null;
+  | PatientAttachment
+  | null;
 }
 
 export interface IClinicalProgressOrchestratorService {
@@ -28,4 +28,8 @@ export interface IClinicalProgressOrchestratorService {
   ): Promise<ClinicalProgressOrchestratorResult>;
 
   getAll(): Promise<ClinicalProgressOrchestratorResult[]>;
+
+  getByPatientId(
+    patientId: string
+  ): Promise<ClinicalProgressOrchestratorResult[]>;
 }

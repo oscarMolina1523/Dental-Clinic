@@ -24,6 +24,7 @@ import {
   CreateClinicalProgressOrchestratorDto,
 } from "../dtos/clinicalProgressOrchestrator.dto";
 import PatientAttachment from "../../Domain/entities/patientAttachment";
+import ClinicalProgres from "../../Domain/entities/clinicalProgres";
 
 @injectable()
 export class ClinicalProgressOrchestratorService
@@ -168,6 +169,51 @@ export class ClinicalProgressOrchestratorService
     return Promise.all(
       clinicalProgresses.map(
         async (clinicalProgress) => {
+
+          const [
+            medicalPrescription,
+            dentalChart,
+            patientAttachment,
+          ] = await Promise.all([
+            this._medicalPrescriptionOrchestrator
+              .getByClinicalProgressId(
+                clinicalProgress.id
+              ),
+
+            this._dentalChartOrchestrator
+              .getByClinicalProgressId(
+                clinicalProgress.id
+              ),
+
+            this._patientAttachmentService
+              .findByClinicalProgressId(
+                clinicalProgress.id
+              ),
+          ]);
+
+          return {
+            clinicalProgress,
+            medicalPrescription,
+            dentalChart,
+            patientAttachment,
+          };
+        }
+      )
+    );
+  }
+
+  async getByPatientId(
+    patientId: string
+  ): Promise<ClinicalProgressOrchestratorResult[]> {
+
+    const clinicalProgresses =
+      await this._clinicalProgressService.findByPatientId(
+        patientId
+      );
+
+    return Promise.all(
+      (clinicalProgresses ?? []).map(
+        async (clinicalProgress: ClinicalProgres) => {
 
           const [
             medicalPrescription,
