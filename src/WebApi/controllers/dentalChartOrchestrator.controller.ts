@@ -54,13 +54,22 @@ export class DentalChartOrchestratorController {
       details
     } = req.body;
 
-    const result =
-      await this._dentalChartOrchestratorService.create(
-        dentalChart,
-        details
-      );
+    try{
 
-    res.status(201).json(result);
+      const result =
+        await this._dentalChartOrchestratorService.create(
+          dentalChart,
+          details
+        );
+  
+      return res.status(201).json(result);
+
+    } catch (error: any) {
+
+      return res.status(400).json({
+        message: error.message
+      });
+    }
   };
 
   // ============================================================

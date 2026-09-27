@@ -44,6 +44,7 @@ import treatmentPlanOrchestratorRoutes from "./WebApi/routes/treatmentPlanOrches
 import authRoutes from "./WebApi/routes/auth.routes";
 import { validateToken } from "./WebApi/middlewares/auth.middleware";
 import medicalPrescriptionOrchestratorRoutes from "./WebApi/routes/medicalPrescriptionOrchestrator.routes";
+import clinicalProgressOrchestratorRoutes from "./WebApi/routes/clinicalProgressOrchestrator.routes";
 
 const app = express();
 // const PORT = process.env.PORT || 3000;
@@ -90,6 +91,7 @@ app.use("/medicalPrescriptionDetail", validateToken, medicalPrescriptionDetailRo
 app.use("/medicalPrescription", validateToken, medicalPrescriptionRoutes);
 app.use("/medicalPrescriptionOrchestrator", validateToken, medicalPrescriptionOrchestratorRoutes);
 app.use("/clinicalProgres", validateToken, clinicalProgresRoutes);
+app.use("/clinicalProgressOrchestrator", validateToken, clinicalProgressOrchestratorRoutes);
 app.use("/treatmentPlanDetail", validateToken, treatmentPlanDetailRoutes);
 app.use("/treatmentPlan", validateToken, treatmentPlanRoutes);
 app.use("/treatmentPlanOrchestrator", validateToken, treatmentPlanOrchestratorRoutes);

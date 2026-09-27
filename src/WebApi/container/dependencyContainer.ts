@@ -159,6 +159,8 @@ import AuthService from "../../Application/services/auth.service";
 import AuthController from "../controllers/auth.controller";
 import { IMedicalPrescriptionOrchestratorService } from "../../Application/interfaces/medicalPrescriptionOrchestrator";
 import { MedicalPrescriptionOrchestratorService } from "../../Application/workflows/medicalPrescriptionOrchestrator";
+import { IClinicalProgressOrchestratorService } from "../../Application/interfaces/clinicalProgressOrchestrator.interface";
+import { ClinicalProgressOrchestratorService } from "../../Application/workflows/clinicalProgressOrchestrator";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
@@ -181,6 +183,12 @@ container.register<IInventoryOrchestratorService>('IInventoryOrchestratorService
 container.register<IDentalChartOrchestratorService>('IDentalChartOrchestratorService', {useClass: DentalChartOrchestratorService});
 container.register<ITreatmentPlanOrchestratorService>('ITreatmentPlanOrchestratorService', {useClass: TreatmentPlanOrchestratorService});
 container.register<IMedicalPrescriptionOrchestratorService>('IMedicalPrescriptionOrchestratorService', {useClass: MedicalPrescriptionOrchestratorService});
+container.register<IClinicalProgressOrchestratorService>(
+  "IClinicalProgressOrchestratorService",
+  {
+    useClass: ClinicalProgressOrchestratorService,
+  }
+);
 
 // AUTO-GENERATED MODULE REGISTRATIONS
 // Appointment
