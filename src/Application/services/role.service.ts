@@ -22,9 +22,11 @@ export class RoleService implements IRoleService {
   }
   
   async create(data: RoleDto): Promise<Role> {
+    const now = new Date();
     const newData: Role = {
       ...data,
       id: generateId(), 
+      createdAt: now
     }
     await this._roleRepository.create(newData);
     return newData;

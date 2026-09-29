@@ -24,7 +24,7 @@ export class CategoryService implements ICategoryService {
   async create(data: CategoryDto): Promise<Category> {
     const newData: Category = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
     }
     await this._categoryRepository.create(newData);
     return newData;
