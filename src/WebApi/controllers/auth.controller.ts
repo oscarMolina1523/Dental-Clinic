@@ -22,7 +22,14 @@ export default class AuthController {
 
       const result = await this._authService.login(data.email, data.password);
 
-      res.json({
+      if (!result.data || !result.token) {
+        res.status(401).json({
+          message: result.message,
+        });
+        return;
+      }
+
+      res.status(200).json({
         message: result.message,
         user: result.data,
         token: result.token,
