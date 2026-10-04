@@ -482,6 +482,10 @@
           "type": "string"
         },
         {
+          "name": "treatmentId",
+          "type": "string"
+        },
+        {
           "name": "invoiceNumber",
           "type": "string"
         },

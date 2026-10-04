@@ -258,6 +258,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("PATIENTID", "patientId", false),
             new SqlColumnSettings("PATIENTFULLNAME", "patientFullName", false),
             new SqlColumnSettings("TREATMENTPLANID", "treatmentPlanId", false),
+            new SqlColumnSettings("TREATMENTID", "treatmentId", false),
             new SqlColumnSettings("INVOICENUMBER", "invoiceNumber", false),
             new SqlColumnSettings("TOTALAMOUNT", "totalAmount", false),
             new SqlColumnSettings("PAIDAMOUNT", "paidAmount", false),

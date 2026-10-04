@@ -213,6 +213,7 @@ export async function initializeDatabase(): Promise<void> {
         PATIENTID TEXT,
         PATIENTFULLNAME TEXT,
         TREATMENTPLANID TEXT,
+        TREATMENTID TEXT,
         INVOICENUMBER TEXT,
         TOTALAMOUNT INTEGER,
         PAIDAMOUNT INTEGER,

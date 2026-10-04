@@ -6,8 +6,6 @@ export const InvoiceSchemas = {
         "patientId",
         "patientFullName",
       
-        "treatmentPlanId",
-      
         "invoiceNumber",
       
         "totalAmount",
@@ -25,6 +23,7 @@ export const InvoiceSchemas = {
       patientFullName: { type: "string" },
       
       treatmentPlanId: { type: "string" },
+      treatmentId: { type: "string" },
       
       invoiceNumber: { type: "string" },
       
@@ -48,7 +47,7 @@ export const InvoiceSchemas = {
       patientFullName: { type: "string" },
       
       treatmentPlanId: { type: "string" },
-      
+      treatmentId: { type: "string" },
       invoiceNumber: { type: "string" },
       
       totalAmount: { type: "number" },

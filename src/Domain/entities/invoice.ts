@@ -4,7 +4,10 @@ import BaseModel from "./base.model";
 export default class Invoice extends BaseModel {
   patientId: string;
   patientFullName:string;
-  treatmentPlanId: string;
+
+  treatmentPlanId?: string;
+  treatmentId?: string;
+
   invoiceNumber: string;
   private totalAmount: number;
   private paidAmount: number;
@@ -15,7 +18,10 @@ export default class Invoice extends BaseModel {
     id,
     patientId,
     patientFullName,
+
     treatmentPlanId,
+    treatmentId,
+
     invoiceNumber,
     totalAmount,
     paidAmount,
@@ -25,7 +31,10 @@ export default class Invoice extends BaseModel {
     id: string;
     patientId: string;
     patientFullName: string;
-    treatmentPlanId: string;
+
+    treatmentPlanId?: string;
+    treatmentId?: string;
+
     invoiceNumber: string;
     totalAmount: number;
     paidAmount: number;
@@ -94,9 +103,18 @@ export default class Invoice extends BaseModel {
       );
     }
 
+    if (treatmentPlanId && treatmentId) {
+      throw new Error(
+        "La factura no puede estar asociada simultáneamente a un tratamiento y a un plan de tratamiento"
+      );
+    }
+
     this.patientId = patientId;
     this.patientFullName = patientFullName;
+
     this.treatmentPlanId = treatmentPlanId;
+    this.treatmentId = treatmentId;
+    
     this.invoiceNumber = invoiceNumber;
     this.totalAmount = totalAmount;
     this.paidAmount = paidAmount;
