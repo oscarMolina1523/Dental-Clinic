@@ -51,6 +51,15 @@ export class AppointmentService implements IAppointmentService {
     patientFullName: data.patientFullName,
     dentistId: data.dentistId,
     dentistFullName: data.dentistFullName,
+    dentistSpeciality: data.dentistSpeciality,
+
+    treatmentId: data.treatmentId,
+    treatmentPlanId: data.treatmentPlanId,
+
+    allergies: data.allergies,
+    symptoms: data.symptoms,
+    diagnosis: data.diagnosis,
+    clinicalNotes:data.clinicalNotes,
 
     startAppointmentTime:
       new Date(data.startAppointmentTime),

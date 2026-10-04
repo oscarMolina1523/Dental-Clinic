@@ -39,20 +39,27 @@ export class AppointmentRepository implements IAppointmentRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new Appointment({
-        id: row["ID"],
-        patientId: row["PATIENTID"],
-        patientFullName: row["PATIENTFULLNAME"],
-        dentistId: row["DENTISTID"],
-        dentistFullName: row["DENTISTFULLNAME"],
-        startAppointmentTime: row["STARTAPPOINTMENTTIME"],
-        endAppointmentTime: row["ENDAPPOINTMENTTIME"],
-        reason: row["REASON"],
-        status: row["STATUS"],
-        cancelationNotes: row["CANCELATIONNOTES"],
-        reminderSent: row["REMINDERSENT"],
-        createdAt: row["CREATEDAT"],
-      })
+        new Appointment({
+          id: row["ID"],
+          patientId: row["PATIENTID"],
+          patientFullName: row["PATIENTFULLNAME"],
+          dentistId: row["DENTISTID"],
+          dentistFullName: row["DENTISTFULLNAME"],
+          dentistSpeciality: row["DENTISTSPECIALITY"],
+          treatmentPlanId: row["TREATMENTPLANID"],
+          treatmentId: row["TREATMENTID"],
+          allergies: row["ALLERGIES"],
+          symptoms: row["SYMPTOMS"],
+          diagnosis: row["DIAGNOSIS"],
+          clinicalNotes: row["CLINICALNOTES"],
+          startAppointmentTime: row["STARTAPPOINTMENTTIME"],
+          endAppointmentTime: row["ENDAPPOINTMENTTIME"],
+          reason: row["REASON"],
+          status: row["STATUS"],
+          cancelationNotes: row["CANCELATIONNOTES"],
+          reminderSent: row["REMINDERSENT"],
+          createdAt: row["CREATEDAT"],
+        })
     );
   }
 
@@ -72,6 +79,13 @@ export class AppointmentRepository implements IAppointmentRepository {
       patientFullName: row["PATIENTFULLNAME"],
       dentistId: row["DENTISTID"],
       dentistFullName: row["DENTISTFULLNAME"],
+      dentistSpeciality: row["DENTISTSPECIALITY"],
+      treatmentPlanId: row["TREATMENTPLANID"],
+      treatmentId: row["TREATMENTID"],
+      allergies: row["ALLERGIES"],
+      symptoms: row["SYMPTOMS"],
+      diagnosis: row["DIAGNOSIS"],
+      clinicalNotes: row["CLINICALNOTES"],
       startAppointmentTime: row["STARTAPPOINTMENTTIME"],
       endAppointmentTime: row["ENDAPPOINTMENTTIME"],
       reason: row["REASON"],

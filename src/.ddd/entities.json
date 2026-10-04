@@ -814,6 +814,34 @@
           "type": "string"
         },
         {
+          "name": "dentistSpeciality",
+          "type": "string"
+        },
+        {
+          "name": "treatmentPlanId",
+          "type": "string"
+        },
+        {
+          "name": "treatmentId",
+          "type": "string"
+        },
+        {
+          "name": "allergies",
+          "type": "string"
+        },
+        {
+          "name": "symptoms",
+          "type": "string"
+        },
+        {
+          "name": "diagnosis",
+          "type": "string"
+        },
+        {
+          "name": "clinicalNotes",
+          "type": "string"
+        },
+        {
           "name": "startAppointmentTime",
           "type": "Date"
         },

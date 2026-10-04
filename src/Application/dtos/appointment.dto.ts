@@ -5,6 +5,16 @@ export interface AppointmentDto {
   patientFullName: string;
   dentistId: string;
   dentistFullName: string;
+  dentistSpeciality: string;
+
+  treatmentPlanId?: string;
+  treatmentId?: string;
+
+  allergies?: string;
+  symptoms?: string;
+  diagnosis?: string;
+  clinicalNotes?: string;
+  
   startAppointmentTime: Date;
   endAppointmentTime: Date;
   reason: string;

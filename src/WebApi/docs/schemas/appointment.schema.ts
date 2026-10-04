@@ -7,6 +7,7 @@ export const AppointmentSchemas = {
       "patientFullName",
       "dentistId",
       "dentistFullName",
+      "dentistSpeciality",
       "startAppointmentTime",
       "endAppointmentTime",
       "reason",
@@ -35,6 +36,34 @@ export const AppointmentSchemas = {
       dentistFullName: {
         type: "string",
         example: "Dr. Jane Smith"
+      },
+      dentistSpeciality: {
+        type: "string",
+        example: "Oral Surgeon"
+      },
+      treatmentPlanId: {
+        type: "string",
+        example: "treatment-plan-789"
+      },
+      treatmentId: {
+        type: "string",
+        example: "treatment-101"
+      },
+      allergies: {
+        type: "string",
+        example: "Penicillin"
+      },
+      symptoms: {
+        type: "string",
+        example: "Toothache"
+      },
+      diagnosis: {
+        type: "string",
+        example: "Cavity"
+      },
+      clinicalNotes: {
+        type: "string",
+        example: "Patient reports pain when eating sweets."
       },
 
       startAppointmentTime: {
@@ -104,6 +133,34 @@ export const AppointmentSchemas = {
       dentistFullName: {
         type: "string",
         example: "Dr. Jane Smith"
+      },
+      dentistSpeciality: {
+        type: "string",
+        example: "Oral Surgeon"
+      },
+      treatmentPlanId: {
+        type: "string",
+        example: "treatment-plan-789"
+      },
+      treatmentId: {
+        type: "string",
+        example: "treatment-101"
+      },
+      allergies: {
+        type: "string",
+        example: "Penicillin"
+      },
+      symptoms: {
+        type: "string",
+        example: "Toothache"
+      },
+      diagnosis: {
+        type: "string",
+        example: "Cavity"
+      },
+      clinicalNotes: {
+        type: "string",
+        example: "Patient reports pain when eating sweets."
       },
 
       startAppointmentTime: {

@@ -6,6 +6,16 @@ export default class Appointment extends BaseModel {
   patientFullName: string;
   dentistId: string;
   dentistFullName: string;
+  dentistSpeciality: string;
+
+  treatmentPlanId?: string;
+  treatmentId?: string;
+
+  allergies?: string;
+  symptoms?: string;
+  diagnosis?: string;
+  clinicalNotes?: string;
+
   startAppointmentTime: Date;
   endAppointmentTime: Date;
   reason: string;
@@ -20,6 +30,16 @@ export default class Appointment extends BaseModel {
     patientFullName,
     dentistId,
     dentistFullName,
+    dentistSpeciality,
+
+    treatmentPlanId,
+    treatmentId,
+
+    allergies,
+    symptoms,
+    diagnosis,
+    clinicalNotes,
+
     startAppointmentTime,
     endAppointmentTime,
     reason,
@@ -31,8 +51,19 @@ export default class Appointment extends BaseModel {
     id: string;
     patientId: string;
     patientFullName: string;
+
+    treatmentPlanId?: string;
+    treatmentId?: string;
+
+    allergies?: string;
+    symptoms?: string;
+    diagnosis?: string;
+    clinicalNotes?: string;
+
     dentistId: string;
     dentistFullName: string;
+    dentistSpeciality: string;
+
     startAppointmentTime: Date | string;
     endAppointmentTime: Date | string;
     reason: string;
@@ -178,6 +209,16 @@ export default class Appointment extends BaseModel {
     this.patientFullName = patientFullName;
     this.dentistId = dentistId;
     this.dentistFullName = dentistFullName;
+    this.dentistSpeciality = dentistSpeciality;
+
+    this.treatmentPlanId = treatmentPlanId;
+    this.treatmentId = treatmentId;
+
+    this.allergies = allergies?.trim() ?? "";
+    this.symptoms = symptoms?.trim() ?? "";
+    this.diagnosis = diagnosis?.trim() ?? "";
+    this.clinicalNotes = clinicalNotes?.trim() ?? "";
+
     this.startAppointmentTime = normalizedStartAppointmentTime;
     this.endAppointmentTime = normalizedEndAppointmentTime;
     this.reason = reason;
@@ -317,6 +358,16 @@ export default class Appointment extends BaseModel {
     patientFullName,
     dentistId,
     dentistFullName,
+    dentistSpeciality,
+
+    treatmentPlanId,
+    treatmentId,
+
+    allergies,
+    symptoms,
+    diagnosis,
+    clinicalNotes,
+
     startAppointmentTime,
     endAppointmentTime,
     reason,
@@ -325,6 +376,16 @@ export default class Appointment extends BaseModel {
     patientFullName: string;
     dentistId: string;
     dentistFullName: string;
+    dentistSpeciality: string;
+
+    treatmentPlanId?: string;
+    treatmentId?: string;
+
+    allergies?: string;
+    symptoms?: string;
+    diagnosis?: string;
+    clinicalNotes?: string;
+
     startAppointmentTime: Date;
     endAppointmentTime: Date;
     reason: string;
@@ -407,6 +468,16 @@ export default class Appointment extends BaseModel {
 
     this.dentistId = dentistId;
     this.dentistFullName = dentistFullName;
+    this.dentistSpeciality = dentistSpeciality;
+
+    this.treatmentPlanId = treatmentPlanId;
+    this.treatmentId = treatmentId;
+
+    this.allergies = allergies?.trim() ?? "";
+    this.symptoms = symptoms?.trim() ?? "";
+    this.diagnosis = diagnosis?.trim() ?? "";
+    this.clinicalNotes = clinicalNotes?.trim() ?? "";
+
     this.startAppointmentTime =
       startAppointmentTime;
 
