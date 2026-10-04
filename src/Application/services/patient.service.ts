@@ -55,7 +55,11 @@ export class PatientService implements IPatientService {
       data.name,
       data.lastName,
       data.birthdate,
-      data.gender
+      data.gender,
+      data.isSelfPayer,
+      data.payerName,
+      data.payerPhoneNumber,
+      data.payerIdCard
     );
 
     await this._patientRepository.update(existing);

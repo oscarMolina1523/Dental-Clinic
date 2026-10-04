@@ -126,6 +126,22 @@
           "type": "boolean"
         },
         {
+          "name": "isSelfPayer",
+          "type": "boolean"
+        },
+        {
+          "name": "payerName",
+          "type": "string"
+        },
+        {
+          "name": "payerIdCard",
+          "type": "string"
+        },
+        {
+          "name": "payerPhoneNumber",
+          "type": "string"
+        },
+        {
           "name": "createdAt",
           "type": "Date"
         },

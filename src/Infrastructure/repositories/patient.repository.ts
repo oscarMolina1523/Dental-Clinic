@@ -39,25 +39,29 @@ export class PatientRepository implements IPatientRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new Patient({
-        id: row["ID"],
-        patientCode: row["PATIENTCODE"],
-        image: row["IMAGE"],
-        name: row["NAME"],
-        lastName: row["LASTNAME"],
-        idCard: row["IDCARD"],
-        birthdate: row["BIRTHDATE"],
-        gender: row["GENDER"],
-        phoneNumber: row["PHONENUMBER"],
-        email: row["EMAIL"],
-        address: row["ADDRESS"],
-        emergencyContactName: row["EMERGENCYCONTACTNAME"],
-        emergencyContactPhone: row["EMERGENCYCONTACTPHONE"],
-        maritalStatus: row["MARITALSTATUS"],
-        active: row["ACTIVE"],
-        createdAt: row["CREATEDAT"],
-        updatedAt: row["UPDATEDAT"],
-      })
+        new Patient({
+          id: row["ID"],
+          patientCode: row["PATIENTCODE"],
+          image: row["IMAGE"],
+          name: row["NAME"],
+          lastName: row["LASTNAME"],
+          idCard: row["IDCARD"],
+          birthdate: row["BIRTHDATE"],
+          gender: row["GENDER"],
+          phoneNumber: row["PHONENUMBER"],
+          email: row["EMAIL"],
+          address: row["ADDRESS"],
+          emergencyContactName: row["EMERGENCYCONTACTNAME"],
+          emergencyContactPhone: row["EMERGENCYCONTACTPHONE"],
+          maritalStatus: row["MARITALSTATUS"],
+          active: row["ACTIVE"],
+          isSelfPayer: row["ISSELFPAYER"],
+          payerName: row["PAYERNAME"],
+          payerIdCard: row["PAYERIDCARD"],
+          payerPhoneNumber: row["PAYERPHONENUMBER"],
+          createdAt: row["CREATEDAT"],
+          updatedAt: row["UPDATEDAT"],
+        })
     );
   }
 
@@ -87,6 +91,10 @@ export class PatientRepository implements IPatientRepository {
       emergencyContactPhone: row["EMERGENCYCONTACTPHONE"],
       maritalStatus: row["MARITALSTATUS"],
       active: row["ACTIVE"],
+      isSelfPayer: row["ISSELFPAYER"],
+      payerName: row["PAYERNAME"],
+      payerIdCard: row["PAYERIDCARD"],
+      payerPhoneNumber: row["PAYERPHONENUMBER"],
       createdAt: row["CREATEDAT"],
       updatedAt: row["UPDATEDAT"],
     });

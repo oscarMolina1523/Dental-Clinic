@@ -30,6 +30,10 @@ export const PatientSchemas = {
         "maritalStatus",
       
         "active",
+        "isSelfPayer",
+        "payerName",
+        "payerIdCard",
+        "payerPhoneNumber",
       
         "createdAt",
       
@@ -65,6 +69,10 @@ export const PatientSchemas = {
       maritalStatus: { type: "string" },
       
       active: { type: "string" },
+      isSelfPayer: { type: "string" },
+      payerName: { type: "string" },
+      payerIdCard: { type: "string" },
+      payerPhoneNumber: { type: "string" },
       
       createdAt: { type: "string" },
       
@@ -105,6 +113,10 @@ export const PatientSchemas = {
       maritalStatus: { type: "string" },
       
       active: { type: "string" },
+      isSelfPayer: { type: "string" },
+      payerName: { type: "string" },
+      payerIdCard: { type: "string" },
+      payerPhoneNumber: { type: "string" },
       
       createdAt: { type: "string" },
       

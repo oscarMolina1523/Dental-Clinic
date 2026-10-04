@@ -55,6 +55,10 @@ export async function initializeDatabase(): Promise<void> {
         EMERGENCYCONTACTPHONE TEXT,
         MARITALSTATUS TEXT,
         ACTIVE INTEGER,
+        ISSELFPAYER BOOLEAN,
+        PAYERNAME TEXT,
+        PAYERIDCARD TEXT,
+        PAYERPHONENUMBER TEXT,
         CREATEDAT TEXT,
         UPDATEDAT TEXT
     );

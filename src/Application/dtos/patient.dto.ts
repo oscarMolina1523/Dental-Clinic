@@ -13,6 +13,10 @@ export interface PatientDto {
   emergencyContactPhone: string;
   maritalStatus: string;
   active: boolean;
+  isSelfPayer: boolean;
+  payerName: string;
+  payerIdCard: string;
+  payerPhoneNumber: string;
   createdAt: Date;
   updatedAt: Date;
 }

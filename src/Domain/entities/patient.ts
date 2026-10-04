@@ -15,6 +15,10 @@ export default class Patient extends BaseModel {
   emergencyContactPhone: string;
   maritalStatus: string;
   private active: boolean;
+  isSelfPayer: boolean;
+  payerName: string;
+  payerIdCard: string;
+  payerPhoneNumber: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -34,6 +38,10 @@ export default class Patient extends BaseModel {
     emergencyContactPhone,
     maritalStatus,
     active,
+    isSelfPayer,
+    payerName,
+    payerPhoneNumber,
+    payerIdCard,
     createdAt,
     updatedAt,
   }: {
@@ -52,6 +60,10 @@ export default class Patient extends BaseModel {
     emergencyContactPhone: string;
     maritalStatus: string;
     active: boolean;
+    isSelfPayer: boolean;
+    payerName: string;
+    payerPhoneNumber: string;
+    payerIdCard: string;
     createdAt: Date;
     updatedAt: Date;
   }) {
@@ -89,6 +101,10 @@ export default class Patient extends BaseModel {
     this.emergencyContactPhone = emergencyContactPhone;
     this.maritalStatus = maritalStatus;
     this.active = active;
+    this.isSelfPayer = isSelfPayer;
+    this.payerName = payerName;
+    this.payerPhoneNumber = payerPhoneNumber;
+    this.payerIdCard = payerIdCard;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -117,7 +133,11 @@ export default class Patient extends BaseModel {
     name: string,
     lastName: string,
     birthdate: Date,
-    gender: string
+    gender: string,
+    isSelfPayer: boolean,
+    payerName: string,
+    payerPhoneNumber: string,
+    payerIdCard: string
   ): void {
 
     if (!name?.trim()) {
@@ -138,7 +158,10 @@ export default class Patient extends BaseModel {
     this.lastName = lastName;
     this.birthdate = birthdate;
     this.gender = gender;
-
+    this.isSelfPayer = isSelfPayer;
+    this.payerName = payerName;
+    this.payerPhoneNumber = payerPhoneNumber;
+    this.payerIdCard = payerIdCard;
     this.updatedAt = new Date();
   }
 

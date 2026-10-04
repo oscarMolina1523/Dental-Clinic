@@ -99,7 +99,10 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("EMERGENCYCONTACTNAME", "emergencyContactName", false),
             new SqlColumnSettings("EMERGENCYCONTACTPHONE", "emergencyContactPhone", false),
             new SqlColumnSettings("MARITALSTATUS", "maritalStatus", false),
-            new SqlColumnSettings("ACTIVE", "active", false),
+            new SqlColumnSettings("ISSELFPAYER", "isSelfPayer", false),
+            new SqlColumnSettings("PAYERNAME", "payerName", false),
+            new SqlColumnSettings("PAYERIDCARD", "payerIdCard", false),
+            new SqlColumnSettings("PAYERPHONENUMBER", "payerPhoneNumber", false),
             new SqlColumnSettings("CREATEDAT", "createdAt", false),
             new SqlColumnSettings("UPDATEDAT", "updatedAt", false),
         ];
