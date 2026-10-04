@@ -403,9 +403,10 @@ export default class Appointment extends BaseModel {
     // ============================================================
 
     this.patientId = patientId;
+    this.patientFullName = patientFullName;
 
     this.dentistId = dentistId;
-
+    this.dentistFullName = dentistFullName;
     this.startAppointmentTime =
       startAppointmentTime;
 
