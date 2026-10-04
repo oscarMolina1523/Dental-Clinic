@@ -49,6 +49,7 @@ export class UserRepository implements IUserRepository {
           phoneNumber: row["PHONENUMBER"],
           membershipNumber: row["MEMBERSHIPNUMBER"],
           active: row["ACTIVE"],
+          specialties: row["SPECIALTIES"],
           createdAt: row["CREATEDAT"],
           updatedAt: row["UPDATEDAT"],
         })
@@ -74,6 +75,7 @@ export class UserRepository implements IUserRepository {
       password: row["PASSWORD"],
       phoneNumber: row["PHONENUMBER"],
       membershipNumber: row["MEMBERSHIPNUMBER"],
+      specialties: row["SPECIALTIES"],
       active: row["ACTIVE"],
       createdAt: row["CREATEDAT"],
       updatedAt: row["UPDATEDAT"],
@@ -100,6 +102,7 @@ export class UserRepository implements IUserRepository {
       password: row["PASSWORD"],
       phoneNumber: row["PHONENUMBER"],
       membershipNumber: row["MEMBERSHIPNUMBER"],
+      specialties: row["SPECIALTIES"],
       active: row["ACTIVE"],
       createdAt: row["CREATEDAT"],
       updatedAt: row["UPDATEDAT"],

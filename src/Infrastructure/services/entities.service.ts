@@ -75,6 +75,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("PASSWORD", "password", false),
             new SqlColumnSettings("PHONENUMBER", "phoneNumber", false),
             new SqlColumnSettings("MEMBERSHIPNUMBER", "membershipNumber", false),
+            new SqlColumnSettings("SPECIALTIES", "specialties", false),
             new SqlColumnSettings("ACTIVE", "active", false),
             new SqlColumnSettings("CREATEDAT", "createdAt", false),
             new SqlColumnSettings("UPDATEDAT", "updatedAt", false),

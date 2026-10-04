@@ -9,6 +9,7 @@ export default class User extends BaseModel {
   phoneNumber: string;
   membershipNumber?: string;
   private active: boolean;
+  specialties: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -22,6 +23,7 @@ export default class User extends BaseModel {
     phoneNumber,
     membershipNumber,
     active,
+    specialties,
     createdAt,
     updatedAt,
   }: {
@@ -34,6 +36,7 @@ export default class User extends BaseModel {
     phoneNumber: string;
     membershipNumber?: string;
     active: boolean;
+    specialties: string;
     createdAt: Date;
     updatedAt: Date;
   }) {
@@ -48,6 +51,7 @@ export default class User extends BaseModel {
     this.active = active;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.specialties = specialties;
   }
 
   getActive(): boolean {
@@ -110,7 +114,8 @@ export default class User extends BaseModel {
     fullName: string,
     phoneNumber: string,
     image?: string,
-    membershipNumber?: string
+    membershipNumber?: string,
+    specialties?: string
   ): void {
     if (!fullName) {
       throw new Error("El nombre es obligatorio");
@@ -120,6 +125,7 @@ export default class User extends BaseModel {
     this.phoneNumber = phoneNumber;
     this.image = image ?? this.image;
     this.membershipNumber = membershipNumber;
+    this.specialties = specialties ?? this.specialties;
 
     this.updatedAt = new Date();
   }

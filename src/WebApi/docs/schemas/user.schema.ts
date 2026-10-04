@@ -18,6 +18,7 @@ export const UserSchemas = {
       "membershipNumber",
 
       "active",
+      "specialties",
 
       "createdAt",
 
@@ -41,6 +42,7 @@ export const UserSchemas = {
       membershipNumber: { type: "string" },
 
       active: { type: "string" },
+      specialties: { type: "string" },
 
       createdAt: { type: "string" },
 
@@ -67,6 +69,7 @@ export const UserSchemas = {
       membershipNumber: { type: "string" },
 
       active: { type: "string" },
+      specialties: { type: "string" },
 
       createdAt: { type: "string" },
 
@@ -104,6 +107,12 @@ export const UserSchemas = {
         type: "string",
         nullable: true,
         example: "OD-12345"
+      },
+
+      specialties: {
+        type: "string",
+        nullable: true,
+        example: "ODONTOLOGO"
       }
     }
   },

@@ -7,6 +7,7 @@ export interface UserDto {
   phoneNumber: string;
   membershipNumber: string;
   active: boolean;
+  specialties: string;
   createdAt: Date;
   updatedAt: Date;
 }

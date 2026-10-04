@@ -77,7 +77,8 @@ export class UserService implements IUserService {
       data.fullName,
       data.phoneNumber,
       data.image,
-      data.membershipNumber
+      data.membershipNumber,
+      data.specialties
     );
 
     await this._userRepository.update(existing);

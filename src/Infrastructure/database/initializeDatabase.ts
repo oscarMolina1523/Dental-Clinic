@@ -31,6 +31,7 @@ export async function initializeDatabase(): Promise<void> {
         PHONENUMBER TEXT,
         MEMBERSHIPNUMBER TEXT,
         ACTIVE INTEGER,
+        SPECIALTIES TEXT,
         CREATEDAT TEXT,
         UPDATEDAT TEXT
     );
