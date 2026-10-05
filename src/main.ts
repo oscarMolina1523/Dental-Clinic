@@ -45,6 +45,7 @@ import authRoutes from "./WebApi/routes/auth.routes";
 import { validateToken } from "./WebApi/middlewares/auth.middleware";
 import medicalPrescriptionOrchestratorRoutes from "./WebApi/routes/medicalPrescriptionOrchestrator.routes";
 import clinicalProgressOrchestratorRoutes from "./WebApi/routes/clinicalProgressOrchestrator.routes";
+import appointmentOrchestratorRoutes from "./WebApi/routes/appointmentOrchestrator.routes";
 
 const app = express();
 // const PORT = process.env.PORT || 3000;
@@ -71,6 +72,7 @@ app.get("/api-docs", async (req, res, next) => {
 //AUTO-REGISTER-ROUTES
 app.use("/auth", authRoutes);
 app.use("/appointment",  validateToken,appointmentRoutes);
+app.use("/appointmentOrchestrator",  validateToken,appointmentOrchestratorRoutes);
 app.use("/paymentNotification", validateToken, paymentNotificationRoutes);
 app.use("/installment",  validateToken, installmentRoutes);
 app.use("/paymentPlan", validateToken, paymentPlanRoutes);

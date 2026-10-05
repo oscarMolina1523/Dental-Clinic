@@ -161,6 +161,8 @@ import { IMedicalPrescriptionOrchestratorService } from "../../Application/inter
 import { MedicalPrescriptionOrchestratorService } from "../../Application/workflows/medicalPrescriptionOrchestrator";
 import { IClinicalProgressOrchestratorService } from "../../Application/interfaces/clinicalProgressOrchestrator.interface";
 import { ClinicalProgressOrchestratorService } from "../../Application/workflows/clinicalProgressOrchestrator";
+import { IAppointmentOrchestratorService } from "../../Application/interfaces/appointmentOrchestrator.service.interface";
+import { AppointmentOrchestratorService } from "../../Application/workflows/appointmentOrchestrator.service";
 //builder, database connection and entity service
 container.registerSingleton<ISingletonSqlConnection>('ISingletonSqlConnection', SingletonSqlConnection);
 container.register<ISqlCommandOperationBuilder>('IOperationBuilder', { useClass: SqlCommandOperationBuilder });
@@ -183,6 +185,7 @@ container.register<IInventoryOrchestratorService>('IInventoryOrchestratorService
 container.register<IDentalChartOrchestratorService>('IDentalChartOrchestratorService', {useClass: DentalChartOrchestratorService});
 container.register<ITreatmentPlanOrchestratorService>('ITreatmentPlanOrchestratorService', {useClass: TreatmentPlanOrchestratorService});
 container.register<IMedicalPrescriptionOrchestratorService>('IMedicalPrescriptionOrchestratorService', {useClass: MedicalPrescriptionOrchestratorService});
+container.register<IAppointmentOrchestratorService>('IAppointmentOrchestratorService', {useClass: AppointmentOrchestratorService});
 container.register<IClinicalProgressOrchestratorService>(
   "IClinicalProgressOrchestratorService",
   {

@@ -67,6 +67,8 @@ import { MedicalPrescriptionOrchestratorPaths } from "./paths/medicalPrescriptio
 import { MedicalPrescriptionOrchestratorSchemas } from "./schemas/medicalPrescriptionOrchestrator.schema";
 import { ClinicalProgressOrchestratorPaths } from "./paths/clinicalProgressOrchestrator.path";
 import { ClinicalProgressOrchestratorSchemas } from "./schemas/clinicalProgressOrchestrator.schema";
+import { AppointmentOrchestratorSchemas } from "./schemas/appointmentOrchestrator.schemas";
+import { AppointmentOrchestratorPaths } from "./paths/appointmentOrchestrator.paths";
 export const OpenApiSpecification = {
   openapi: "3.0.0",
   info: {
@@ -83,6 +85,7 @@ export const OpenApiSpecification = {
   paths: {
     ...AuthPaths,
     ...AppointmentPaths,
+    ...AppointmentOrchestratorPaths,
     ...PaymentNotificationPaths,
     ...InstallmentPaths,
     ...PaymentPlanPaths,
@@ -126,6 +129,7 @@ export const OpenApiSpecification = {
     },
     schemas: {
       ...AppointmentSchemas,
+      ...AppointmentOrchestratorSchemas,
       ...PaymentNotificationSchemas,
       ...InstallmentSchemas,
       ...PaymentPlanSchemas,
