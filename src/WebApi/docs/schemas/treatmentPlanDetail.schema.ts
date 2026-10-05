@@ -8,8 +8,6 @@ export const TreatmentPlanDetailSchemas = {
       "treatmentId",
       "treatmentName",
 
-      "toothNumber",
-
       "quantity",
 
       "unitPrice",

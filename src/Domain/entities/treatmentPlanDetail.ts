@@ -5,7 +5,7 @@ export default class TreatmentPlanDetail extends BaseModel {
   planId: string;
   treatmentId: string;
   treatmentName: string;
-  private toothNumber: number;
+  private toothNumber?: number;
   private quantity: number;
   private unitPrice: number; //almacena el precio del momento que tenia el tratamiento, asi en el futuro cuando aumente el precio este tendra el de ese momento y no se cambiara
   private subtotal: number;
@@ -26,7 +26,7 @@ export default class TreatmentPlanDetail extends BaseModel {
     planId: string;
     treatmentId: string;
     treatmentName: string;
-    toothNumber: number;
+    toothNumber?: number;
     quantity: number;
     unitPrice: number;
     subtotal: number;
@@ -41,7 +41,8 @@ export default class TreatmentPlanDetail extends BaseModel {
       throw new Error("El tratamiento es obligatorio");
     }
 
-    if (toothNumber <= 0) {
+    if (toothNumber !== undefined &&
+      toothNumber <= 0) {
       throw new Error(
         "El número de diente debe ser mayor que cero"
       );
@@ -86,7 +87,7 @@ export default class TreatmentPlanDetail extends BaseModel {
     this.status = status;
   }
 
-  get currentToothNumber(): number {
+  get currentToothNumber(): number | undefined {
     return this.toothNumber;
   }
 
@@ -127,9 +128,9 @@ export default class TreatmentPlanDetail extends BaseModel {
   }
 
   //DIENTE
-  changeTooth(toothNumber: number): void {
+  changeTooth(toothNumber?: number): void {
 
-    if (toothNumber <= 0) {
+    if (toothNumber !== undefined && toothNumber <= 0) {
       throw new Error(
         "El número de diente debe ser mayor que cero"
       );

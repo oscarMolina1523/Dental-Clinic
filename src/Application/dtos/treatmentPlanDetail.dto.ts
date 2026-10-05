@@ -4,7 +4,7 @@ export interface TreatmentPlanDetailDto {
   planId: string;
   treatmentId: string;
   treatmentName: string;
-  toothNumber: number;
+  toothNumber?: number;
   quantity: number;
   unitPrice: number;
   subtotal: number;

@@ -56,7 +56,6 @@ export const TreatmentPlanOrchestratorSchemas = {
             "planId",
             "treatmentId",
             "treatmentName",
-            "toothNumber",
             "quantity",
             "unitPrice",
             "subtotal",
