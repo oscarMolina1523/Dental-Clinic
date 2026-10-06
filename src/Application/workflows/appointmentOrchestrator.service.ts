@@ -381,7 +381,7 @@ export class AppointmentOrchestratorService
 
         if (
             data.appointment.treatmentId &&
-            data.treatmentPlan
+            data.appointment.treatmentPlanId
         ) {
             throw new Error(
                 "La cita no puede tener un tratamiento individual y un plan de tratamiento al mismo tiempo"
