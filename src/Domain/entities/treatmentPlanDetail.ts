@@ -41,13 +41,6 @@ export default class TreatmentPlanDetail extends BaseModel {
       throw new Error("El tratamiento es obligatorio");
     }
 
-    if (toothNumber !== undefined &&
-      toothNumber <= 0) {
-      throw new Error(
-        "El número de diente debe ser mayor que cero"
-      );
-    }
-
     if (quantity <= 0) {
       throw new Error(
         "La cantidad debe ser mayor que cero"
