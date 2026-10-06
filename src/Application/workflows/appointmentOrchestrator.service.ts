@@ -351,7 +351,7 @@ export class AppointmentOrchestratorService
             )
         );
     }
-
+    
     async update(
         id: string,
         data: CreateAppointmentOrchestratorDto
@@ -359,7 +359,10 @@ export class AppointmentOrchestratorService
 
         /*
          * ============================================================
-         * 1. BUSCAR LA CITA ACTUAL
+         * 1. VALIDAR QUE LA CITA EXISTE
+         *
+         * existingAppointment solamente se utiliza para validar
+         * existencia. NO se utiliza para decidir el nuevo estado.
          * ============================================================
          */
 
@@ -367,7 +370,7 @@ export class AppointmentOrchestratorService
             await this._appointmentService.findById(id);
 
         if (!existingAppointment) {
-           throw new Error(
+            throw new Error(
                 "La cita no existe"
             );
         }
@@ -375,7 +378,7 @@ export class AppointmentOrchestratorService
 
         /*
          * ============================================================
-         * 2. VALIDAR QUE NO VENGAN TREATMENT + PLAN
+         * 2. VALIDAR TREATMENT + PLAN
          * ============================================================
          */
 
@@ -391,95 +394,43 @@ export class AppointmentOrchestratorService
 
         /*
          * ============================================================
-         * 3. LA CITA YA TENÍA UN TREATMENT PLAN
+         * 3. ACTUALIZACIÓN COMO TREATMENT INDIVIDUAL
          *
-         * No creamos otro plan.
+         * El frontend ya decidió que la cita tendrá un solo
+         * tratamiento porque manda treatmentId.
          *
-         * Solamente:
-         * - actualizamos el mismo plan
-         * - agregamos details nuevos
-         * - actualizamos details existentes
-         * - eliminamos details que ya no vienen
+         * NO usamos existingAppointment.treatmentId
+         * NO usamos existingAppointment.treatmentPlanId
          * ============================================================
          */
 
-        if (existingAppointment.treatmentPlanId) {
+        if (
+            data.appointment.treatmentId &&
+            !data.treatmentPlan
+        ) {
 
-            /*
-             * Si viene treatmentPlan, sincronizamos sus detalles.
-             */
+            const treatment =
+                await this._treatmentService.findById(
+                    data.appointment.treatmentId
+                );
 
-            if (data.treatmentPlan) {
-
-                const treatmentPlan =
-                    await this._treatmentPlanService.update(
-                        existingAppointment.treatmentPlanId,
-                        data.treatmentPlan.data
-                    );
-
-                if (!treatmentPlan) {
-                    throw new Error(
-                        "No se encontró el plan de tratamiento de la cita"
-                    );
-                }
-
-
-                /*
-                 * Sincronizar details del mismo plan
-                 */
-
-                const treatmentPlanDetails =
-                    await this.syncTreatmentPlanDetails(
-                        existingAppointment.treatmentPlanId,
-                        data.treatmentPlan.details
-                    );
-
-
-                /*
-                 * Actualizar appointment manteniendo
-                 * el mismo treatmentPlanId
-                 */
-
-                const appointment =
-                    await this._appointmentService.update(
-                        id,
-                        {
-                            ...data.appointment,
-
-                            treatmentId: undefined,
-
-                            treatmentPlanId:
-                                existingAppointment.treatmentPlanId,
-                        }
-                    );
-
-                if (!appointment) {
-                    return null;
-                }
-
-
-                return {
-                    appointment,
-                    treatment: null,
-                    treatmentPlan,
-                    treatmentPlanDetails,
-                };
+            if (!treatment) {
+                throw new Error(
+                    "El tratamiento seleccionado no existe"
+                );
             }
 
-
-            /*
-             * Si no viene treatmentPlan, simplemente
-             * actualizamos el appointment.
-             */
 
             const appointment =
                 await this._appointmentService.update(
                     id,
                     {
                         ...data.appointment,
-                        treatmentPlanId:
-                            existingAppointment.treatmentPlanId,
-                        treatmentId: undefined,
+
+                        treatmentId:
+                            data.appointment.treatmentId,
+
+                        treatmentPlanId: undefined,
                     }
                 );
 
@@ -490,7 +441,7 @@ export class AppointmentOrchestratorService
 
             return {
                 appointment,
-                treatment: null,
+                treatment,
                 treatmentPlan: null,
                 treatmentPlanDetails: [],
             };
@@ -499,65 +450,108 @@ export class AppointmentOrchestratorService
 
         /*
          * ============================================================
-         * 4. LA CITA ANTES TENÍA UN TREATMENT ID
+         * 4. ACTUALIZACIÓN COMO TREATMENT PLAN
          *
-         * Si ahora viene treatmentPlan significa que el usuario
-         * agregó uno o más servicios y debemos convertir:
+         * El frontend manda treatmentPlan.
          *
-         * treatmentId
-         *
-         * en
-         *
-         * treatmentPlanId
+         * El plan que se debe utilizar es el que viene en DATA,
+         * no el de existingAppointment.
          * ============================================================
          */
 
-        if (
-            existingAppointment.treatmentId &&
-            data.treatmentPlan
-        ) {
+        if (data.treatmentPlan) {
 
             /*
-             * CREAR EL NUEVO PLAN
+             * El frontend puede mandar el treatmentPlanId
+             * dentro de appointment.
+             *
+             * Si existe, actualizamos ese plan.
+             *
+             * Si no existe, creamos uno nuevo.
              */
 
-            const treatmentPlan =
-                await this._treatmentPlanService.create({
-                    ...data.treatmentPlan.data,
-                });
+            let treatmentPlan: TreatmentPlan;
+
+            if (data.appointment.treatmentPlanId) {
+
+                const updatedPlan =
+                    await this._treatmentPlanService.update(
+                        data.appointment.treatmentPlanId,
+                        data.treatmentPlan.data
+                    );
+
+                if (!updatedPlan) {
+                    throw new Error(
+                        "No se encontró el plan de tratamiento"
+                    );
+                }
+
+                treatmentPlan = updatedPlan;
+
+            } else {
+
+                treatmentPlan =
+                    await this._treatmentPlanService.create({
+                        ...data.treatmentPlan.data,
+                    });
+            }
 
 
             /*
-             * CREAR LOS DETAILS DEL PLAN
+             * ========================================================
+             * SINCRONIZAR DETAILS
+             * ========================================================
+             *
+             * Si el plan ya existía:
+             * - actualiza existentes
+             * - crea nuevos
+             * - elimina los que ya no vienen
+             *
+             * Si es nuevo:
+             * - crea todos los details
              */
 
             const treatmentPlanDetails:
                 TreatmentPlanDetail[] = [];
 
-            for (
-                const detail
-                of data.treatmentPlan.details
-            ) {
+            if (data.appointment.treatmentPlanId) {
 
-                const createdDetail =
-                    await this._treatmentPlanDetailService.create({
-                        ...detail,
-                        planId: treatmentPlan.id,
-                    });
+                const syncedDetails =
+                    await this.syncTreatmentPlanDetails(
+                        data.appointment.treatmentPlanId,
+                        data.treatmentPlan.details
+                    );
 
                 treatmentPlanDetails.push(
-                    createdDetail
+                    ...syncedDetails
                 );
+
+            } else {
+
+                for (
+                    const detail
+                    of data.treatmentPlan.details
+                ) {
+
+                    const createdDetail =
+                        await this._treatmentPlanDetailService.create({
+                            ...detail,
+                            planId: treatmentPlan.id,
+                        });
+
+                    treatmentPlanDetails.push(
+                        createdDetail
+                    );
+                }
             }
 
 
             /*
+             * ========================================================
              * ACTUALIZAR APPOINTMENT
              *
-             * IMPORTANTE:
-             *
-             * Se elimina treatmentId
-             * y se asigna treatmentPlanId.
+             * El nuevo estado viene completamente de DATA.
+             * ========================================================
              */
 
             const appointment =
@@ -589,20 +583,9 @@ export class AppointmentOrchestratorService
 
         /*
          * ============================================================
-         * 5. SIGUE SIENDO UN SOLO TREATMENT
+         * 5. ACTUALIZACIÓN SIN TREATMENT NI PLAN
          *
-         * Ejemplo:
-         *
-         * Antes:
-         * treatmentId = A
-         *
-         * Ahora:
-         * treatmentId = B
-         *
-         * Solo cambiamos el ID.
-         *
-         * NO creamos TreatmentPlan.
-         * NO modificamos TreatmentCatalog.
+         * Solo actualizamos los demás datos de la cita.
          * ============================================================
          */
 
@@ -611,8 +594,6 @@ export class AppointmentOrchestratorService
                 id,
                 {
                     ...data.appointment,
-
-                    treatmentPlanId: undefined,
                 }
             );
 
