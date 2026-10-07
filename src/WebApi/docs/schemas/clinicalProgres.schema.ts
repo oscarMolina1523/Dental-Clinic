@@ -11,8 +11,6 @@ export const ClinicalProgresSchemas = {
       
         "diagnosis",
       
-        "treatmentId",
-      
         "observations",
       
         "registrationDate"
@@ -29,6 +27,7 @@ export const ClinicalProgresSchemas = {
       diagnosis: { type: "string" },
       
       treatmentId: { type: "string" },
+      treatmentPlanId: { type: "string" },
       
       observations: { type: "string" },
       
@@ -51,6 +50,7 @@ export const ClinicalProgresSchemas = {
       diagnosis: { type: "string" },
       
       treatmentId: { type: "string" },
+      treatmentPlanId: { type: "string" },
       
       observations: { type: "string" },
       

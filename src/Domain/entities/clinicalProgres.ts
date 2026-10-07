@@ -5,7 +5,8 @@ export default class ClinicalProgres extends BaseModel {
   dateId: string; //hace referencia a la cita 
   dentistId: string;
   diagnosis: string;
-  treatmentId: string;
+  treatmentId?: string;
+  treatmentPlanId?: string;
   observations: string;
   registrationDate: Date;
 
@@ -24,7 +25,8 @@ export default class ClinicalProgres extends BaseModel {
     dateId: string;
     dentistId: string;
     diagnosis: string;
-    treatmentId: string;
+    treatmentId?: string;
+    treatmentPlanId?: string;
     observations: string;
     registrationDate: Date;
   }) {
@@ -34,6 +36,7 @@ export default class ClinicalProgres extends BaseModel {
     this.dentistId = dentistId;
     this.diagnosis = diagnosis;
     this.treatmentId = treatmentId;
+    this.treatmentPlanId = this.treatmentPlanId;
     this.observations = observations;
     this.registrationDate = registrationDate;
   }

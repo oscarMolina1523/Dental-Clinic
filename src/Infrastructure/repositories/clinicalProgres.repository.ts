@@ -46,6 +46,7 @@ export class ClinicalProgresRepository implements IClinicalProgresRepository {
         dentistId: row["DENTISTID"],
         diagnosis: row["DIAGNOSIS"],
         treatmentId: row["TREATMENTID"],
+        treatmentPlanId: row["TREATMENTPLANID"],
         observations: row["OBSERVATIONS"],
         registrationDate: row["REGISTRATIONDATE"],
       } as ClinicalProgres)
@@ -69,6 +70,7 @@ export class ClinicalProgresRepository implements IClinicalProgresRepository {
       dentistId: row["DENTISTID"],
       diagnosis: row["DIAGNOSIS"],
       treatmentId: row["TREATMENTID"],
+      treatmentPlanId: row["TREATMENTPLANID"],
       observations: row["OBSERVATIONS"],
       registrationDate: row["REGISTRATIONDATE"],
     } as ClinicalProgres;
@@ -94,6 +96,7 @@ export class ClinicalProgresRepository implements IClinicalProgresRepository {
           dentistId: row["DENTISTID"],
           diagnosis: row["DIAGNOSIS"],
           treatmentId: row["TREATMENTID"],
+          treatmentPlanId: row["TREATMENTPLANID"],
           observations: row["OBSERVATIONS"],
           registrationDate: row["REGISTRATIONDATE"],
         })

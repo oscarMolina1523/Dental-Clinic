@@ -160,6 +160,7 @@ export async function initializeDatabase(): Promise<void> {
         DENTISTID TEXT,
         DIAGNOSIS TEXT,
         TREATMENTID TEXT,
+        TREATMENTPLANID TEXT,
         OBSERVATIONS TEXT,
         REGISTRATIONDATE TEXT
     );

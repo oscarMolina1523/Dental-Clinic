@@ -362,6 +362,10 @@
           "type": "string"
         },
         {
+          "name": "treatmentPlanId",
+          "type": "string"
+        },
+        {
           "name": "observations",
           "type": "string"
         },

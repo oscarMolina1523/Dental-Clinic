@@ -3,7 +3,8 @@ export interface ClinicalProgresDto {
   dateId: string;
   dentistId: string;
   diagnosis: string;
-  treatmentId: string;
+  treatmentId?: string;
+  treatmentPlanId?: string;
   observations: string;
   registrationDate: Date;
 }
