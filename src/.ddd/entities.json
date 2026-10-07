@@ -868,6 +868,10 @@
         {
           "name": "createdAt",
           "type": "Date"
+        },
+        {
+          "name": "isInvoiced",
+          "type": "boolean"
         }
       ]
     }

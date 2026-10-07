@@ -19,12 +19,12 @@ export class AppointmentController {
   }
 
   create = async (req: Request, res: Response) => {
-    try{
+    try {
 
       const result = await this._appointmentService.create(req.body);
       res.status(201).json(result);
 
-    }catch (error) {
+    } catch (error) {
       return res.status(400).json({
         message:
           error instanceof Error
@@ -143,14 +143,14 @@ export class AppointmentController {
 
     const { notes } = req.body;
 
-    try{
+    try {
 
       const result =
         await this._appointmentService.cancel(
           id,
           notes
         );
-  
+
       res.json(result);
 
     } catch (error) {
@@ -171,16 +171,16 @@ export class AppointmentController {
     const id =
       req.params.id as string;
 
-      try{
+    try {
 
-        const result =
-          await this._appointmentService.markAsNoShow(
-            id
-          );
-    
-        res.json(result);
+      const result =
+        await this._appointmentService.markAsNoShow(
+          id
+        );
 
-      } catch (error) {
+      res.json(result);
+
+    } catch (error) {
       return res.status(400).json({
         message:
           error instanceof Error
@@ -282,5 +282,36 @@ export class AppointmentController {
       appointmentId: id,
       isPending: result
     });
+  };
+
+  // ============================================================
+  // INVOICE
+  // ============================================================
+
+  markAsInvoiced = async (
+    req: Request,
+    res: Response
+  ) => {
+
+    const id =
+      req.params.id as string;
+
+    try {
+
+      const result =
+        await this._appointmentService.markAsInvoiced(
+          id
+        );
+
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo marcar la cita como facturada"
+      });
+    }
   };
 }

@@ -48,4 +48,8 @@ export interface IAppointmentService {
   isPending(
     id: string
   ): Promise<boolean | null>;
+
+  markAsInvoiced(
+    id: string
+  ): Promise<Appointment | null>
 }

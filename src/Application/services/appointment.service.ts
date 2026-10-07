@@ -282,4 +282,30 @@ export class AppointmentService implements IAppointmentService {
 
     return appointment.isPending;
   }
+
+    // ============================================================
+  // INVOICE
+  // ============================================================
+
+  async markAsInvoiced(
+    id: string
+  ): Promise<Appointment | null> {
+
+    const appointment =
+      await this._appointmentRepository.findById(id);
+
+    if (!appointment) {
+      return null;
+    }
+
+    // DOMAIN
+    appointment.markAsInvoiced();
+
+    // PERSISTENCE
+    await this._appointmentRepository.update(
+      appointment
+    );
+
+    return appointment;
+  }
 }

@@ -22,4 +22,5 @@ export interface AppointmentDto {
   cancelationNotes: string;
   reminderSent: boolean;
   createdAt: Date;
+  isInvoiced: boolean;
 }

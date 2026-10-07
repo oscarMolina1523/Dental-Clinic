@@ -58,6 +58,7 @@ export class AppointmentRepository implements IAppointmentRepository {
           status: row["STATUS"],
           cancelationNotes: row["CANCELATIONNOTES"],
           reminderSent: row["REMINDERSENT"],
+          isInvoiced: row["ISINVOICED"],
           createdAt: row["CREATEDAT"],
         })
     );
@@ -92,6 +93,7 @@ export class AppointmentRepository implements IAppointmentRepository {
       status: row["STATUS"],
       cancelationNotes: row["CANCELATIONNOTES"],
       reminderSent: row["REMINDERSENT"],
+      isInvoiced: row["ISINVOICED"],
       createdAt: row["CREATEDAT"],
     });
   }

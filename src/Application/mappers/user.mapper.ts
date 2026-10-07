@@ -19,6 +19,7 @@ export class UserMapper {
       active: dto.active,
       createdAt: now,
       updatedAt: now,
+      specialties:""
     });
   }
 

@@ -378,7 +378,8 @@ export async function initializeDatabase(): Promise<void> {
         STATUS TEXT,
         CANCELATIONNOTES TEXT,
         REMINDERSENT INTEGER,
-        CREATEDAT TEXT
+        CREATEDAT TEXT,
+        ISINVOICED INTEGER
     );
 `);
 

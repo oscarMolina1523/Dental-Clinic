@@ -467,6 +467,51 @@ export const AppointmentPaths = {
     }
   },
 
+  // ============================================================
+  // INVOICE
+  // ============================================================
+
+  "/appointment/{id}/mark-as-invoiced": {
+
+    post: {
+      summary: "Mark Appointment as Invoiced",
+      description: "Marks the appointment as invoiced.",
+      tags: ["Appointment"],
+
+      parameters: [
+        {
+          name: "id",
+          in: "path",
+          required: true,
+          schema: {
+            type: "string"
+          },
+          description: "Appointment ID"
+        }
+      ],
+
+      responses: {
+        200: {
+          description: "Appointment marked as invoiced",
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/Appointment"
+              }
+            }
+          }
+        },
+
+        404: {
+          description: "Appointment not found"
+        },
+
+        400: {
+          description: "Appointment cannot be marked as invoiced"
+        }
+      }
+    }
+  },
 
   // ============================================================
   // INFORMATION

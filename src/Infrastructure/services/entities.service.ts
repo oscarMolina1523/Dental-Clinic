@@ -424,6 +424,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("CANCELATIONNOTES", "cancelationNotes", false),
             new SqlColumnSettings("REMINDERSENT", "reminderSent", false),
             new SqlColumnSettings("CREATEDAT", "createdAt", false),
+            new SqlColumnSettings("ISINVOICED", "isInvoiced", false),
         ];
         return new SqlEntitySettings("APPOINTMENTS", columns);
     }

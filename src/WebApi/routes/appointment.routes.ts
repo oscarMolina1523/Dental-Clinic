@@ -73,5 +73,9 @@ router.get(
     controller.isPending
 );
 
+router.post(
+    "/:id/mark-as-invoiced",
+    controller.markReminderAsSent
+);
 
 export default router;
