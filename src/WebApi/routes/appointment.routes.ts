@@ -75,7 +75,7 @@ router.get(
 
 router.post(
     "/:id/mark-as-invoiced",
-    controller.markReminderAsSent
+    controller.markAsInvoiced
 );
 
 export default router;
