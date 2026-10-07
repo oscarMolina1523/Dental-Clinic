@@ -308,4 +308,26 @@ export class AppointmentService implements IAppointmentService {
 
     return appointment;
   }
+
+  async markAsClinicalProgressRegistered(
+    id: string
+  ): Promise<Appointment | null> {
+
+    const appointment =
+      await this._appointmentRepository.findById(id);
+
+    if (!appointment) {
+      return null;
+    }
+
+    // DOMAIN
+    appointment.markAsClinicalProgressRegistered();
+
+    // PERSISTENCE
+    await this._appointmentRepository.update(
+      appointment
+    );
+
+    return appointment;
+  }
 }

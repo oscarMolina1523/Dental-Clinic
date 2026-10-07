@@ -78,4 +78,9 @@ router.post(
     controller.markAsInvoiced
 );
 
+router.post(
+    "/:id/mark-as-clinical-progress-registered",
+    controller.markAsClinicalProgressRegistered
+);
+
 export default router;

@@ -876,6 +876,10 @@
         {
           "name": "isInvoiced",
           "type": "boolean"
+        },
+        {
+          "name": "isClinicalProgressRegistered",
+          "type": "boolean"
         }
       ]
     }

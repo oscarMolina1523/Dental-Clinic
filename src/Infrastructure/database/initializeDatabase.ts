@@ -380,7 +380,8 @@ export async function initializeDatabase(): Promise<void> {
         CANCELATIONNOTES TEXT,
         REMINDERSENT INTEGER,
         CREATEDAT TEXT,
-        ISINVOICED INTEGER
+        ISINVOICED INTEGER,
+        ISCLINICALPROGRESSREGISTERED INTEGER
     );
 `);
 

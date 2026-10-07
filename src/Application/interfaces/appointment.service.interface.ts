@@ -51,5 +51,9 @@ export interface IAppointmentService {
 
   markAsInvoiced(
     id: string
-  ): Promise<Appointment | null>
+  ): Promise<Appointment | null>;
+
+  markAsClinicalProgressRegistered(
+    id: string
+  ): Promise<Appointment | null>;
 }

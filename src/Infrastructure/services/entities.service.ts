@@ -426,6 +426,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("REMINDERSENT", "reminderSent", false),
             new SqlColumnSettings("CREATEDAT", "createdAt", false),
             new SqlColumnSettings("ISINVOICED", "isInvoiced", false),
+            new SqlColumnSettings("ISCLINICALPROGRESSREGISTERED", "isClinicalProgressRegistered", false),
         ];
         return new SqlEntitySettings("APPOINTMENTS", columns);
     }

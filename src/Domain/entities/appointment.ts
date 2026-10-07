@@ -25,6 +25,7 @@ export default class Appointment extends BaseModel {
   createdAt: Date;
 
   isInvoiced: boolean;
+  isClinicalProgressRegistered: boolean;
 
   constructor({
     id,
@@ -49,7 +50,9 @@ export default class Appointment extends BaseModel {
     cancelationNotes,
     reminderSent,
     createdAt,
-    isInvoiced
+
+    isInvoiced,
+    isClinicalProgressRegistered
   }: {
     id: string;
     patientId: string;
@@ -75,6 +78,7 @@ export default class Appointment extends BaseModel {
     reminderSent: boolean | number | string
     createdAt: Date | string;
     isInvoiced: boolean;
+    isClinicalProgressRegistered: boolean;
   }) {
     super(id);
 
@@ -231,6 +235,7 @@ export default class Appointment extends BaseModel {
     this.reminderSent = normalizedReminderSent;
     this.createdAt = normalizedCreatedAt;
     this.isInvoiced = isInvoiced;
+    this.isClinicalProgressRegistered = isClinicalProgressRegistered;
   }
 
   // ============================================================
@@ -495,6 +500,10 @@ export default class Appointment extends BaseModel {
 
   markAsInvoiced(): void {
     this.isInvoiced = true;
+  }
+
+  markAsClinicalProgressRegistered(): void {
+    this.isClinicalProgressRegistered = true;
   }
 
 }

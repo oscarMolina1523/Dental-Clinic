@@ -23,4 +23,5 @@ export interface AppointmentDto {
   reminderSent: boolean;
   createdAt: Date;
   isInvoiced: boolean;
+  isClinicalProgressRegistered: boolean;
 }

@@ -314,4 +314,35 @@ export class AppointmentController {
       });
     }
   };
+
+  // ============================================================
+  // CLINICAL PROGRESS
+  // ============================================================
+
+  markAsClinicalProgressRegistered = async (
+    req: Request,
+    res: Response
+  ) => {
+
+    const id =
+      req.params.id as string;
+
+    try {
+
+      const result =
+        await this._appointmentService.markAsClinicalProgressRegistered(
+          id
+        );
+
+      res.json(result);
+
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo marcar la cita como registrada en expediente"
+      });
+    }
+  };
 }
