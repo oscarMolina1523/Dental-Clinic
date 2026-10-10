@@ -12,4 +12,6 @@ export interface InvoiceDto {
   paidAmount: number;
   pendingAmount: number;
   status: InvoiceStatus;
+
+  hasInstallment: boolean;
 }

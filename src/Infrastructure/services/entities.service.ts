@@ -265,6 +265,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("PAIDAMOUNT", "paidAmount", false),
             new SqlColumnSettings("PENDINGAMOUNT", "pendingAmount", false),
             new SqlColumnSettings("STATUS", "status", false),
+            new SqlColumnSettings("HASINSTALLMENT", "hasInstallment", false),
         ];
         return new SqlEntitySettings("INVOICES", columns);
     }

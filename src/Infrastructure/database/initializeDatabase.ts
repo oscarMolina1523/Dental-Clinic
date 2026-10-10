@@ -219,7 +219,8 @@ export async function initializeDatabase(): Promise<void> {
         TOTALAMOUNT INTEGER,
         PAIDAMOUNT INTEGER,
         PENDINGAMOUNT INTEGER,
-        STATUS TEXT
+        STATUS TEXT,
+        HASINSTALLMENT INTEGER
     );
 `);
 

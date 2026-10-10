@@ -50,6 +50,7 @@ export class InvoiceRepository implements IInvoiceRepository {
         paidAmount: row["PAIDAMOUNT"],
         pendingAmount: row["PENDINGAMOUNT"],
         status: row["STATUS"],
+        hasInstallment: row["HASINSTALLMENT"],
       })
     );
   }
@@ -75,6 +76,7 @@ export class InvoiceRepository implements IInvoiceRepository {
       paidAmount: row["PAIDAMOUNT"],
       pendingAmount: row["PENDINGAMOUNT"],
       status: row["STATUS"],
+      hasInstallment: row["HASINSTALLMENT"],
     });
   }
 

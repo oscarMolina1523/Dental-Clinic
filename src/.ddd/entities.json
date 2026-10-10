@@ -508,6 +508,10 @@
         {
           "name": "status",
           "type": "string"
+        },
+        {
+          "name": "hasInstallment",
+          "type": "boolean"
         }
       ]
     },
