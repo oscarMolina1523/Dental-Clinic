@@ -45,6 +45,8 @@ export class InvoiceService implements IInvoiceService {
     }
 
     existing.changeTotal(data.totalAmount);
+    existing.hasInstallment = data.hasInstallment ?? existing.hasInstallment;
+    
     await this._invoiceRepository.update(existing);
     return existing;
   }
