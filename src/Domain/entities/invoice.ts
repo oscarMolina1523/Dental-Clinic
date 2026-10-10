@@ -49,12 +49,6 @@ export default class Invoice extends BaseModel {
       );
     }
 
-    if (!treatmentPlanId) {
-      throw new Error(
-        "El plan de tratamiento es obligatorio"
-      );
-    }
-
     if (!invoiceNumber) {
       throw new Error(
         "El número de factura es obligatorio"
