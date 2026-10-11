@@ -36,6 +36,65 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
     ) { }
 
 
+    private async applyLateFeeIfNeeded(
+        installment: Installment,
+        gracePeriodDays: number
+    ): Promise<Installment> {
+        // 1. No cobrar mora más de una vez.
+        if (installment.hasLateFee) {
+            return installment;
+        }
+
+        // 2. No aplicar mora a cuotas pagadas o canceladas.
+        if (
+            installment.currentStatus === InstallmentStatus.PAID ||
+            installment.currentStatus === InstallmentStatus.CANCELLED
+        ) {
+            return installment;
+        }
+
+        // 3. Calcular la fecha límite: vencimiento + días de gracia.
+        const dueDate = new Date(installment.dueDate);
+        dueDate.setHours(0, 0, 0, 0);
+
+        const deadline = new Date(dueDate);
+        deadline.setDate(deadline.getDate() + gracePeriodDays);
+        deadline.setHours(0, 0, 0, 0);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Todavía está dentro del período permitido.
+        if (today <= deadline) {
+            return installment;
+        }
+
+        // 4. Aplicar el 5 % una sola vez sobre el monto de la cuota.
+        const lateFee = Number(
+            (installment.currentAmount * 0.05).toFixed(2)
+        );
+
+        if (lateFee <= 0) {
+            return installment;
+        }
+
+        // 5. Guardar la mora en la base de datos.
+        const updatedInstallment =
+            await this._installmentService.addLateFee(
+                installment.id,
+                lateFee
+            );
+
+        if (!updatedInstallment) {
+            throw new Error(
+                `No se pudo aplicar la mora a la cuota ${installment.installmentNumber}`
+            );
+        }
+
+        return updatedInstallment;
+    }
+
+
     // ============================================================
     // GET PAYMENT PLAN BY ID
     // ============================================================
@@ -94,10 +153,23 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
         // 3. Buscar cuotas
         // ----------------------------------------------------------
 
+
         const installments =
             await this._installmentService.findByPaymentPlanId(
                 paymentPlan.id
             );
+
+        const updatedInstallments: Installment[] = [];
+
+        for (const installment of installments) {
+            const updatedInstallment =
+                await this.applyLateFeeIfNeeded(
+                    installment,
+                    paymentPlan.currentGracePeriodDays
+                );
+
+            updatedInstallments.push(updatedInstallment);
+        }
 
         // ----------------------------------------------------------
         // 4. Buscar pagos
@@ -115,7 +187,7 @@ export class PaymentPlanOrchestratorService implements IPaymentPlanOrchestratorS
         return {
             paymentPlan,
             invoice,
-            installments,
+            installments: updatedInstallments,
             payments
         };
     }

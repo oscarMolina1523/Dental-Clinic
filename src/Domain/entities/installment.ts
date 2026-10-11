@@ -258,4 +258,7 @@ export default class Installment extends BaseModel {
     this.status = InstallmentStatus.PENDING;
   }
 
+  get hasLateFee(): boolean {
+    return this.lateFeeAmount > 0;
+  }
 }
