@@ -1,0 +1,115 @@
+modulo de gestion de inventario
+
+sea diagram
+actor "Administrador / Especialista" as User
+participant "Módulo de Gestión de Inventario" as System
+participant "Base de Datos" as DB
+
+loop Operaciones de gestión de inventario
+  opt Administrar productos, categorías y proveedores
+    User->System: Solicitar gestión de productos o proveedores
+    System->System: Validar permisos de la operación
+
+    alt Tiene autorización
+      System-->User: Mostrar información y opciones disponibles
+      User->System: Consultar, registrar o modificar datos
+      System->System: Validar datos ingresados
+
+      alt Datos válidos
+        System->+DB: Consultar o guardar productos, categorías o proveedores
+        DB-->-System: Retornar resultado de la operación
+        System-->User: Mostrar resultado actualizado
+      else Datos inválidos
+        System-->User: Notificar errores de validación
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Gestionar inventario general
+    User->System: Consultar o configurar inventario
+    System->System: Validar permisos de gestión
+
+    alt Tiene autorización
+      System->+DB: Consultar existencias y configuración
+      DB-->-System: Retornar datos del inventario
+
+      opt Configurar stock mínimo
+        User->System: Definir stock mínimo del producto
+        System->System: Validar valor ingresado
+        System->+DB: Guardar stock mínimo
+        DB-->-System: Confirmar actualización
+      end
+else Sin autorización
+          System-->User: Notificar acceso denegado
+
+      opt Crear o administrar lotes
+        User->System: Solicitar creación o gestión de lote
+        System->System: Validar permisos de la operación
+
+        alt Tiene autorización
+          User->System: Ingresar producto, cantidad, fecha de caducidad y datos del lote
+          System->System: Validar datos del lote
+
+          alt Datos válidos
+            System->+DB: Registrar lote y existencias iniciales
+            DB-->-System: Confirmar registro
+            System-->User: Mostrar lote registrado
+          else Datos inválidos
+            System-->User: Notificar errores de validación
+          end
+        
+        end
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Ajustar existencias
+    User->System: Solicitar ajuste de existencias
+    System->System: Validar permisos de ajuste
+
+    alt Tiene autorización
+      System->+DB: Consultar existencias actuales
+      DB-->-System: Retornar cantidades actuales
+
+      User->System: Ingresar cantidad y motivo del ajuste
+      System->System: Validar ajuste solicitado
+
+      alt Ajuste válido
+        System->+DB: Registrar ajuste y actualizar existencias
+        DB-->-System: Confirmar actualización
+        System-->User: Mostrar existencias actualizadas
+      else Ajuste inválido
+        System-->User: Notificar error de validación
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Gestionar lotes vencidos
+    User->System: Consultar lotes 
+    System->System: Validar permisos de gestión
+
+    alt Tiene autorización
+      System->+DB: Consultar lotes y fechas de caducidad
+      DB-->-System: Retornar lotes 
+
+      User->System: Seleccionar lote para dar de baja por vencimiento
+      System->System: Validar estado y cantidad disponible
+
+      alt Lote apto para baja
+        System->+DB: Registrar baja y actualizar existencias
+        DB-->-System: Confirmar baja
+        System-->User: Mostrar resultado de la baja
+      else Baja no permitida
+        System-->User: Notificar motivo del rechazo
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+end

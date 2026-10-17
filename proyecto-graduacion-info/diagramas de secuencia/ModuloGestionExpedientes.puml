@@ -1,0 +1,60 @@
+@startuml
+
+actor "Administrador / Especialista" as User
+participant "Módulo de Gestión de Expedientes Clínicos" as System
+participant "Gestor de Base de Datos" as DB
+
+loop Realizar operaciones de gestión de expedientes clínicos
+  opt Escenario: Registrar progreso clínico
+    User -> System : Registrar progreso clínico, diagnósticos y observaciones
+    System -> System : Validar permisos de escritura
+
+    alt Tiene permiso de escritura
+      System -> DB : Guardar progreso, diagnósticos y observaciones de cita
+      DB --> System : Confirmar registro exitoso
+      System --> User : Mostrar confirmación del progreso clínico
+    else No tiene permiso de escritura
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Gestionar Odontograma / Ficha dental
+    User -> System : Crear ficha o actualizar estado de piezas, caras y notas
+    System -> System : Validar permisos de modificación
+
+    alt Tiene permiso de escritura
+      System -> DB : Actualizar ficha dental y estado de piezas/caras en DB
+      DB --> System : Confirmar actualización de la ficha
+      System --> User : Mostrar odontograma actualizado
+    else No tiene permiso de escritura
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Emitir recetas médicas
+    User -> System : Crear receta médica y configurar medicamentos, dosis y frecuencia
+    System -> System : Validar permisos de emisión
+
+    alt Tiene permiso de escritura
+      System -> DB : Guardar receta médica y configuración en DB
+      DB --> System : Confirmar emisión de receta
+      System --> User : Mostrar receta médica generada
+    else No tiene permiso de escritura
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Adjuntar archivos de imágenes clínicas
+    User -> System : Seleccionar y adjuntar archivos de imágenes clínicas
+    System -> System : Validar permisos de archivo
+
+    alt Tiene permiso de escritura
+      System -> DB : Guardar archivos e imágenes en DB / Repositorio
+      DB --> System : Confirmar almacenamiento exitoso
+      System --> User : Mostrar archivos clínicos adjuntos
+    else No tiene permiso de escritura
+      System --> User : Notificar acceso denegado
+    end
+  end
+end
+@enduml

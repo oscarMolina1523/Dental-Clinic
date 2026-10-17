@@ -1,0 +1,55 @@
+Modulo de reportes
+
+actor Administrador as Admin
+participant "Módulo de Reportes" as System
+participant "Gestor de Base de Datos" as DB
+
+
+opt Consultar estados de las citas
+  Admin->System: Solicitar reporte de estados de citas
+  System->System: Validar permisos de lectura
+
+  alt Tiene permiso de lectura
+    System->DB: Consultar citas y sus estados
+    DB-->System: Retornar citas y estados
+    System->System: Procesar datos del reporte
+    System-->Admin: Mostrar reporte de estados de citas
+  else Sin permiso de lectura
+    System-->Admin: Notificar acceso denegado
+  end
+end
+
+
+opt Consultar deudores
+  Admin->System: Solicitar reporte de deudores
+  System->System: Validar permisos de lectura
+
+  alt Tiene permiso de lectura
+    System->DB: Consultar pacientes con saldos pendientes
+    DB-->System: Retornar deudores y saldos
+
+    System->DB: Consultar planes de servicios y citas vinculadas
+    DB-->System: Retornar relaciones disponibles
+
+    System->System: Consolidar información de deudas
+    System-->Admin: Mostrar reporte de deudores
+  else Sin permiso de lectura
+    System-->Admin: Notificar acceso denegado
+  end
+end
+
+
+opt Consultar crecimiento de citas
+  Admin->System: Solicitar reporte de crecimiento
+  System->System: Validar permisos de lectura
+
+  alt Tiene permiso de lectura
+    System->DB: Consultar historial de citas por fecha
+    DB-->System: Retornar datos históricos
+
+    System->System: Agrupar citas por período y calcular variación
+    System-->Admin: Mostrar reporte de crecimiento de citas
+  else Sin permiso de lectura
+    System-->Admin: Notificar acceso denegado
+  end
+end

@@ -1,0 +1,192 @@
+Diagrama de actividades del modulo de facturacion
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Recepcionista"]
+        A((Inicio))
+        
+        %% Decisión inicial
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Generar Factura
+        U_ReqGenFact["Solicitar generación de factura"]
+        U_IngPacPlan["Ingresar paciente y plan de tratamiento"]
+
+        %% 2. Registrar Pago Directo
+        U_SelFactPago["Seleccionar factura y registrar pago"]
+        U_IngRefTrans1["Ingresar referencia de transacción"]
+
+        %% 3. Crear Plan de Pagos
+        U_ReqPlan["Solicitar plan de pagos para una factura"]
+        U_DefCuotas["Definir cuotas, intereses y fecha inicial"]
+
+        %% 4. Registrar Pago de Cuota
+        U_SelCuota["Seleccionar plan y cuota"]
+        U_IngImpMetodo["Ingresar importe y método de pago"]
+        U_IngRefTrans2["Ingresar referencia de transacción"]
+
+        %% 5. Modificar Factura
+        U_SelFactMod["Seleccionar factura"]
+        U_IngModif["Ingresar modificaciones"]
+    end
+
+    subgraph Sistema["Módulo de Facturación / Base de Datos"]
+        %% 1. Generar Factura
+        S_ValPerm1{"¿Tiene autorización?"}
+        S_ConsultPacPlan["Consultar paciente y plan en DB"]
+        S_ValFactData["Validar datos y calcular importe"]
+        D_ValData1{"¿Datos válidos?"}
+        S_RegFact["Registrar factura y saldo pendiente en DB"]
+        S_ShowFact["Mostrar factura generada"]
+        S_ErrVal1["Mostrar errores de validación"]
+
+        %% 2. Registrar Pago Directo
+        S_ValPerm2{"¿Tiene autorización?"}
+        S_ConsultFact1["Consultar factura y saldo en DB"]
+        S_ValPago1["Validar importe y método de pago"]
+        D_EsTrans1{"¿Es transferencia?"}
+        S_ValRef1["Validar referencia de transacción"]
+        D_PagoValid1{"¿Pago válido?"}
+        S_RegPago1["Registrar pago y actualizar saldo en DB"]
+        S_ShowPago1["Mostrar pago y saldo actualizado"]
+        S_ErrPago1["Mostrar error de pago"]
+
+        %% 3. Crear Plan de Pagos
+        S_ValPerm3{"¿Tiene autorización?"}
+        S_ConsultFact2["Consultar factura y saldo en DB"]
+        S_ValPlanCond["Validar condiciones del plan"]
+        D_PlanValid{"¿Datos válidos?"}
+        S_CalcCuotas["Calcular cuotas y vencimientos"]
+        S_RegPlan["Registrar plan y cuotas en DB"]
+        S_ShowPlan["Mostrar plan de pagos"]
+        S_ErrPlan["Mostrar errores de validación"]
+
+        %% 4. Registrar Pago de Cuota
+        S_ValPerm4{"¿Tiene autorización?"}
+        S_ConsultCuota["Consultar plan, cuota y pagos anteriores en DB"]
+        S_ValCuotaCond["Validar vencimiento, saldo y orden"]
+        D_CuotaValid{"¿Cuota pagable e importe válido?"}
+        D_EsTrans2{"¿Es transferencia?"}
+        S_ValRef2["Validar referencia de transacción"]
+        S_RegPagoCuota["Registrar pago de cuota y actualizar saldos en DB"]
+        S_ShowPagoCuota["Mostrar pago y saldos actualizados"]
+        S_ErrCuota["Notificar motivo del rechazo"]
+
+        %% 5. Modificar Factura
+        S_ValPerm5{"¿Tiene autorización?"}
+        S_ConsultFactMod["Consultar factura y pagos asociados en DB"]
+        S_ValEdit{"¿Factura editable y cambios válidos?"}
+        S_ValModif["Validar cambios y recalcular importes"]
+        S_UpdFact["Actualizar factura en DB"]
+        S_ShowFactUpd["Mostrar factura actualizada"]
+        S_ErrModif["Notificar que no se puede modificar"]
+
+        %% Nodo de denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. GENERAR FACTURA
+    %% ==========================================
+    D_Opcion -->|Generar factura| U_ReqGenFact
+    U_ReqGenFact --> S_ValPerm1
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| U_IngPacPlan
+    U_IngPacPlan --> S_ConsultPacPlan
+    S_ConsultPacPlan --> S_ValFactData
+    S_ValFactData --> D_ValData1
+    D_ValData1 -->|No| S_ErrVal1
+    S_ErrVal1 --> Fin
+    D_ValData1 -->|Sí| S_RegFact
+    S_RegFact --> S_ShowFact
+    S_ShowFact --> Fin
+
+    %% ==========================================
+    %% 2. REGISTRAR PAGO DIRECTO
+    %% ==========================================
+    D_Opcion -->|Registrar pago directo| U_SelFactPago
+    U_SelFactPago --> S_ValPerm2
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_ConsultFact1
+    S_ConsultFact1 --> S_ValPago1
+    S_ValPago1 --> D_EsTrans1
+    
+    D_EsTrans1 -->|Sí| U_IngRefTrans1
+    U_IngRefTrans1 --> S_ValRef1
+    S_ValRef1 --> D_PagoValid1
+    
+    D_EsTrans1 -->|No| D_PagoValid1
+    
+    D_PagoValid1 -->|No| S_ErrPago1
+    S_ErrPago1 --> Fin
+    D_PagoValid1 -->|Sí| S_RegPago1
+    S_RegPago1 --> S_ShowPago1
+    S_ShowPago1 --> Fin
+
+    %% ==========================================
+    %% 3. CREAR PLAN DE PAGOS
+    %% ==========================================
+    D_Opcion -->|Crear plan de pagos| U_ReqPlan
+    U_ReqPlan --> S_ValPerm3
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_ConsultFact2
+    S_ConsultFact2 --> U_DefCuotas
+    U_DefCuotas --> S_ValPlanCond
+    S_ValPlanCond --> D_PlanValid
+    D_PlanValid -->|No| S_ErrPlan
+    S_ErrPlan --> Fin
+    D_PlanValid -->|Sí| S_CalcCuotas
+    S_CalcCuotas --> S_RegPlan
+    S_RegPlan --> S_ShowPlan
+    S_ShowPlan --> Fin
+
+    %% ==========================================
+    %% 4. REGISTRAR PAGO DE CUOTA
+    %% ==========================================
+    D_Opcion -->|Registrar pago de cuota| U_SelCuota
+    U_SelCuota --> S_ValPerm4
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_ConsultCuota
+    S_ConsultCuota --> S_ValCuotaCond
+    S_ValCuotaCond --> D_CuotaValid
+    
+    D_CuotaValid -->|No| S_ErrCuota
+    S_ErrCuota --> Fin
+    
+    D_CuotaValid -->|Sí| U_IngImpMetodo
+    U_IngImpMetodo --> D_EsTrans2
+    
+    D_EsTrans2 -->|Sí| U_IngRefTrans2
+    U_IngRefTrans2 --> S_ValRef2
+    S_ValRef2 --> S_RegPagoCuota
+    
+    D_EsTrans2 -->|No| S_RegPagoCuota
+    
+    S_RegPagoCuota --> S_ShowPagoCuota
+    S_ShowPagoCuota --> Fin
+
+    %% ==========================================
+    %% 5. MODIFICAR FACTURA
+    %% ==========================================
+    D_Opcion -->|Modificar factura| U_SelFactMod
+    U_SelFactMod --> S_ValPerm5
+    S_ValPerm5 -->|No| S_NoAuth
+    S_ValPerm5 -->|Sí| S_ConsultFactMod
+    S_ConsultFactMod --> S_ValEdit
+    
+    S_ValEdit -->|No| S_ErrModif
+    S_ErrModif --> Fin
+    
+    S_ValEdit -->|Sí| U_IngModif
+    U_IngModif --> S_ValModif
+    S_ValModif --> S_UpdFact
+    S_UpdFact --> S_ShowFactUpd
+    S_ShowFactUpd --> Fin
+
+    %% Conexión de denegación al fin
+    S_NoAuth --> Fin

@@ -1,0 +1,99 @@
+Diagrama de actividad modulo de seguridad
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista / Recepcionista"]
+        A((Inicio))
+        
+        %% Iniciar Sesión
+        U_SelLogin["Seleccionar 'Iniciar Sesión'"]
+        U_IngCred["Ingresar credenciales"]
+        
+        %% Registrar Usuario
+        U_SelReg["Seleccionar 'Registrar Usuario'"]
+        U_IngReg["Ingresar datos de nuevo usuario"]
+        U_IngPostReg["Ingresar datos del usuario para login"]
+        
+        %% Cerrar Sesión
+        U_SelLogout["Seleccionar 'Cerrar Sesión'"]
+        
+        %% Decisión de Opciones
+        D_Opcion{"Seleccionar Opción"}
+    end
+
+    subgraph Sistema["Sistema / Módulo de Seguridad"]
+        %% Iniciar Sesión
+        S_ViewLogin["Mostrar vista de login"]
+        S_ProcCred["Procesar credenciales / Autenticación"]
+        D_CredValid{"¿Credenciales correctas?"}
+        S_ErrCred["Notificar error de credenciales"]
+        S_GenToken["Generar y guardar Token de Sesión"]
+        S_OkLogin["Notificar login exitoso y enviar Token"]
+        S_UpState["Actualizar estado de sesión"]
+        S_ViewHome["Mostrar vista de inicio del sistema"]
+
+        %% Registrar Usuario
+        S_ViewReg["Mostrar vista de registro"]
+        S_ValReg["Validar datos y disponibilidad"]
+        D_RegValid{"¿Datos y disponibilidad válidos?"}
+        S_ErrReg["Notificar error de registro / Inconsistencias"]
+        S_OkReg["Notificar registro exitoso"]
+        S_RedLoginReg["Redirección a pantalla de login"]
+        S_LogUser["Logear Usuario"]
+        S_ViewApp["Mostrar vistas de la app"]
+
+        %% Cerrar Sesión
+        S_ConfLogout["Notificar confirmación de cierre de sesión"]
+        S_CleanCache["Limpieza de datos en sesión (Caché)"]
+        S_InactToken["Inactivar token en sesión"]
+        S_OkLogout["Notificar cierre de sesión exitoso"]
+        S_RedLoginLogout["Redirección a pantalla de Inicio de sesión"]
+        
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL Y DECISIÓN DE MENÚ ---
+    A --> D_Opcion
+
+    %% --- 1. OPCIÓN: INICIAR SESIÓN ---
+    D_Opcion -->|Iniciar Sesión| U_SelLogin
+    U_SelLogin --> S_ViewLogin
+    S_ViewLogin --> U_IngCred
+    U_IngCred --> S_ProcCred
+    S_ProcCred --> D_CredValid
+
+    D_CredValid -->|No| S_ErrCred
+    S_ErrCred --> S_ViewLogin
+
+    D_CredValid -->|Sí| S_GenToken
+    S_GenToken --> S_OkLogin
+    S_OkLogin --> S_UpState
+    S_UpState --> S_ViewHome
+    S_ViewHome --> Fin
+
+    %% --- 2. OPCIÓN: REGISTRAR USUARIO ---
+    D_Opcion -->|Registrar Usuario| U_SelReg
+    U_SelReg --> S_ViewReg
+    S_ViewReg --> U_IngReg
+    U_IngReg --> S_ValReg
+    S_ValReg --> D_RegValid
+
+    D_RegValid -->|No| S_ErrReg
+    S_ErrReg --> S_ViewReg
+
+    D_RegValid -->|Sí| S_OkReg
+    S_OkReg --> S_RedLoginReg
+    S_RedLoginReg --> U_IngPostReg
+    U_IngPostReg --> S_LogUser
+    S_LogUser --> S_ViewApp
+    S_ViewApp --> Fin
+
+    %% --- 3. OPCIÓN: CERRAR SESIÓN ---
+    D_Opcion -->|Cerrar Sesión| U_SelLogout
+    U_SelLogout --> S_ConfLogout
+    S_ConfLogout --> S_CleanCache
+    S_CleanCache --> S_InactToken
+    S_InactToken --> S_OkLogout
+    S_OkLogout --> S_RedLoginLogout
+    S_RedLoginLogout --> Fin

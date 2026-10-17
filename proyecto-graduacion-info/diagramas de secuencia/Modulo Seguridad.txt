@@ -1,0 +1,53 @@
+Modulo Seguridad
+
+
+
+actor "Administrador / Especialista / Recepcionista" as User
+participant "Módulo de Seguridad" as Interface
+participant "Base de datos de usuarios" as DB
+
+loop Mientras el usuario no esté autenticado
+  opt Iniciar Sesión (con Token)
+    User->Interface: Seleccionar opción "Iniciar Sesión"
+    Interface-->User: Mostrar vista de login
+    User->Interface: Ingresar credenciales (enviar credenciales)
+    Interface->+DB: Solicitar autenticación / Procesar credenciales
+    DB-->-Interface: Retornar resultado de autenticación
+
+    alt Si las credenciales son incorrectas
+      Interface-->User: Notificar error de credenciales
+      Interface-->User: Redirección a vista de login 
+
+    else Si las credenciales son correctas
+      DB->Interface: Generar Token de Sesión
+      Interface->DB: Guardar Token de Sesión
+      Interface-->User: Notificar login exitoso y enviar Token
+      Interface-->User: Redirección a pantalla de Inicio 
+      Interface->Interface: Actualizar estado de sesión
+      Interface-->User: Mostrar vista de inicio
+    end
+  end
+
+  opt Registrar Usuario
+    User->Interface: Seleccionar opción "Registrar Usuario"
+    Interface-->User: Mostrar vista de registro
+    User->Interface: Ingresar datos de nuevo usuario
+    Interface->+DB: Validar datos y disponibilidad
+    DB-->-Interface: Validación de datos y disponibilidad exitosa
+    Interface-->User: Notificar registro exitoso
+    Interface-->User: Redirección a pantalla de login 
+    User->Interface: Ingreso de datos del usuario
+    Interface->Interface: Logear Usuario
+    Interface-->User: Mostrar vistas de la app
+  end
+
+  opt Cerrar Sesión
+    User->Interface: Seleccionar opción "Cerrar Sesión"
+    Interface-->User: Notificar confirmación de cierre de sesión
+    Interface->Interface: Limpieza de datos en sesión (Caché)
+    Interface->+DB: Solicitar inactividad de token
+    DB-->-Interface: Inactivación de token en sesión
+    Interface-->User: Notificar cierre de sesión exitoso
+    Interface-->User: Redirección a pantalla de Inicio de sesión 
+  end
+end

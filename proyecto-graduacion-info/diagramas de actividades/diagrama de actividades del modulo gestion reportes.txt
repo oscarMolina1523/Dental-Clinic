@@ -1,0 +1,91 @@
+diagrama de actividades del modulo de gestion de reportes
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Consultar estados de las citas
+        U_ReqRepCitas["Solicitar reporte de estados de citas"]
+
+        %% 2. Consultar deudores
+        U_ReqRepDeudores["Solicitar reporte de deudores"]
+
+        %% 3. Consultar crecimiento de citas
+        U_ReqRepCrecimiento["Solicitar reporte de crecimiento"]
+    end
+
+    subgraph Sistema["Módulo de Reportes / Base de Datos"]
+        %% 1. Consultar estados de las citas
+        S_ValPerm1{"¿Tiene permiso de lectura?"}
+        S_DBConsCitas["Consultar citas y sus estados en DB"]
+        S_ProcCitas["Procesar datos del reporte"]
+        S_ShowRepCitas["Mostrar reporte de estados de citas"]
+
+        %% 2. Consultar deudores
+        S_ValPerm2{"¿Tiene permiso de lectura?"}
+        S_DBConsDeudores["Consultar pacientes con saldos pendientes en DB"]
+        S_DBConsPlanes["Consultar planes de servicios y citas vinculadas en DB"]
+        S_ProcDeudas["Consolidar información de deudas"]
+        S_ShowRepDeudores["Mostrar reporte de deudores"]
+
+        %% 3. Consultar crecimiento de citas
+        S_ValPerm3{"¿Tiene permiso de lectura?"}
+        S_DBConsHistorial["Consultar historial de citas por fecha en DB"]
+        S_ProcCrecimiento["Agrupar citas por período y calcular variación"]
+        S_ShowRepCrecimiento["Mostrar reporte de crecimiento de citas"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. CONSULTAR ESTADOS DE LAS CITAS
+    %% ==========================================
+    D_Opcion -->|Reporte estados de citas| U_ReqRepCitas
+    U_ReqRepCitas --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_DBConsCitas
+    
+    S_DBConsCitas --> S_ProcCitas
+    S_ProcCitas --> S_ShowRepCitas
+    S_ShowRepCitas --> Fin
+
+    %% ==========================================
+    %% 2. CONSULTAR DEUDORES
+    %% ==========================================
+    D_Opcion -->|Reporte de deudores| U_ReqRepDeudores
+    U_ReqRepDeudores --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_DBConsDeudores
+    
+    S_DBConsDeudores --> S_DBConsPlanes
+    S_DBConsPlanes --> S_ProcDeudas
+    S_ProcDeudas --> S_ShowRepDeudores
+    S_ShowRepDeudores --> Fin
+
+    %% ==========================================
+    %% 3. CONSULTAR CRECIMIENTO DE CITAS
+    %% ==========================================
+    D_Opcion -->|Reporte de crecimiento| U_ReqRepCrecimiento
+    U_ReqRepCrecimiento --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_DBConsHistorial
+    
+    S_DBConsHistorial --> S_ProcCrecimiento
+    S_ProcCrecimiento --> S_ShowRepCrecimiento
+    S_ShowRepCrecimiento --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

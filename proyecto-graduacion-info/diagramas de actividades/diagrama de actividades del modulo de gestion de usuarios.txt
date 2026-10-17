@@ -1,0 +1,123 @@
+diagrama de actividades del modulo de gestion de usuarios
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Lectura / Obtener detalles
+        U_ReqDetalle["Obtener detalles del usuario"]
+
+        %% 2. Escritura / Registrar usuario
+        U_IngDatosReg["Ingresar datos y enviar registro"]
+
+        %% 3. Activar/Desactivar usuario
+        U_ReqEstado["Solicitar cambio de estado"]
+
+        %% 4. Asignar/Editar roles
+        U_SelRoles["Selecciona roles"]
+
+        %% 5. Editar detalles de usuario
+        U_IngEdicion["Ingresar nuevos datos y enviar solicitud"]
+    end
+
+    subgraph Sistema["Módulo de Gestión de Usuarios / Base de Datos"]
+        %% 1. Lectura / Obtener detalles
+        S_ValPerm1{"¿Tiene permiso de lectura?"}
+        S_DBConsDetalle["Solicitar detalles del usuario en DB"]
+        S_ShowDetalle["Mostrar detalles del usuario"]
+
+        %% 2. Escritura / Registrar usuario
+        S_ValPerm2{"¿Tiene permisos de escritura?"}
+        S_DBRegUser["Solicitar creación en DB"]
+        S_ShowResReg["Retornar éxito/error y notificar resultado"]
+
+        %% 3. Activar/Desactivar usuario
+        S_ValPerm3{"¿Tiene permiso de escritura?"}
+        S_DBUpdEstado["Actualiza el estado en DB y confirma cambio"]
+        S_ShowEstado["Mostrar vista y nuevo estado"]
+
+        %% 4. Asignar/Editar roles
+        S_ValPerm4{"¿Tiene permiso de escritura?"}
+        S_DBUpdRoles["Actualiza roles en DB y confirma cambio"]
+        S_ShowRoles["Mostrar vista y confirmar actualización"]
+
+        %% 5. Editar detalles de usuario
+        S_ValPerm5{"¿Tiene permisos de escritura?"}
+        S_DBUpdDetalles["Actualiza los detalles en DB y confirma cambio"]
+        S_ShowDetalles["Mostrar vista y nuevos datos"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. OBTENER DETALLES (LECTURA)
+    %% ==========================================
+    D_Opcion -->|Obtener detalles| U_ReqDetalle
+    U_ReqDetalle --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_DBConsDetalle
+    
+    S_DBConsDetalle --> S_ShowDetalle
+    S_ShowDetalle --> Fin
+
+    %% ==========================================
+    %% 2. REGISTRAR USUARIO (ESCRITURA)
+    %% ==========================================
+    D_Opcion -->|Registrar usuario| U_IngDatosReg
+    U_IngDatosReg --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_DBRegUser
+    
+    S_DBRegUser --> S_ShowResReg
+    S_ShowResReg --> Fin
+
+    %% ==========================================
+    %% 3. ACTIVAR / DESACTIVAR USUARIO
+    %% ==========================================
+    D_Opcion -->|Activar o desactivar usuario| U_ReqEstado
+    U_ReqEstado --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_DBUpdEstado
+    
+    S_DBUpdEstado --> S_ShowEstado
+    S_ShowEstado --> Fin
+
+    %% ==========================================
+    %% 4. ASIGNAR / EDITAR ROLES
+    %% ==========================================
+    D_Opcion -->|Asignar o editar roles| U_SelRoles
+    U_SelRoles --> S_ValPerm4
+    
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_DBUpdRoles
+    
+    S_DBUpdRoles --> S_ShowRoles
+    S_ShowRoles --> Fin
+
+    %% ==========================================
+    %% 5. EDITAR DETALLES DE USUARIO
+    %% ==========================================
+    D_Opcion -->|Editar detalles de usuario| U_IngEdicion
+    U_IngEdicion --> S_ValPerm5
+    
+    S_ValPerm5 -->|No| S_NoAuth
+    S_ValPerm5 -->|Sí| S_DBUpdDetalles
+    
+    S_DBUpdDetalles --> S_ShowDetalles
+    S_ShowDetalles --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

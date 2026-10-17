@@ -1,0 +1,84 @@
+@startuml
+
+actor "Administrador / Especialista" as User
+participant "Modulo de planes y servicios" as System
+participant "Gestor de Base de Datos" as DB
+
+
+opt Consultar o administrar catálogo
+  User -> System : Solicitar catálogo o registrar servicio
+  System -> System : Validar permisos
+
+  alt Tiene permisos
+    System -> DB : Consultar o guardar servicios,\nprecios y duraciones
+    DB --> System : Resultado de la operación
+    System --> User : Mostrar catálogo o confirmar registro
+  else Sin permisos
+    System --> User : Notificar acceso denegado
+  end
+end
+
+
+opt Crear plan personalizado
+  User -> System : Solicitar creación de plan
+  System -> System : Validar permiso de creación
+
+  alt Tiene autorización
+    System -> DB : Consultar pacientes y catálogo de servicios
+    DB --> System : Retornar pacientes y servicios
+    System --> User : Mostrar opciones disponibles
+
+    User -> System : Seleccionar paciente y servicios
+    User -> System : Enviar datos del plan
+    System -> System : Validar datos del plan
+
+    alt Datos válidos
+      System -> DB : Guardar plan y sus servicios
+      DB --> System : Confirmar creación
+      System --> User : Mostrar confirmación
+    else Datos inválidos
+      System --> User : Mostrar errores de validación
+    end
+  else Sin autorización
+    System --> User : Notificar acceso denegado
+  end
+end
+
+
+opt Cambiar estado de un plan existente
+  User -> System : Seleccionar plan
+  System -> DB : Consultar plan y estado actual
+  DB --> System : Retornar información del plan
+  System --> User : Mostrar plan y estado actual
+
+  User -> System : Solicitar cambio de estado
+  System -> System : Validar permisos y transición de estado
+
+  alt Cambio autorizado y válido
+    System -> DB : Actualizar estado del plan
+    DB --> System : Confirmar actualización
+    System --> User : Mostrar nuevo estado
+  else Cambio no autorizado o inválido
+    System --> User : Notificar rechazo del cambio
+  end
+end
+
+
+opt Ajustar importes de un plan
+  User -> System : Seleccionar plan y consultar importes
+  System -> DB : Consultar plan, servicios e importes
+  DB --> System : Retornar datos e importes
+  System --> User : Mostrar subtotal y total actual
+
+  User -> System : Enviar ajustes monetarios
+  System -> System : Validar permisos y ajustes
+
+  alt Ajustes autorizados y válidos
+    System -> DB : Guardar ajustes monetarios
+    DB --> System : Confirmar actualización
+    System --> User : Mostrar importes actualizados
+  else Ajustes no autorizados o inválidos
+    System --> User : Notificar rechazo de los ajustes
+  end
+end
+@enduml

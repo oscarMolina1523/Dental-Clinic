@@ -1,0 +1,267 @@
+diagrama de clases
+
+
+classDiagram
+    BaseModel <|-- Appointment
+    BaseModel <|-- Category
+    BaseModel <|-- ClinicalProgres
+    BaseModel <|-- DentalChart
+    BaseModel <|-- DentalChartDetail
+    BaseModel <|-- Disease
+    BaseModel <|-- Installment
+    BaseModel <|-- Inventory
+    BaseModel <|-- InventoryLote
+    BaseModel <|-- InventoryMovement
+    BaseModel <|-- Invoice
+    BaseModel <|-- MeasurementUnit
+    BaseModel <|-- MedicalPrescription
+    BaseModel <|-- MedicalPrescriptionDetail
+    BaseModel <|-- Patient
+    BaseModel <|-- PatientAttachment
+    BaseModel <|-- PatientDisease
+    BaseModel <|-- Payment
+    BaseModel <|-- PaymentNotification
+    BaseModel <|-- PaymentPlan
+    BaseModel <|-- Product
+    BaseModel <|-- Role
+    BaseModel <|-- Supplier
+    BaseModel <|-- TreatmentCatalog
+    BaseModel <|-- TreatmentPlan
+    BaseModel <|-- TreatmentPlanDetail
+    BaseModel <|-- User
+
+    class BaseModel {
+        +String id
+    }
+
+    class Appointment {
+        +String patientId
+        +String dentistId
+        +String status
+        +Date startAppointmentTime
+        +Date endAppointmentTime
+        +confirm()
+        +start()
+        +complete()
+        +cancel()
+    }
+
+    class Category {
+        +String name
+    }
+
+    class ClinicalProgres {
+        +String patientId
+        +String dateId
+        +String dentistId
+        +String diagnosis
+        +Date registrationDate
+    }
+
+    class DentalChart {
+        +String clinicalProgressId
+        +String patientId
+        +String dentistId
+        +Date evaluationDate
+        +String observations
+    }
+
+    class DentalChartDetail {
+        +String dentalChartId
+        +int toothNumber
+        +String face
+        +String toothStatus
+        +String notes
+    }
+
+    class Disease {
+        +String name
+        +String description
+    }
+
+    class Installment {
+        +String paymentPlanId
+        +int installmentNumber
+        +Date dueDate
+        -number amount
+        -number lateFeeAmount
+        -number paidAmount
+        -status status
+        +addPayment(amount)
+        +addLateFee(amount)
+    }
+
+    class Inventory {
+        +String productId
+        +String productName
+        -int currentStock
+        +int minimumStock
+        +increase(quantity)
+        +decrease(quantity)
+    }
+
+    class InventoryLote {
+        +String productId
+        +String supplierId
+        +String loteNumber
+        +Date expirationDate
+        +int quantity
+    }
+
+    class InventoryMovement {
+        +String productId
+        +String movementType
+        +int quantity
+        +Date movementDate
+    }
+
+    class Invoice {
+        +String patientId
+        +String appointmentId
+        +number subtotal
+        +number total
+        +String status
+    }
+
+    class MeasurementUnit {
+        +String name
+        +String abreviation
+    }
+
+    class MedicalPrescription {
+        +String patientId
+        +String dentistId
+        +Date prescriptionDate
+    }
+
+    class MedicalPrescriptionDetail {
+        +String medicalPrescriptionId
+        +String medicine
+        +String dose
+        +String frequency
+        +String duration
+    }
+
+    class Patient {
+        +String patientCode
+        +String name
+        +String lastName
+        +String idCard
+        +Date birthdate
+        +String phoneNumber
+        +String email
+        +activate()
+        +deactivate()
+    }
+
+    class PatientAttachment {
+        +String clinicalProgressId
+        +String patientId
+        +String fileType
+        +String fileUrl
+        +String fileName
+    }
+
+    class PatientDisease {
+        +String patientId
+        +String diseaseId
+        +String observations
+    }
+
+    class Payment {
+        +String invoiceId
+        +number amount
+        +Date paymentDate
+        +String paymentMethod
+    }
+
+    class PaymentNotification {
+        +String installmentId
+        +String patientId
+        +Date scheduledDate
+        +String status
+    }
+
+    class PaymentPlan {
+        +String patientId
+        +String treatmentPlanId
+        +number totalAmount
+        +int installmentsCount
+    }
+
+    class Product {
+        +String name
+        +String categoryId
+        +String measurementUnitId
+        +String supplierId
+        -number purchasePrice
+        -number salePrice
+        -bool active
+    }
+
+    class Role {
+        +String name
+        +String description
+    }
+
+    class Supplier {
+        +String name
+        +String contact
+        +String phone
+        +String email
+    }
+
+    class TreatmentCatalog {
+        +String code
+        +String name
+        -number basePrice
+        -number estimatedDurationMinutes
+        -bool active
+    }
+
+    class TreatmentPlan {
+        +String patientId
+        +String dentistId
+        +String code
+        -String status
+        -number totalAmount
+        +propose()
+        +accept()
+        +complete()
+    }
+
+    class TreatmentPlanDetail {
+        +String treatmentPlanId
+        +String treatmentCatalogId
+        -number price
+        -number quantity
+    }
+
+    class User {
+        +String roleId
+        +String fullName
+        +String email
+        -bool active
+        +activate()
+        +deactivate()
+    }
+
+    %% Relaciones principales del dominio
+    Role "1" --> "*" User : assigns
+    Category "1" --> "*" Product : classifies
+    MeasurementUnit "1" --> "*" Product : measures
+    Supplier "1" --> "*" Product : supplies
+    Product "1" --> "*" Inventory : tracks
+    Product "1" --> "*" InventoryLote : batches
+    Product "1" --> "*" InventoryMovement : logs
+    Patient "1" --> "*" Appointment : has
+    User "1" --> "*" Appointment : attends (dentist)
+    Patient "1" --> "*" TreatmentPlan : has
+    User "1" --> "*" TreatmentPlan : creates (dentist)
+    TreatmentPlan "1" --> "*" TreatmentPlanDetail : contains
+    TreatmentCatalog "1" --> "*" TreatmentPlanDetail : defines
+    Patient "1" --> "*" DentalChart : has
+    DentalChart "1" --> "*" DentalChartDetail : contains
+    MedicalPrescription "1" --> "*" MedicalPrescriptionDetail : contains
+    PaymentPlan "1" --> "*" Installment : divides into
+    Invoice "1" --> "*" Payment : receives

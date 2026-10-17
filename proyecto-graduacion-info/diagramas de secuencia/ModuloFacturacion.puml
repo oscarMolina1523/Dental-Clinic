@@ -1,0 +1,135 @@
+@startuml
+
+actor "Administrador / Recepcionista" as User
+participant "Módulo de Facturación" as System
+participant "Base de Datos" as DB
+
+loop Operaciones de facturación
+  opt Generar factura
+    User -> System : Solicitar generación de factura
+    System -> System : Validar permisos de creación
+
+    alt Tiene autorización
+      User -> System : Ingresar paciente y plan de tratamiento
+      System -> DB : Consultar paciente y plan de tratamiento
+      DB --> System : Retornar datos del paciente y plan
+
+      System -> System : Validar datos y calcular importe
+
+      alt Datos válidos
+        System -> DB : Registrar factura y saldo pendiente
+        DB --> System : Confirmar creación
+        System --> User : Mostrar factura generada
+      else Datos inválidos
+        System --> User : Mostrar errores de validación
+      end
+    else Sin autorización
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Registrar pago directo
+    User -> System : Seleccionar factura y registrar pago
+    System -> System : Validar permisos de registro de pago
+
+    alt Tiene autorización
+      System -> DB : Consultar factura y saldo pendiente
+      DB --> System : Retornar datos de factura
+
+      System -> System : Validar importe y método de pago
+
+      opt Método de pago por transferencia
+        User -> System : Ingresar referencia de transacción
+        System -> System : Validar referencia
+      end
+
+      alt Pago válido
+        System -> DB : Registrar pago y actualizar saldo pendiente
+        DB --> System : Confirmar registro
+        System --> User : Mostrar pago y saldo actualizado
+      else Pago inválido
+        System --> User : Mostrar error de pago
+      end
+    else Sin autorización
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Crear plan de pagos
+    User -> System : Solicitar plan de pagos para una factura
+    System -> System : Validar permisos de creación de plan
+
+    alt Tiene autorización
+      System -> DB : Consultar factura y saldo pendiente
+      DB --> System : Retornar datos de factura
+
+      User -> System : Definir cuotas, intereses y fecha inicial
+      System -> System : Validar condiciones del plan
+
+      alt Datos válidos
+        System -> System : Calcular cuotas y vencimientos
+        System -> DB : Registrar plan y cuotas
+        DB --> System : Confirmar creación
+        System --> User : Mostrar plan de pagos
+      else Datos inválidos
+        System --> User : Mostrar errores de validación
+      end
+    else Sin autorización
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Registrar pago de cuota
+    User -> System : Seleccionar plan y cuota
+    System -> System : Validar permisos de registro de pago
+
+    alt Tiene autorización
+      System -> DB : Consultar plan, cuota y pagos anteriores
+      DB --> System : Retornar información de la cuota
+
+      System -> System : Validar vencimiento, saldo y orden de cuotas
+
+      alt Cuota pagable e importe válido
+        User -> System : Ingresar importe y método de pago
+
+        opt Método de pago por transferencia
+          User -> System : Ingresar referencia de transacción
+          System -> System : Validar referencia
+        end
+
+        System -> DB : Registrar pago de cuota y actualizar saldos
+        DB --> System : Confirmar actualizaciones
+        System --> User : Mostrar pago y saldos actualizados
+      else Cuota o importe no válido
+        System --> User : Notificar motivo del rechazo
+      end
+    else Sin autorización
+      System --> User : Notificar acceso denegado
+    end
+  end
+
+  opt Modificar factura
+    User -> System : Seleccionar factura
+    System -> System : Validar permisos de modificación
+
+    alt Tiene autorización
+      System -> DB : Consultar factura y pagos asociados
+      DB --> System : Retornar factura y pagos
+
+      System -> System : Validar que la modificación sea permitida
+
+      alt Factura editable y cambios válidos
+        User -> System : Ingresar modificaciones
+        System -> System : Validar cambios y recalcular importes
+        System -> DB : Actualizar factura
+        DB --> System : Confirmar actualización
+        System --> User : Mostrar factura actualizada
+      else Modificación no permitida
+        System --> User : Notificar que no se puede modificar
+      end
+    else Sin autorización
+      System --> User : Notificar acceso denegado
+    end
+  end
+end
+@enduml

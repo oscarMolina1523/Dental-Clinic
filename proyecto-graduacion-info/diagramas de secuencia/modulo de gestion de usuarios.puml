@@ -1,0 +1,72 @@
+@startuml
+Modulo de gestion de usuarios
+
+
+actor "Administrador" as Admin
+participant "Módulo de Gestión de Usuarios" as System
+participant "Gestor de Base de Datos" as DB
+
+loop Iterar operaciones de Gestión de Usuarios
+  opt Escenario: Realizar Operaciones de Lectura (Obtener detalles)
+    Admin -> System : Obtener detalles del usuario
+System -> System : Validar permisos de lectura
+alt Tiene Autorización
+        System -> DB : Solicitar detalles del usuario
+        DB --> System : Retornar datos del usuario
+        System --> Admin : Mostrar detalles del usuario
+    else No tiene permiso de lectura
+        System --> Admin : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Realizar Operaciones de Escritura (Registrar Usuario)
+    Admin -> System : Ingresar datos
+    Admin -> System : Enviar registro
+alt Validación de permisos (Escritura)
+        System -> DB : Solicitar creación en DB
+    DB --> System : Retornar el éxito/error
+    System --> Admin : Notificar el resultado
+else No tiene permiso de lectura
+        System --> Admin : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Activar/Desactivar Usuario
+    Admin -> System : Solicitar cambio de estado
+alt Tiene permiso de escritura
+    System -> DB : Actualiza el estado en DB
+    DB --> System : Confirma el cambio
+    System --> Admin : Mostrar vista
+    System --> Admin : Mostrar el nuevo estado
+else No tiene permiso de lectura
+        System --> Admin : Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Asignar/Editar Roles
+    Admin -> System : Selecciona roles
+alt Tiene permiso de escritura
+    System -> DB : Actualiza a roles en DB
+    DB --> System : Confirma el cambio
+    System --> Admin : Mostrar vista
+    System --> Admin : Confirman actualización
+else No tiene permiso de lectura
+        System --> Admin : Notificar acceso denegado
+end
+  end
+
+  opt Escenario General: Editar Detalles de usuario
+    Admin -> System : Ingresar nuevos datos
+Admin -> System : Enviar solicitud
+alt Validación de permisos
+     System -> DB : Actualiza el detalles en DB
+    DB --> System : Confirma el cambio
+    System --> Admin : Mostrar vista
+    System --> Admin : Mostrar los nuevos datos
+else No tiene permiso de lectura
+        System --> Admin : Notificar acceso denegado
+
+    end
+  end
+end
+@enduml

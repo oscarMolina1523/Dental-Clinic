@@ -1,0 +1,175 @@
+diagrama de actividades del modulo de gestion de inventario
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Administrar productos, categorías y proveedores
+        U_ReqAdminProd["Solicitar gestión de productos o proveedores"]
+        U_IngDatosProd["Consultar, registrar o modificar datos"]
+
+        %% 2. Gestionar inventario general
+        U_ReqInvGen["Consultar o configurar inventario"]
+        U_DefStockMin["Definir stock mínimo del producto"]
+        U_ReqLote["Solicitar creación o gestión de lote"]
+        U_IngDatosLote["Ingresar producto, cantidad, fecha de caducidad y datos del lote"]
+
+        %% 3. Ajustar existencias
+        U_ReqAjuste["Solicitar ajuste de existencias"]
+        U_IngCantMotivo["Ingresar cantidad y motivo del ajuste"]
+
+        %% 4. Gestionar lotes vencidos
+        U_ConsLotes["Consultar lotes"]
+        U_SelLoteBaja["Seleccionar lote para dar de baja por vencimiento"]
+    end
+
+    subgraph Sistema["Módulo de Inventario / Base de Datos"]
+        %% 1. Administrar productos, categorías y proveedores
+        S_ValPerm1{"¿Tiene autorización?"}
+        S_ShowOpts1["Mostrar información y opciones disponibles"]
+        S_ValDatosProd["Validar datos ingresados"]
+        D_ValProdValid{"¿Datos válidos?"}
+        S_DBCrudProd["Consultar o guardar productos, categorías o proveedores en DB"]
+        S_ShowResProd["Mostrar resultado actualizado"]
+        S_ErrProd["Notificar errores de validación"]
+
+        %% 2. Gestionar inventario general
+        S_ValPerm2{"¿Tiene autorización?"}
+        S_DBConsInv["Consultar existencias y configuración en DB"]
+        
+        %% Configurar stock mínimo (Sub-proceso)
+        S_ValStockMin["Validar valor ingresado"]
+        S_DBStoreStock["Guardar stock mínimo en DB"]
+        
+        %% Crear o administrar lotes (Sub-proceso)
+        S_ValPermLote{"¿Tiene autorización?"}
+        S_ValDatosLote["Validar datos del lote"]
+        D_LoteValid{"¿Datos válidos?"}
+        S_DBRegLote["Registrar lote y existencias iniciales en DB"]
+        S_ShowLote["Mostrar lote registrado"]
+        S_ErrLote["Notificar errores de validación"]
+
+        %% 3. Ajustar existencias
+        S_ValPerm3{"¿Tiene autorización?"}
+        S_DBConsCant["Consultar existencias actuales en DB"]
+        S_ValAjuste["Validar ajuste solicitado"]
+        D_AjusteValid{"¿Ajuste válido?"}
+        S_DBRegAjuste["Registrar ajuste y actualizar existencias en DB"]
+        S_ShowAjuste["Mostrar existencias actualizadas"]
+        S_ErrAjuste["Notificar error de validación"]
+
+        %% 4. Gestionar lotes vencidos
+        S_ValPerm4{"¿Tiene autorización?"}
+        S_DBConsVenc["Consultar lotes y fechas de caducidad en DB"]
+        S_ValEstadoLote["Validar estado y cantidad disponible"]
+        D_LoteApto{"¿Lote apto para baja?"}
+        S_DBRegBaja["Registrar baja y actualizar existencias en DB"]
+        S_ShowBaja["Mostrar resultado de la baja"]
+        S_ErrBaja["Notificar motivo del rechazo"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. ADMINISTRAR PRODUCTOS, CATEGORÍAS Y PROVEEDORES
+    %% ==========================================
+    D_Opcion -->|Administrar productos/proveedores| U_ReqAdminProd
+    U_ReqAdminProd --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_ShowOpts1
+    
+    S_ShowOpts1 --> U_IngDatosProd
+    U_IngDatosProd --> S_ValDatosProd
+    S_ValDatosProd --> D_ValProdValid
+    
+    D_ValProdValid -->|No| S_ErrProd
+    S_ErrProd --> Fin
+    
+    D_ValProdValid -->|Sí| S_DBCrudProd
+    S_DBCrudProd --> S_ShowResProd
+    S_ShowResProd --> Fin
+
+    %% ==========================================
+    %% 2. GESTIONAR INVENTARIO GENERAL
+    %% ==========================================
+    D_Opcion -->|Gestionar inventario general| U_ReqInvGen
+    U_ReqInvGen --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_DBConsInv
+    
+    %% Opciones dentro de Inventario General
+    S_DBConsInv --> U_DefStockMin
+    U_DefStockMin --> S_ValStockMin
+    S_ValStockMin --> S_DBStoreStock
+    S_DBStoreStock --> Fin
+
+    S_DBConsInv --> U_ReqLote
+    U_ReqLote --> S_ValPermLote
+    
+    S_ValPermLote -->|No| S_NoAuth
+    S_ValPermLote -->|Sí| U_IngDatosLote
+    
+    U_IngDatosLote --> S_ValDatosLote
+    S_ValDatosLote --> D_LoteValid
+    
+    D_LoteValid -->|No| S_ErrLote
+    S_ErrLote --> Fin
+    
+    D_LoteValid -->|Sí| S_DBRegLote
+    S_DBRegLote --> S_ShowLote
+    S_ShowLote --> Fin
+
+    %% ==========================================
+    %% 3. AJUSTAR EXISTENCIAS
+    %% ==========================================
+    D_Opcion -->|Ajustar existencias| U_ReqAjuste
+    U_ReqAjuste --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_DBConsCant
+    
+    S_DBConsCant --> U_IngCantMotivo
+    U_IngCantMotivo --> S_ValAjuste
+    S_ValAjuste --> D_AjusteValid
+    
+    D_AjusteValid -->|No| S_ErrAjuste
+    S_ErrAjuste --> Fin
+    
+    D_AjusteValid -->|Sí| S_DBRegAjuste
+    S_DBRegAjuste --> S_ShowAjuste
+    S_ShowAjuste --> Fin
+
+    %% ==========================================
+    %% 4. GESTIONAR LOTES VENCIDOS
+    %% ==========================================
+    D_Opcion -->|Gestionar lotes vencidos| U_ConsLotes
+    U_ConsLotes --> S_ValPerm4
+    
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_DBConsVenc
+    
+    S_DBConsVenc --> U_SelLoteBaja
+    U_SelLoteBaja --> S_ValEstadoLote
+    S_ValEstadoLote --> D_LoteApto
+    
+    D_LoteApto -->|No| S_ErrBaja
+    S_ErrBaja --> Fin
+    
+    D_LoteApto -->|Sí| S_DBRegBaja
+    S_DBRegBaja --> S_ShowBaja
+    S_ShowBaja --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

@@ -1,0 +1,151 @@
+diagramas de actividades del modulo de gestion de pacientes
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista / Recepcionista"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Registrar nuevo paciente
+        U_ReqRegPac["Solicitar registro de paciente"]
+        U_IngDatosPac["Ingresar datos personales y generales"]
+
+        %% 2. Consultar lista de pacientes
+        U_ReqListaPac["Solicitar lista de pacientes"]
+        U_SelPaciente["Seleccionar paciente"]
+
+        %% 3. Actualizar información del paciente
+        U_SelPacEdit["Seleccionar paciente para editar"]
+        U_EnvíarCambios["Enviar cambios"]
+
+        %% 4. Activar o desactivar perfil
+        U_ReqCambioEstado["Solicitar cambio de estado del paciente"]
+    end
+
+    subgraph Sistema["Módulo de Gestión de Pacientes / Base de Datos"]
+        %% 1. Registrar nuevo paciente
+        S_ValPerm1{"¿Tiene autorización?"}
+        S_ShowFormReg["Mostrar formulario de registro"]
+        S_ValDatosReg["Validar datos obligatorios y formato"]
+        D_DatosRegValid{"¿Datos válidos?"}
+        S_DBRegPac["Verificar duplicados y registrar paciente en DB"]
+        S_ShowRegOk["Mostrar confirmación del registro"]
+        S_ErrRegPac["Mostrar errores de validación"]
+
+        %% 2. Consultar lista de pacientes
+        S_ValPerm2{"¿Tiene autorización?"}
+        S_DBConsLista["Consultar pacientes en DB"]
+        S_ShowLista["Mostrar lista de pacientes"]
+        
+        %% Consultar detalles (Sub-proceso)
+        S_DBConsDetalle["Consultar detalles del paciente en DB"]
+        S_ShowDetalle["Mostrar detalles del paciente"]
+
+        %% 3. Actualizar información del paciente
+        S_ValPerm3{"¿Tiene autorización?"}
+        S_DBConsAct["Consultar datos actuales del paciente en DB"]
+        S_ShowFormAct["Mostrar formulario con datos actuales"]
+        S_ValModif["Validar información modificada"]
+        D_ModifValid{"¿Datos válidos?"}
+        S_DBUpdPac["Actualizar información del paciente en DB"]
+        S_ShowActOk["Mostrar confirmación de cambios"]
+        S_ErrModif["Mostrar errores de validación"]
+
+        %% 4. Activar o desactivar perfil
+        S_ValPerm4{"¿Tiene autorización?"}
+        S_DBConsEstado["Consultar estado actual del paciente en DB"]
+        D_EstadoValid{"¿El cambio de estado es válido?"}
+        S_DBUpdEstado["Actualizar estado del paciente en DB"]
+        S_ShowEstadoOk["Mostrar estado actualizado"]
+        S_ErrEstado["Notificar operación no permitida"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. REGISTRAR NUEVO PACIENTE
+    %% ==========================================
+    D_Opcion -->|Registrar nuevo paciente| U_ReqRegPac
+    U_ReqRegPac --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_ShowFormReg
+    
+    S_ShowFormReg --> U_IngDatosPac
+    U_IngDatosPac --> S_ValDatosReg
+    S_ValDatosReg --> D_DatosRegValid
+    
+    D_DatosRegValid -->|No| S_ErrRegPac
+    S_ErrRegPac --> Fin
+    
+    D_DatosRegValid -->|Sí| S_DBRegPac
+    S_DBRegPac --> S_ShowRegOk
+    S_ShowRegOk --> Fin
+
+    %% ==========================================
+    %% 2. CONSULTAR LISTA DE PACIENTES
+    %% ==========================================
+    D_Opcion -->|Consultar lista de pacientes| U_ReqListaPac
+    U_ReqListaPac --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_DBConsLista
+    
+    S_DBConsLista --> S_ShowLista
+    
+    %% Sub-opción: Consultar detalles
+    S_ShowLista --> U_SelPaciente
+    U_SelPaciente --> S_DBConsDetalle
+    S_DBConsDetalle --> S_ShowDetalle
+    S_ShowDetalle --> Fin
+
+    %% ==========================================
+    %% 3. ACTUALIZAR INFORMACIÓN DEL PACIENTE
+    %% ==========================================
+    D_Opcion -->|Actualizar información| U_SelPacEdit
+    U_SelPacEdit --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_DBConsAct
+    
+    S_DBConsAct --> S_ShowFormAct
+    S_ShowFormAct --> U_EnvíarCambios
+    
+    U_EnvíarCambios --> S_ValModif
+    S_ValModif --> D_ModifValid
+    
+    D_ModifValid -->|No| S_ErrModif
+    S_ErrModif --> Fin
+    
+    D_ModifValid -->|Sí| S_DBUpdPac
+    S_DBUpdPac --> S_ShowActOk
+    S_ShowActOk --> Fin
+
+    %% ==========================================
+    %% 4. ACTIVAR O DESACTIVAR PERFIL
+    %% ==========================================
+    D_Opcion -->|Activar o desactivar perfil| U_ReqCambioEstado
+    U_ReqCambioEstado --> S_ValPerm4
+    
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_DBConsEstado
+    
+    S_DBConsEstado --> D_EstadoValid
+    
+    D_EstadoValid -->|No| S_ErrEstado
+    S_ErrEstado --> Fin
+    
+    D_EstadoValid -->|Sí| S_DBUpdEstado
+    S_DBUpdEstado --> S_ShowEstadoOk
+    S_ShowEstadoOk --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

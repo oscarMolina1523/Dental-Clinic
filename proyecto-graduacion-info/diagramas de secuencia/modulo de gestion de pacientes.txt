@@ -1,0 +1,93 @@
+modulo de gestion de pacientes
+
+
+actor "Administrador / Especialista / Recepcionista" as User
+participant "Módulo de Gestión de Pacientes" as System
+participant "Base de Datos" as DB
+
+loop Operaciones de gestión de pacientes
+  opt Registrar nuevo paciente
+    User->System: Solicitar registro de paciente
+    System->System: Validar permisos de creación
+
+    alt Tiene autorización
+      System-->User: Mostrar formulario de registro
+      User->System: Ingresar datos personales y generales
+      System->System: Validar datos obligatorios y formato
+
+      alt Datos válidos
+        System->+DB: Verificar duplicados y registrar paciente
+        DB-->-System: Confirmar registro
+        System-->User: Mostrar confirmación del registro
+      else Datos inválidos
+        System-->User: Mostrar errores de validación
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Consultar lista de pacientes
+    User->System: Solicitar lista de pacientes
+    System->System: Validar permisos de lectura
+
+    alt Tiene autorización
+      System->+DB: Consultar pacientes
+      DB-->-System: Retornar lista de pacientes
+      System-->User: Mostrar lista de pacientes
+
+      opt Consultar detalles de un paciente
+        User->System: Seleccionar paciente
+        System->+DB: Consultar detalles del paciente
+        DB-->-System: Retornar información del paciente
+        System-->User: Mostrar detalles del paciente
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Actualizar información del paciente
+    User->System: Seleccionar paciente para editar
+    System->System: Validar permisos de modificación
+
+    alt Tiene autorización
+      System->+DB: Consultar datos actuales del paciente
+      DB-->-System: Retornar datos del paciente
+      System-->User: Mostrar formulario con datos actuales
+
+      User->System: Enviar cambios
+      System->System: Validar información modificada
+
+      alt Datos válidos
+        System->+DB: Actualizar información del paciente
+        DB-->-System: Confirmar actualización
+        System-->User: Mostrar confirmación de cambios
+      else Datos inválidos
+        System-->User: Mostrar errores de validación
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Activar o desactivar perfil
+    User->System: Solicitar cambio de estado del paciente
+    System->System: Validar permisos de modificación
+
+    alt Tiene autorización
+      System->+DB: Consultar estado actual del paciente
+      DB-->-System: Retornar estado actual
+
+      alt El cambio de estado es válido
+        System->+DB: Actualizar estado del paciente
+        DB-->-System: Confirmar actualización
+        System-->User: Mostrar estado actualizado
+      else El cambio no es válido
+        System-->User: Notificar operación no permitida
+      end
+    else Sin autorización
+      System-->User: Notificar acceso denegado
+    end
+  end
+end

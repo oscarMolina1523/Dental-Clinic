@@ -1,0 +1,103 @@
+diagrama de actividades del modulo de expediente clinic
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Registrar progreso clínico
+        U_IngProgreso["Registrar progreso clínico, diagnósticos y observaciones"]
+
+        %% 2. Gestionar Odontograma / Ficha dental
+        U_IngFicha["Crear ficha o actualizar estado de piezas, caras y notas"]
+
+        %% 3. Emitir recetas médicas
+        U_IngReceta["Crear receta médica y configurar medicamentos, dosis y frecuencia"]
+
+        %% 4. Adjuntar archivos de imágenes clínicas
+        U_AdjuntarImg["Seleccionar y adjuntar archivos de imágenes clínicas"]
+    end
+
+    subgraph Sistema["Módulo de Expedientes Clínicos / Base de Datos"]
+        %% 1. Registrar progreso clínico
+        S_ValPerm1{"¿Tiene permiso de escritura?"}
+        S_GuardarProgreso["Guardar progreso, diagnósticos y observaciones en DB"]
+        S_ShowProgreso["Mostrar confirmación del progreso clínico"]
+
+        %% 2. Gestionar Odontograma / Ficha dental
+        S_ValPerm2{"¿Tiene permiso de escritura?"}
+        S_UpdFicha["Actualizar ficha dental y estado de piezas/caras en DB"]
+        S_ShowOdonto["Mostrar odontograma actualizado"]
+
+        %% 3. Emitir recetas médicas
+        S_ValPerm3{"¿Tiene permiso de escritura?"}
+        S_GuardarReceta["Guardar receta médica y configuración en DB"]
+        S_ShowReceta["Mostrar receta médica generada"]
+
+        %% 4. Adjuntar archivos de imágenes clínicas
+        S_ValPerm4{"¿Tiene permiso de escritura?"}
+        S_GuardarImg["Guardar archivos e imágenes en DB / Repositorio"]
+        S_ShowArchivos["Mostrar archivos clínicos adjuntos"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. REGISTRAR PROGRESO CLÍNICO
+    %% ==========================================
+    D_Opcion -->|Registrar progreso clínico| U_IngProgreso
+    U_IngProgreso --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_GuardarProgreso
+    
+    S_GuardarProgreso --> S_ShowProgreso
+    S_ShowProgreso --> Fin
+
+    %% ==========================================
+    %% 2. GESTIONAR ODONTOGRAMA / FICHA DENTAL
+    %% ==========================================
+    D_Opcion -->|Gestionar Odontograma / Ficha| U_IngFicha
+    U_IngFicha --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_UpdFicha
+    
+    S_UpdFicha --> S_ShowOdonto
+    S_ShowOdonto --> Fin
+
+    %% ==========================================
+    %% 3. EMITIR RECETAS MÉDICAS
+    %% ==========================================
+    D_Opcion -->|Emitir recetas médicas| U_IngReceta
+    U_IngReceta --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_GuardarReceta
+    
+    S_GuardarReceta --> S_ShowReceta
+    S_ShowReceta --> Fin
+
+    %% ==========================================
+    %% 4. ADJUNTAR ARCHIVOS DE IMÁGENES CLÍNICAS
+    %% ==========================================
+    D_Opcion -->|Adjuntar archivos clínicos| U_AdjuntarImg
+    U_AdjuntarImg --> S_ValPerm4
+    
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_GuardarImg
+    
+    S_GuardarImg --> S_ShowArchivos
+    S_ShowArchivos --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

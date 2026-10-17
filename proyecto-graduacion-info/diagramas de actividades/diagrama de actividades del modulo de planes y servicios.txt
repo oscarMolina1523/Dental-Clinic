@@ -1,0 +1,132 @@
+diagrama de actividades del modulo de gestion de planes y servicios
+
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Consultar o administrar catálogo
+        U_ReqCatalogo["Solicitar catálogo o registrar servicio"]
+
+        %% 2. Crear plan personalizado
+        U_ReqPlan["Solicitar creación de plan"]
+        U_SelPacServ["Seleccionar paciente y servicios, y enviar datos"]
+
+        %% 3. Cambiar estado de un plan
+        U_SelPlanEstado["Seleccionar plan y solicitar cambio de estado"]
+
+        %% 4. Ajustar importes de un plan
+        U_SelPlanImp["Seleccionar plan, consultar importes y enviar ajustes"]
+    end
+
+    subgraph Sistema["Módulo de Planes y Servicios / Base de Datos"]
+        %% 1. Consultar o administrar catálogo
+        S_ValPerm1{"¿Tiene permisos?"}
+        S_DBCat["Consultar o guardar servicios, precios y duraciones en DB"]
+        S_ShowCat["Mostrar catálogo o confirmar registro"]
+
+        %% 2. Crear plan personalizado
+        S_ValPerm2{"¿Tiene autorización?"}
+        S_DBConsPacServ["Consultar pacientes y catálogo de servicios en DB"]
+        S_ShowOptsPlan["Mostrar opciones disponibles"]
+        S_ValDatosPlan{"¿Datos válidos?"}
+        S_DBRegPlan["Guardar plan y sus servicios en DB"]
+        S_ShowPlanOk["Mostrar confirmación"]
+        S_ErrPlanVal["Mostrar errores de validación"]
+
+        %% 3. Cambiar estado de un plan
+        S_DBConsPlan1["Consultar plan y estado actual en DB"]
+        S_ShowPlanInfo["Mostrar plan y estado actual"]
+        S_ValTransPlan{"¿Cambio autorizado y válido?"}
+        S_DBUpdEstado["Actualizar estado del plan en DB"]
+        S_ShowNuevoEstado["Mostrar nuevo estado"]
+        S_ErrTransPlan["Notificar rechazo del cambio"]
+
+        %% 4. Ajustar importes de un plan
+        S_DBConsImp["Consultar plan, servicios e importes en DB"]
+        S_ShowSubtotal["Mostrar subtotal y total actual"]
+        S_ValImpModif{"¿Ajustes autorizados y válidos?"}
+        S_DBGuardarImp["Guardar ajustes monetarios en DB"]
+        S_ShowImpOk["Mostrar importes actualizados"]
+        S_ErrImp["Notificar rechazo de los ajustes"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. CONSULTAR O ADMINISTRAR CATÁLOGO
+    %% ==========================================
+    D_Opcion -->|Consultar o administrar catálogo| U_ReqCatalogo
+    U_ReqCatalogo --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_DBCat
+    
+    S_DBCat --> S_ShowCat
+    S_ShowCat --> Fin
+
+    %% ==========================================
+    %% 2. CREAR PLAN PERSONALIZADO
+    %% ==========================================
+    D_Opcion -->|Crear plan personalizado| U_ReqPlan
+    U_ReqPlan --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_DBConsPacServ
+    
+    S_DBConsPacServ --> S_ShowOptsPlan
+    S_ShowOptsPlan --> U_SelPacServ
+    
+    U_SelPacServ --> S_ValDatosPlan
+    
+    S_ValDatosPlan -->|No| S_ErrPlanVal
+    S_ErrPlanVal --> Fin
+    
+    S_ValDatosPlan -->|Sí| S_DBRegPlan
+    S_DBRegPlan --> S_ShowPlanOk
+    S_ShowPlanOk --> Fin
+
+    %% ==========================================
+    %% 3. CAMBIAR ESTADO DE UN PLAN EXISTENTE
+    %% ==========================================
+    D_Opcion -->|Cambiar estado de plan| U_SelPlanEstado
+    U_SelPlanEstado --> S_DBConsPlan1
+    
+    S_DBConsPlan1 --> S_ShowPlanInfo
+    S_ShowPlanInfo --> S_ValTransPlan
+    
+    S_ValTransPlan -->|No| S_ErrTransPlan
+    S_ErrTransPlan --> Fin
+    
+    S_ValTransPlan -->|Sí| S_DBUpdEstado
+    S_DBUpdEstado --> S_ShowNuevoEstado
+    S_ShowNuevoEstado --> Fin
+
+    %% ==========================================
+    %% 4. AJUSTAR IMPORTES DE un PLAN
+    %% ==========================================
+    D_Opcion -->|Ajustar importes de un plan| U_SelPlanImp
+    U_SelPlanImp --> S_DBConsImp
+    
+    S_DBConsImp --> S_ShowSubtotal
+    S_ShowSubtotal --> S_ValImpModif
+    
+    S_ValImpModif -->|No| S_ErrImp
+    S_ErrImp --> Fin
+    
+    S_ValImpModif -->|Sí| S_DBGuardarImp
+    S_DBGuardarImp --> S_ShowImpOk
+    S_ShowImpOk --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

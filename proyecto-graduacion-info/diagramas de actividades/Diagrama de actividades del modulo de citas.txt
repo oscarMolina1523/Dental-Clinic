@@ -1,0 +1,137 @@
+Diagrama de actividades del modulo de citas
+
+flowchart TD
+
+    %% Columnas de responsabilidad (Swimlanes)
+    subgraph Usuario["Administrador / Especialista / Recepcionista"]
+        A((Inicio))
+        
+        %% Decisión inicial de menú
+        D_Opcion{"Seleccionar Opción"}
+
+        %% 1. Crear y agendar nueva cita
+        U_IngDatosCita["Ingresar datos de paciente, especialista, fecha y hora"]
+
+        %% 2. Cambiar estado de cita
+        U_ReqCambioEstado["Solicitar cambio de estado"]
+
+        %% 3. Cancelar cita
+        U_ReqCancel["Solicitar cancelación e ingresar motivo"]
+
+        %% 4. Iniciar atención clínica
+        U_ReqAtencion["Solicitar inicio de atención"]
+    end
+
+    subgraph Sistema["Módulo de Gestión de Citas / Base de Datos"]
+        %% 1. Crear y agendar nueva cita
+        S_ValPerm1{"¿Tiene permiso de escritura?"}
+        S_ConsDisp["Consultar disponibilidad del especialista en DB"]
+        D_DispValid{"¿Horario disponible?"}
+        S_RegCita["Registrar nueva cita en DB"]
+        S_ShowCita["Mostrar confirmación de cita"]
+        S_ErrDisp["Notificar conflicto de horario"]
+
+        %% 2. Cambiar estado de cita
+        S_ValPerm2{"¿Tiene permiso de escritura?"}
+        S_ConsCita1["Consultar cita y estado actual en DB"]
+        D_TransValid{"¿Transición de estado permitida?"}
+        S_UpdEstado["Actualizar estado de la cita en DB"]
+        S_ShowEstado["Mostrar nuevo estado"]
+        S_ErrTrans["Notificar cambio no permitido"]
+
+        %% 3. Cancelar cita
+        S_ValPerm3{"¿Tiene permiso de escritura?"}
+        S_ConsCita2["Consultar cita y estado actual en DB"]
+        D_CancelValid{"¿Cita cancelable y motivo válido?"}
+        S_RegCancel["Guardar motivo y actualizar estado en DB"]
+        S_ShowCancel["Notificar cancelación exitosa"]
+        S_ErrCancel["Mostrar motivo del rechazo"]
+
+        %% 4. Iniciar atención clínica
+        S_ValPerm4{"¿Tiene permiso de escritura?"}
+        S_ConsCita3["Consultar cita y estado actual en DB"]
+        D_AtencionValid{"¿Cita confirmada y apta para atención?"}
+        S_UpdCurso["Actualizar estado a EN_CURSO en DB"]
+        S_GetProgreso["Obtener o crear progreso clínico en DB"]
+        S_ShowProgreso["Mostrar progreso clínico"]
+        S_ErrAtencion["Notificar que no puede iniciar"]
+
+        %% Denegación general y Fin
+        S_NoAuth["Notificar acceso denegado"]
+        Fin((Fin))
+    end
+
+    %% --- FLUJO PRINCIPAL ---
+    A --> D_Opcion
+
+    %% ==========================================
+    %% 1. CREAR Y AGENDAR NUEVA CITA
+    %% ==========================================
+    D_Opcion -->|Crear y agendar cita| U_IngDatosCita
+    U_IngDatosCita --> S_ValPerm1
+    
+    S_ValPerm1 -->|No| S_NoAuth
+    S_ValPerm1 -->|Sí| S_ConsDisp
+    
+    S_ConsDisp --> D_DispValid
+    D_DispValid -->|No| S_ErrDisp
+    S_ErrDisp --> Fin
+    
+    D_DispValid -->|Sí| S_RegCita
+    S_RegCita --> S_ShowCita
+    S_ShowCita --> Fin
+
+    %% ==========================================
+    %% 2. CAMBIAR ESTADO DE CITA
+    %% ==========================================
+    D_Opcion -->|Cambiar estado de cita| U_ReqCambioEstado
+    U_ReqCambioEstado --> S_ValPerm2
+    
+    S_ValPerm2 -->|No| S_NoAuth
+    S_ValPerm2 -->|Sí| S_ConsCita1
+    
+    S_ConsCita1 --> D_TransValid
+    D_TransValid -->|No| S_ErrTrans
+    S_ErrTrans --> Fin
+    
+    D_TransValid -->|Sí| S_UpdEstado
+    S_UpdEstado --> S_ShowEstado
+    S_ShowEstado --> Fin
+
+    %% ==========================================
+    %% 3. CANCELAR CITA
+    %% ==========================================
+    D_Opcion -->|Cancelar cita| U_ReqCancel
+    U_ReqCancel --> S_ValPerm3
+    
+    S_ValPerm3 -->|No| S_NoAuth
+    S_ValPerm3 -->|Sí| S_ConsCita2
+    
+    S_ConsCita2 --> D_CancelValid
+    D_CancelValid -->|No| S_ErrCancel
+    S_ErrCancel --> Fin
+    
+    D_CancelValid -->|Sí| S_RegCancel
+    S_RegCancel --> S_ShowCancel
+    S_ShowCancel --> Fin
+
+    %% ==========================================
+    %% 4. INICIAR ATENCIÓN CLÍNICA
+    %% ==========================================
+    D_Opcion -->|Iniciar atención clínica| U_ReqAtencion
+    U_ReqAtencion --> S_ValPerm4
+    
+    S_ValPerm4 -->|No| S_NoAuth
+    S_ValPerm4 -->|Sí| S_ConsCita3
+    
+    S_ConsCita3 --> D_AtencionValid
+    D_AtencionValid -->|No| S_ErrAtencion
+    S_ErrAtencion --> Fin
+    
+    D_AtencionValid -->|Sí| S_UpdCurso
+    S_UpdCurso --> S_GetProgreso
+    S_GetProgreso --> S_ShowProgreso
+    S_ShowProgreso --> Fin
+
+    %% Conexión centralizada de denegación
+    S_NoAuth --> Fin

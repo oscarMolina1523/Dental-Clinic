@@ -1,0 +1,90 @@
+Modulo de gestion de citas
+
+
+actor "Administrador / Especialista / Recepcionista" as User
+participant "Módulo de Gestión de Citas" as System
+participant "Gestor de Base de Datos" as DB
+
+loop Realizar operaciones de gestión de citas
+  opt Escenario: Crear y agendar nueva cita
+    User->System: Ingresar datos de paciente, especialista, fecha y hora
+    System->System: Validar permisos de creación
+
+    alt Tiene permiso de escritura
+      System->+DB: Consultar disponibilidad del especialista
+      DB-->-System: Retornar disponibilidad
+
+      alt Horario disponible
+        System->+DB: Registrar nueva cita
+        DB-->-System: Confirmar registro
+        System-->User: Mostrar confirmación de cita
+      else Horario no disponible
+        System-->User: Notificar conflicto de horario
+      end
+    else No tiene permiso de escritura
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Cambiar estado de cita
+    User->System: Solicitar cambio de estado
+    System->System: Validar permisos de modificación
+
+    alt Tiene permiso de escritura
+      System->+DB: Consultar cita y estado actual
+      DB-->-System: Retornar datos de la cita
+
+      alt Transición de estado permitida
+        System->+DB: Actualizar estado de la cita
+        DB-->-System: Confirmar actualización
+        System-->User: Mostrar nuevo estado
+      else Transición no permitida
+        System-->User: Notificar cambio no permitido
+      end
+    else No tiene permiso de escritura
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Cancelar cita
+    User->System: Solicitar cancelación e ingresar motivo
+    System->System: Validar permisos de cancelación
+
+    alt Tiene permiso de escritura
+      System->+DB: Consultar cita y estado actual
+      DB-->-System: Retornar datos de la cita
+
+      alt Cita cancelable y motivo válido
+        System->+DB: Guardar motivo y actualizar estado
+        DB-->-System: Confirmar cancelación
+        System-->User: Notificar cancelación exitosa
+      else Cancelación no permitida
+        System-->User: Mostrar motivo del rechazo
+      end
+    else No tiene permiso de escritura
+      System-->User: Notificar acceso denegado
+    end
+  end
+
+  opt Escenario: Iniciar atención clínica
+    User->System: Solicitar inicio de atención
+    System->System: Validar permisos de atención
+
+    alt Tiene permiso de escritura
+      System->+DB: Consultar cita y estado actual
+      DB-->-System: Retornar datos de la cita
+
+      alt Cita confirmada y apta para atención
+        System->+DB: Actualizar estado a EN_CURSO
+        DB-->-System: Confirmar actualización
+        System->+DB: Obtener o crear progreso clínico
+        DB-->-System: Retornar progreso clínico
+        System-->User: Mostrar progreso clínico
+      else Cita no apta para atención
+        System-->User: Notificar que no puede iniciar
+      end
+    else No tiene permiso de  escritura
+      System-->User: Notificar acceso denegado
+    end
+  end
+end
