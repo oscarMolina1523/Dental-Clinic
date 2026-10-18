@@ -5,11 +5,11 @@ export default class Patient extends BaseModel {
   image: string;
   name: string;
   lastName: string;
-  idCard: string;
+  idCard?: string;
   birthdate: Date;
   gender: string;
   phoneNumber: string;
-  email: string;
+  email?: string;
   address: string;
   emergencyContactName: string;
   emergencyContactPhone: string;
@@ -50,11 +50,11 @@ export default class Patient extends BaseModel {
     image: string;
     name: string;
     lastName: string;
-    idCard: string;
+    idCard?: string;
     birthdate: Date;
     gender: string;
     phoneNumber: string;
-    email: string;
+    email?: string;
     address: string;
     emergencyContactName: string;
     emergencyContactPhone: string;

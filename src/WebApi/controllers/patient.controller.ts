@@ -19,8 +19,20 @@ export class PatientController {
   }
 
   create = async (req: Request, res: Response) => {
-    const result = await this._patientService.create(req.body);
-    res.status(201).json(result);
+    try{
+
+      const result = await this._patientService.create(req.body);
+      return res.status(201).json(result);
+
+    }catch (error) {
+
+      return res.status(500).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el paciente."
+      });
+    }
   }
 
   getById = async (req: Request, res: Response) => {

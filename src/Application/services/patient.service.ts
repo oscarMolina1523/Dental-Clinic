@@ -23,6 +23,35 @@ export class PatientService implements IPatientService {
   }
 
   async create(data: PatientDto): Promise<Patient> {
+
+    const existingByName = await this._patientRepository.findByField(
+      "name",
+      data.name
+    );
+
+    //verificamos que el nombre ya eziste pero no hay problema ya que mucha gente se llama igual
+    if (existingByName) {
+      // Verificar también el apellido, en caso de ser identicos nombres y apellidos devolvemos el error
+      if (
+        existingByName.lastName.toLowerCase().trim() ===
+        data.lastName.toLowerCase().trim()
+      ) {
+        throw new Error("Ya existe un paciente con ese nombre y apellido.");
+      }
+    }
+
+    if(data.idCard){
+      //si trae documento de identidad vemos que no se repita
+      const existingByIdCard = await this._patientRepository.findByField(
+          "idCard",
+          data.idCard
+      );
+  
+      if (existingByIdCard) {
+          throw new Error("Ya existe un paciente con esa cédula.");
+      }
+    }
+
     const now = new Date();
 
     const patientCode = generateEntityCode({

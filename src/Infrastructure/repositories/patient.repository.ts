@@ -100,6 +100,42 @@ export class PatientRepository implements IPatientRepository {
     });
   }
 
+  async findByField(field: string, value: string): Promise<Patient | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.Patient)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new Patient({
+      id: row["ID"],
+      patientCode: row["PATIENTCODE"],
+      image: row["IMAGE"],
+      name: row["NAME"],
+      lastName: row["LASTNAME"],
+      idCard: row["IDCARD"],
+      birthdate: row["BIRTHDATE"],
+      gender: row["GENDER"],
+      phoneNumber: row["PHONENUMBER"],
+      email: row["EMAIL"],
+      address: row["ADDRESS"],
+      emergencyContactName: row["EMERGENCYCONTACTNAME"],
+      emergencyContactPhone: row["EMERGENCYCONTACTPHONE"],
+      maritalStatus: row["MARITALSTATUS"],
+      active: row["ACTIVE"],
+      isSelfPayer: row["ISSELFPAYER"],
+      payerName: row["PAYERNAME"],
+      payerIdCard: row["PAYERIDCARD"],
+      payerPhoneNumber: row["PAYERPHONENUMBER"],
+      createdAt: row["CREATEDAT"],
+      updatedAt: row["UPDATEDAT"],
+    });
+  }
+
   async create(entity: Patient): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.Patient, entity)
