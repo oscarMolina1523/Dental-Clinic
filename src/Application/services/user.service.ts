@@ -33,6 +33,31 @@ export class UserService implements IUserService {
   }
 
   async registerUser(user: UserRequest): Promise<ServiceResult<UserResponse>> {
+
+    if (!user.username) {
+      throw new Error("Debe ingresar un nombre de usuario.");
+    }
+
+    const existingByName = await this._userRepository.findByField(
+      "fullname",
+      user.username
+    );
+
+    //verificamos que el nombre ya existe
+    if (existingByName) {
+      throw new Error("Este nombre de usuario ya esta ocupado.");
+    }
+
+    const existingByEmail = await this._userRepository.findByField(
+      "email",
+      user.email
+    );
+
+    if (existingByEmail) {
+      throw new Error("Este email ya está ocupado.");
+    }
+
+
     const newUser = UserMapper.toEntity(user, "system");
     await this._userRepository.create(newUser);
     const response =
@@ -42,6 +67,30 @@ export class UserService implements IUserService {
   }
 
   async create(data: UserDto): Promise<User> {
+
+    if (!data.fullName) {
+      throw new Error("Debe ingresar un nombre de usuario.");
+    }
+
+    const existingByName = await this._userRepository.findByField(
+      "username", //campo en base de datos
+      data.fullName //campo del dto
+    );
+
+    //verificamos que el nombre ya existe
+    if (existingByName) {
+      throw new Error("Este nombre de usuario ya esta ocupado.");
+    }
+
+    const existingByEmail = await this._userRepository.findByField(
+      "email",
+      data.email
+    );
+
+    if (existingByEmail) {
+      throw new Error("Este email ya está ocupado.");
+    }
+
     const passwordHash = await this._passwordService.hash(
       data.password
     );

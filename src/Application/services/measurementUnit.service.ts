@@ -22,6 +22,16 @@ export class MeasurementUnitService implements IMeasurementUnitService {
   }
   
   async create(data: MeasurementUnitDto): Promise<MeasurementUnit> {
+
+    const existingByName = await this._measurementUnitRepository.findByField(
+      "name",
+      data.name
+    );
+
+    if (existingByName) {
+      throw new Error("Ya existe una unidad de medida con este nombre.");
+    }
+
     const newData: MeasurementUnit = {
       ...data,
       id: generateId(), 

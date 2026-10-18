@@ -19,8 +19,18 @@ export class TreatmentCatalogController {
   }
 
   create= async (req: Request, res: Response)=> {
-    const result = await this._treatmentCatalogService.create(req.body);
-    res.status(201).json(result);
+    try{
+      const result = await this._treatmentCatalogService.create(req.body);
+      return res.status(201).json(result);
+    } catch (error) {
+
+      return res.status(500).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el servicio."
+      });
+    }
   }
 
   getById= async (req: Request, res: Response)=> {

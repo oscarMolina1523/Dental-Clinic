@@ -109,6 +109,33 @@ export class UserRepository implements IUserRepository {
     });
   }
 
+  async findByField(field: string, value: string): Promise<User | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.User)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField(field, value).BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new User({
+      id: row["ID"],
+      roleId: row["ROLEID"],
+      fullName: row["FULLNAME"],
+      image: row["IMAGE"],
+      email: row["EMAIL"],
+      password: row["PASSWORD"],
+      phoneNumber: row["PHONENUMBER"],
+      membershipNumber: row["MEMBERSHIPNUMBER"],
+      specialties: row["SPECIALTIES"],
+      active: row["ACTIVE"],
+      createdAt: row["CREATEDAT"],
+      updatedAt: row["UPDATEDAT"],
+    });
+  }
+
   async create(entity: User): Promise<void> {
     const writeCommand = this._operationBuilder
       .From(EntityType.User, entity)

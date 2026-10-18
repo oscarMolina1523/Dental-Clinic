@@ -22,6 +22,16 @@ export class CategoryService implements ICategoryService {
   }
   
   async create(data: CategoryDto): Promise<Category> {
+
+    const existingByName = await this._categoryRepository.findByField(
+      "name",
+      data.name
+    );
+
+    if (existingByName) {
+      throw new Error("Ya existe una categoria con este nombre.");
+    }
+
     const newData: Category = {
       ...data,
       id: generateId(),

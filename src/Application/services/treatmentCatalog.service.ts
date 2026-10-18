@@ -24,6 +24,16 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
 
   async create(data: TreatmentCatalogDto): Promise<TreatmentCatalog> {
 
+    const existingByName = await this._treatmentCatalogRepository.findByField(
+      "name",
+      data.name
+    );
+
+    //verificamos que el nombre ya existe
+    if (existingByName) {
+      throw new Error("Ya existe un servicio con este nombre.");
+    }
+
     const treatmentCode = generateEntityCode({
       prefix: "TRT",
       date: new Date(),
@@ -32,7 +42,7 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
 
     const newData: TreatmentCatalog = new TreatmentCatalog({
       ...data,
-      code:treatmentCode,
+      code: treatmentCode,
       id: generateId(),
       active: true
     })
@@ -46,9 +56,9 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
       return null;
     }
     //solo actualizamos el nombre y al descripcion
-    if (data.name !== undefined) { existing.name = data.name; } 
+    if (data.name !== undefined) { existing.name = data.name; }
 
-    if (data.description !== undefined) { existing.description = data.description; } 
+    if (data.description !== undefined) { existing.description = data.description; }
 
     await this._treatmentCatalogRepository.update(existing);
 

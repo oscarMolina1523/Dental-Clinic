@@ -56,7 +56,11 @@ export default class AuthController {
         user: result.data || null,
       });
     } catch (error) {
-      res.status(500).json({ message: "Error al registrar usuario", error });
+      res.status(500).json({ message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo crear el usuario." 
+      });
     }
   };
 

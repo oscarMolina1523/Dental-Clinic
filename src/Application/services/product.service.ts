@@ -12,19 +12,38 @@ export class ProductService implements IProductService {
   constructor(@inject("IProductRepository") repository: IProductRepository) {
     this._productRepository = repository;
   }
-  
+
   async findAll(page: number = 1, pageSize: number = 100): Promise<Product[]> {
     return await this._productRepository.findAll(page, pageSize);
   }
-  
-  async findById(id: string) : Promise<Product | null> {
+
+  async findById(id: string): Promise<Product | null> {
     return await this._productRepository.findById(id);
   }
-  
+
   async create(data: ProductDto): Promise<Product> {
+
+    const existingByName = await this._productRepository.findByField(
+      "name",
+      data.name
+    );
+
+    //verificamos que el producto no exista , es decir el nombre con el mismo category y unidad de medida 
+    if (
+      existingByName &&
+      existingByName.category_id.toLowerCase().trim() ===
+      data.category_id.toLowerCase().trim() &&
+      existingByName.measurement_unit_id.toLowerCase().trim() ===
+      data.measurement_unit_id.toLowerCase().trim()
+    ) {
+      throw new Error(
+        "Ya existe un producto con esta misma categoría y unidad de medida."
+      );
+    }
+
     const newData: Product = {
       ...data,
-      id: generateId(), 
+      id: generateId(),
     }
     await this._productRepository.create(newData);
     return newData;
@@ -44,10 +63,10 @@ export class ProductService implements IProductService {
     return newData;
   }
 
-  async delete(id: string) : Promise<void> {
+  async delete(id: string): Promise<void> {
     const existing = await this._productRepository.findById(id);
     if (!existing) {
-      return ;
+      return;
     }
     return await this._productRepository.delete(existing);
   }

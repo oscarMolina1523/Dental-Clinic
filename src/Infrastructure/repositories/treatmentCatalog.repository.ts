@@ -39,15 +39,15 @@ export class TreatmentCatalogRepository implements ITreatmentCatalogRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new TreatmentCatalog({
-        id: row["ID"],
-        code: row["CODE"],
-        name: row["NAME"],
-        description: row["DESCRIPTION"],
-        basePrice: row["BASEPRICE"],
-        estimatedDurationMinutes: row["ESTIMATEDDURATIONMINUTES"],
-        active: row["ACTIVE"],
-      })
+        new TreatmentCatalog({
+          id: row["ID"],
+          code: row["CODE"],
+          name: row["NAME"],
+          description: row["DESCRIPTION"],
+          basePrice: row["BASEPRICE"],
+          estimatedDurationMinutes: row["ESTIMATEDDURATIONMINUTES"],
+          active: row["ACTIVE"],
+        })
     );
   }
 
@@ -57,6 +57,28 @@ export class TreatmentCatalogRepository implements ITreatmentCatalogRepository {
       .WithOperation(SqlReadOperation.SelectById)
       .WithId(id)
       .BuildReader();
+
+    const row = await this._connection.executeScalar(readCommand);
+    if (!row) return null;
+
+    return new TreatmentCatalog({
+      id: row["ID"],
+      code: row["CODE"],
+      name: row["NAME"],
+      description: row["DESCRIPTION"],
+      basePrice: row["BASEPRICE"],
+      estimatedDurationMinutes: row["ESTIMATEDDURATIONMINUTES"],
+      active: row["ACTIVE"],
+    });
+  }
+
+  async findByField(field: string, value: string): Promise<TreatmentCatalog | null> {
+    const builder = this._operationBuilder
+      .Initialize(EntityType.TreatmentCatalog)
+      .WithOperation(SqlReadOperation.SelectByField);
+
+    if (!builder.WithField) throw new Error("WithField no implementado");
+    const readCommand = builder.WithField(field, value).BuildReader();
 
     const row = await this._connection.executeScalar(readCommand);
     if (!row) return null;
