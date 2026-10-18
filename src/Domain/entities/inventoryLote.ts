@@ -152,13 +152,6 @@ export default class InventoryLote extends BaseModel {
    */
   decrease(quantity: number): void {
 
-    if (this.isExpired) {
-      throw new Error(
-        "No se puede retirar inventario de un lote vencido"
-      );
-    }
-
-
     if (quantity <= 0) {
       throw new Error(
         "La cantidad a disminuir debe ser mayor que cero"
