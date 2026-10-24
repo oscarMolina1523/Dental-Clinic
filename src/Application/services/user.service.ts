@@ -73,7 +73,7 @@ export class UserService implements IUserService {
     }
 
     const existingByName = await this._userRepository.findByField(
-      "username", //campo en base de datos
+      "fullname", //campo en base de datos
       data.fullName //campo del dto
     );
 
