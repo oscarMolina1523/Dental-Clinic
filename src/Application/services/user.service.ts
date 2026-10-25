@@ -128,17 +128,8 @@ export class UserService implements IUserService {
       throw new Error("Este nombre de usuario ya esta ocupado.");
     }
 
-    const existingByEmail = await this._userRepository.findByField(
-      "email",
-      data.email
-    );
-
-    if (existingByEmail) {
-      throw new Error("Este email ya está ocupado.");
-    }
-
     const existing = await this._userRepository.findById(id);
-    
+
     if (!existing) {
       return null;
     }
@@ -168,6 +159,15 @@ export class UserService implements IUserService {
     id: string,
     email: string
   ): Promise<User | null> {
+
+    const existingByEmail = await this._userRepository.findByField(
+      "email",
+      email
+    );
+
+    if (existingByEmail) {
+      throw new Error("Este email ya está ocupado.");
+    }
 
     const existing = await this._userRepository.findById(id);
 
