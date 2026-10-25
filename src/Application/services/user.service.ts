@@ -117,7 +117,28 @@ export class UserService implements IUserService {
 
   //el update solo actualiza el perfil
   async update(id: string, data: UserDto): Promise<User | null> {
+
+    const existingByName = await this._userRepository.findByField(
+      "username", //campo en base de datos
+      data.userName //campo del dto
+    );
+
+    //verificamos que el nombre ya existe
+    if (existingByName) {
+      throw new Error("Este nombre de usuario ya esta ocupado.");
+    }
+
+    const existingByEmail = await this._userRepository.findByField(
+      "email",
+      data.email
+    );
+
+    if (existingByEmail) {
+      throw new Error("Este email ya está ocupado.");
+    }
+
     const existing = await this._userRepository.findById(id);
+    
     if (!existing) {
       return null;
     }
