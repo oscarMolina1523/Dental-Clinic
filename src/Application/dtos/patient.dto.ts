@@ -7,7 +7,7 @@ export interface PatientDto {
   idCard?: string;
   birthdate: Date;
   gender: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   email?: string;
   address: string;
   emergencyContactName: string;

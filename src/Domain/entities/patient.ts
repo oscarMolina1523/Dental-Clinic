@@ -9,7 +9,7 @@ export default class Patient extends BaseModel {
   idCard?: string;
   birthdate: Date;
   gender: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   email?: string;
   address: string;
   emergencyContactName: string;
@@ -56,7 +56,7 @@ export default class Patient extends BaseModel {
     idCard?: string;
     birthdate: Date;
     gender: string;
-    phoneNumber: string;
+    phoneNumber?: string;
     email?: string;
     address: string;
     emergencyContactName: string;
