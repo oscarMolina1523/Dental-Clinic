@@ -118,21 +118,22 @@ export class UserService implements IUserService {
   //el update solo actualiza el perfil
   async update(id: string, data: UserDto): Promise<User | null> {
 
-    const existingByName = await this._userRepository.findByField(
-      "username", //campo en base de datos
-      data.userName //campo del dto
-    );
-
-    //verificamos que el nombre ya existe
-    if (existingByName) {
-      throw new Error("Este nombre de usuario ya esta ocupado.");
-    }
-
     const existing = await this._userRepository.findById(id);
 
     if (!existing) {
       return null;
     }
+
+    const existingByName = await this._userRepository.findByField(
+      "username",
+      data.userName
+    );
+
+    // Solo rechazamos el nombre si pertenece a OTRO usuario
+    if (existingByName && existingByName.id !== existing.id) {
+      throw new Error("Este nombre de usuario ya está ocupado.");
+    }
+
 
     existing.updateProfile(
       data.fullName,
@@ -160,19 +161,20 @@ export class UserService implements IUserService {
     email: string
   ): Promise<User | null> {
 
+    const existing = await this._userRepository.findById(id);
+
+    if (!existing) {
+      return null;
+    }
+
     const existingByEmail = await this._userRepository.findByField(
       "email",
       email
     );
 
-    if (existingByEmail) {
+    // El email solo está ocupado si pertenece a otro usuario
+    if (existingByEmail && existingByEmail.id !== existing.id) {
       throw new Error("Este email ya está ocupado.");
-    }
-
-    const existing = await this._userRepository.findById(id);
-
-    if (!existing) {
-      return null;
     }
 
     existing.changeEmail(email);
