@@ -41,15 +41,25 @@ export class UserController {
 
   update = async (req: Request, res: Response) => {
     const id = req.params.id as string;
-    const result = await this._userService.update(id, req.body);
+    try{
+      const result = await this._userService.update(id, req.body);
+  
+      if (!result) {
+        return res.status(404).json({
+          message: "Usuario no encontrado"
+        });
+      }
+  
+      return res.json(result);
+    } catch (error) {
 
-    if (!result) {
-      return res.status(404).json({
-        message: "Usuario no encontrado"
+      return res.status(500).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo actualizar el usuario."
       });
     }
-
-    res.json(result);
   }
 
   delete = async (req: Request, res: Response) => {
@@ -57,24 +67,36 @@ export class UserController {
     await this._userService.delete(id);
     res.status(204).send();
   }
+
   changeEmail = async (req: Request, res: Response) => {
 
     const id = req.params.id as string;
 
     const { email } = req.body;
 
-    const result = await this._userService.changeEmail(
-      id,
-      email
-    );
+    try{
+      const result = await this._userService.changeEmail(
+        id,
+        email
+      );
+  
+      if (!result) {
+        return res.status(404).json({
+          message: "Usuario no encontrado"
+        });
+      }
+  
+      return res.json(result);
+    }catch (error) {
 
-    if (!result) {
-      return res.status(404).json({
-        message: "Usuario no encontrado"
+      return res.status(500).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "No se pudo cambiar el email."
       });
     }
 
-    res.json(result);
   };
 
   changePhoneNumber = async (
