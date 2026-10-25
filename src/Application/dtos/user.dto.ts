@@ -1,6 +1,7 @@
 export interface UserDto {
   roleId: string;
   fullName: string;
+  userName: string;
   image: string;
   email: string;
   password: string;

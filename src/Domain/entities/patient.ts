@@ -5,6 +5,7 @@ export default class Patient extends BaseModel {
   image: string;
   name: string;
   lastName: string;
+  bloodType: string;
   idCard?: string;
   birthdate: Date;
   gender: string;
@@ -28,6 +29,7 @@ export default class Patient extends BaseModel {
     image,
     name,
     lastName,
+    bloodType,
     idCard,
     birthdate,
     gender,
@@ -50,6 +52,7 @@ export default class Patient extends BaseModel {
     image: string;
     name: string;
     lastName: string;
+    bloodType: string;
     idCard?: string;
     birthdate: Date;
     gender: string;
@@ -91,6 +94,7 @@ export default class Patient extends BaseModel {
     this.image = image;
     this.name = name;
     this.lastName = lastName;
+    this.bloodType = bloodType;
     this.idCard = idCard;
     this.birthdate = birthdate;
     this.gender = gender;
@@ -132,12 +136,14 @@ export default class Patient extends BaseModel {
   updatePersonalInformation(
     name: string,
     lastName: string,
+    bloodType: string,
     birthdate: Date,
     gender: string,
     isSelfPayer: boolean,
     payerName: string,
     payerPhoneNumber: string,
-    payerIdCard: string
+    payerIdCard: string,
+    idCard?: string,
   ): void {
 
     if (!name?.trim()) {
@@ -156,6 +162,8 @@ export default class Patient extends BaseModel {
 
     this.name = name;
     this.lastName = lastName;
+    this.bloodType = bloodType;
+    this.idCard = idCard;
     this.birthdate = birthdate;
     this.gender = gender;
     this.isSelfPayer = isSelfPayer;

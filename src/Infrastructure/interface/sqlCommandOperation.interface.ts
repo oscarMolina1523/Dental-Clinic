@@ -18,6 +18,11 @@ export interface IExecuteWriteBuilder {
 
 export interface IHaveSqlReadOperation {
   WithOperation(operation: SqlReadOperation): IHavePrimaryKeyValue;
+
+  WithOrderBy(
+    fieldName: string,
+    direction?: "ASC" | "DESC"
+  ): IHaveSqlReadOperation;
 }
 
 export interface IHavePrimaryKeyValue extends IExecuteReadBuilder {

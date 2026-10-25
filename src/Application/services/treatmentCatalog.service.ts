@@ -60,6 +60,8 @@ export class TreatmentCatalogService implements ITreatmentCatalogService {
 
     if (data.description !== undefined) { existing.description = data.description; }
 
+    if (data.specialities !== undefined) { existing.specialities = data.specialities; }
+
     await this._treatmentCatalogRepository.update(existing);
 
     return existing;

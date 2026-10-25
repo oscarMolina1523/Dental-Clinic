@@ -2,6 +2,7 @@ export interface PatientDto {
   patientCode: string;
   image: string;
   name: string;
+  bloodType: string;
   lastName: string;
   idCard?: string;
   birthdate: Date;

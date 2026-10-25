@@ -3,6 +3,7 @@ import BaseModel from "./base.model";
 export default class User extends BaseModel {
   roleId: string;
   fullName: string;
+  userName: string;
   image: string;
   email: string;
   password: string;
@@ -17,6 +18,7 @@ export default class User extends BaseModel {
     id,
     roleId,
     fullName,
+    userName,
     image,
     email,
     password,
@@ -30,6 +32,7 @@ export default class User extends BaseModel {
     id: string;
     roleId: string;
     fullName: string;
+    userName: string;
     image: string;
     email: string;
     password: string;
@@ -43,6 +46,7 @@ export default class User extends BaseModel {
     super(id);
     this.roleId = roleId;
     this.fullName = fullName;
+    this.userName = userName;
     this.image = image;
     this.email = email;
     this.password = password;
@@ -112,6 +116,7 @@ export default class User extends BaseModel {
   //para actualizar los datos del perfil
   updateProfile(
     fullName: string,
+    userName: string,
     phoneNumber: string,
     image?: string,
     membershipNumber?: string,
@@ -122,6 +127,7 @@ export default class User extends BaseModel {
     }
 
     this.fullName = fullName;
+    this.userName = userName;
     this.phoneNumber = phoneNumber;
     this.image = image ?? this.image;
     this.membershipNumber = membershipNumber;

@@ -7,8 +7,7 @@ import { SqlColumnSettings } from "./sqlEntitySettings";
 import { SqlReadOperation } from "./sqlOperations.enum";
 
 export class SqlCommandReadBuilder<TEntity extends BaseModel>
-  implements IHaveSqlReadOperation, IExecuteReadBuilder, IHavePrimaryKeyValue
-{
+  implements IHaveSqlReadOperation, IExecuteReadBuilder, IHavePrimaryKeyValue {
   private operation!: SqlReadOperation;
   private readonly entitiesService: IEntitiesService;
   private entityType: EntityType;
@@ -17,6 +16,9 @@ export class SqlCommandReadBuilder<TEntity extends BaseModel>
   private fieldValue?: any; // se guarda el valor del campo para operaciones futuras
   private limit?: number;
   private offset?: number;
+
+  private orderByField?: string;
+  private orderDirection: "ASC" | "DESC" = "ASC";
 
   constructor(entitiesService: IEntitiesService, entityType: EntityType) {
     this.entitiesService = entitiesService;
@@ -42,6 +44,15 @@ export class SqlCommandReadBuilder<TEntity extends BaseModel>
   WithPagination(limit: number, offset: number): IExecuteReadBuilder {
     this.limit = limit;
     this.offset = offset;
+    return this;
+  }
+
+  WithOrderBy(
+    fieldName: string,
+    direction: "ASC" | "DESC" = "ASC"
+  ): IHaveSqlReadOperation {
+    this.orderByField = fieldName;
+    this.orderDirection = direction;
     return this;
   }
 
@@ -74,7 +85,32 @@ export class SqlCommandReadBuilder<TEntity extends BaseModel>
     const columnNames = columns.map((c) => c.name).join(", ");
     const limit = this.limit ?? 100;
     const offset = this.offset ?? 0;
-    return `SELECT ${columnNames} FROM ${entityName} LIMIT ${limit} OFFSET ${offset};`; //limit es para solo traer 100 registros
+
+    let orderByClause = "";
+
+    if (this.orderByField) {
+      const column = columns.find(
+        (c) =>
+          c.domainName.toLowerCase() ===
+          this.orderByField!.toLowerCase()
+      );
+
+      if (!column) {
+        throw new Error(
+          `Column "${this.orderByField}" not found.`
+        );
+      }
+
+      orderByClause =
+        ` ORDER BY ${column.name} ${this.orderDirection}`;
+    }
+
+    return `
+    SELECT ${columnNames}
+    FROM ${entityName}
+    ${orderByClause}
+    LIMIT ${limit} OFFSET ${offset};
+  `;
   }
 
   private getSelectByIdCommand(): SqlCommand {

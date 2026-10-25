@@ -3,6 +3,7 @@ import BaseModel from "./base.model";
 export default class TreatmentCatalog extends BaseModel {
   code: string;
   name: string;
+  specialities: string;
   description: string;
   private basePrice: number;
   private estimatedDurationMinutes: number;
@@ -12,6 +13,7 @@ export default class TreatmentCatalog extends BaseModel {
     id,
     code,
     name,
+    specialities,
     description,
     basePrice,
     estimatedDurationMinutes,
@@ -20,6 +22,7 @@ export default class TreatmentCatalog extends BaseModel {
     id: string;
     code: string;
     name: string;
+    specialities: string;
     description: string;
     basePrice: number;
     estimatedDurationMinutes: number;
@@ -48,6 +51,7 @@ export default class TreatmentCatalog extends BaseModel {
     }
     this.code = code;
     this.name = name;
+    this.specialities = specialities;
     this.description = description;
     this.basePrice = basePrice;
     this.estimatedDurationMinutes = estimatedDurationMinutes;

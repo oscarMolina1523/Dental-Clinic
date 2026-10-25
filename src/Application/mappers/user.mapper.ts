@@ -12,7 +12,8 @@ export class UserMapper {
       id: generateId(),
       image:"https://sites.utexas.edu/weiwli/wp-content/uploads/sites/5648/2026/04/To-be-updated.jpg",
       phoneNumber:"",
-      fullName: dto.username ?? dto.email.split("@")[0],
+      userName: dto.username ?? dto.email.split("@")[0],
+      fullName: dto.fullname ?? "",
       email: dto.email,
       password: dto.password,
       roleId: dto.roleId ?? "VIEWER",
@@ -26,7 +27,7 @@ export class UserMapper {
   static toPublic(user: User): UserResponse {
     return {
       id: user.id,
-      username: user.fullName,
+      username: user.userName,
       email: user.email,
       roleId: user.roleId,
       active: user.getActive(),

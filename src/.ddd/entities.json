@@ -29,6 +29,10 @@
           "type": "string"
         },
         {
+          "name": "userName",
+          "type": "string"
+        },
+        {
           "name": "image",
           "type": "string"
         },
@@ -79,6 +83,10 @@
         },
         {
           "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "bloodType",
           "type": "string"
         },
         {
@@ -240,6 +248,10 @@
         },
         {
           "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "specialities",
           "type": "string"
         },
         {

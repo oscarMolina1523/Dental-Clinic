@@ -39,7 +39,7 @@ export class UserService implements IUserService {
     }
 
     const existingByName = await this._userRepository.findByField(
-      "fullname",
+      "username",
       user.username
     );
 
@@ -68,13 +68,13 @@ export class UserService implements IUserService {
 
   async create(data: UserDto): Promise<User> {
 
-    if (!data.fullName) {
+    if (!data.userName) {
       throw new Error("Debe ingresar un nombre de usuario.");
     }
 
     const existingByName = await this._userRepository.findByField(
-      "fullname", //campo en base de datos
-      data.fullName //campo del dto
+      "username", //campo en base de datos
+      data.userName //campo del dto
     );
 
     //verificamos que el nombre ya existe
@@ -124,6 +124,7 @@ export class UserService implements IUserService {
 
     existing.updateProfile(
       data.fullName,
+      data.userName,
       data.phoneNumber,
       data.image,
       data.membershipNumber,
