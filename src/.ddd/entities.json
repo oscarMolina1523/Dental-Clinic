@@ -603,6 +603,10 @@
         {
           "name": "measurement_unit_id",
           "type": "string"
+        },
+        {
+          "name": "hasExpiration",
+          "type": "boolean"
         }
       ]
     },

@@ -260,7 +260,8 @@ export async function initializeDatabase(): Promise<void> {
         NAME TEXT,
         DESCRIPTION TEXT,
         CATEGORY_ID TEXT,
-        MEASUREMENT_UNIT_ID TEXT
+        MEASUREMENT_UNIT_ID TEXT,
+        HAS_EXPIRATION INTEGER
     );
 `);
 

@@ -306,6 +306,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("DESCRIPTION", "description", false),
             new SqlColumnSettings("CATEGORY_ID", "category_id", false),
             new SqlColumnSettings("MEASUREMENT_UNIT_ID", "measurement_unit_id", false),
+            new SqlColumnSettings("HAS_EXPIRATION", "hasExpiration", false),
         ];
         return new SqlEntitySettings("PRODUCTS", columns);
     }

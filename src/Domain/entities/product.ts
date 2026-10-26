@@ -6,6 +6,7 @@ export default class Product extends BaseModel {
   description?: string;
   category_id: string;
   measurement_unit_id: string;
+  hasExpiration?: boolean;
 
   constructor({
     id,
@@ -14,6 +15,7 @@ export default class Product extends BaseModel {
     description,
     category_id,
     measurement_unit_id,
+    hasExpiration
   }: {
     id: string;
     barcode?: string;
@@ -21,6 +23,7 @@ export default class Product extends BaseModel {
     description?: string;
     category_id: string;
     measurement_unit_id: string;
+    hasExpiration?: boolean;
   }) {
     super(id);
     this.barcode = barcode;
@@ -28,5 +31,6 @@ export default class Product extends BaseModel {
     this.description = description;
     this.category_id = category_id;
     this.measurement_unit_id = measurement_unit_id;
+    this.hasExpiration = hasExpiration;
   }
 }

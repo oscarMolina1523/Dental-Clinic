@@ -46,6 +46,7 @@ export class ProductRepository implements IProductRepository {
         description: row["DESCRIPTION"],
         category_id: row["CATEGORY_ID"],
         measurement_unit_id: row["MEASUREMENT_UNIT_ID"],
+        hasExpiration: row["HAS_EXPIRATION"]
       } as Product)
     );
   }
@@ -67,6 +68,7 @@ export class ProductRepository implements IProductRepository {
       description: row["DESCRIPTION"],
       category_id: row["CATEGORY_ID"],
       measurement_unit_id: row["MEASUREMENT_UNIT_ID"],
+      hasExpiration: row["HAS_EXPIRATION"]
     } as Product;
   }
 
@@ -88,6 +90,7 @@ export class ProductRepository implements IProductRepository {
       description: row["DESCRIPTION"],
       category_id: row["CATEGORY_ID"],
       measurement_unit_id: row["MEASUREMENT_UNIT_ID"],
+      hasExpiration: row["HAS_EXPIRATION"]
     } as Product;
   }
 
