@@ -32,7 +32,7 @@ export class AppointmentRepository implements IAppointmentRepository {
 
     const readCommand = this._operationBuilder
       .Initialize(EntityType.Appointment)
-      .WithOrderBy("startAppointmentTime", "DESC") //retorna por fechas de mas reciente a mas vieja
+      .WithOrderBy("startAppointmentTime", "ASC") //retorna por fechas de mas reciente a mas vieja
       .WithOperation(SqlReadOperation.Select)
       .WithPagination(pageSize, offset)
       .BuildReader();
