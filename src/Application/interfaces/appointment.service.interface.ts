@@ -25,6 +25,10 @@ export interface IAppointmentService {
     notes: string
   ): Promise<Appointment | null>;
 
+  abandon(
+    id: string
+  ): Promise<Appointment | null>
+
   markAsNoShow(
     id: string
   ): Promise<Appointment | null>;

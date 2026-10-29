@@ -40,6 +40,11 @@ router.post(
     controller.markAsNoShow
 );
 
+router.post(
+  "/:id/abandon",
+  controller.abandon
+);
+
 // ============================================================
 // REMINDER
 // ============================================================

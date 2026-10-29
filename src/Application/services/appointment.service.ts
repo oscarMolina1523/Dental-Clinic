@@ -47,28 +47,28 @@ export class AppointmentService implements IAppointmentService {
     }
 
     existing.update({
-    patientId: data.patientId,
-    patientFullName: data.patientFullName,
-    dentistId: data.dentistId,
-    dentistFullName: data.dentistFullName,
-    dentistSpeciality: data.dentistSpeciality,
+      patientId: data.patientId,
+      patientFullName: data.patientFullName,
+      dentistId: data.dentistId,
+      dentistFullName: data.dentistFullName,
+      dentistSpeciality: data.dentistSpeciality,
 
-    treatmentId: data.treatmentId,
-    treatmentPlanId: data.treatmentPlanId,
+      treatmentId: data.treatmentId,
+      treatmentPlanId: data.treatmentPlanId,
 
-    allergies: data.allergies,
-    symptoms: data.symptoms,
-    diagnosis: data.diagnosis,
-    clinicalNotes:data.clinicalNotes,
+      allergies: data.allergies,
+      symptoms: data.symptoms,
+      diagnosis: data.diagnosis,
+      clinicalNotes: data.clinicalNotes,
 
-    startAppointmentTime:
-      new Date(data.startAppointmentTime),
+      startAppointmentTime:
+        new Date(data.startAppointmentTime),
 
-    endAppointmentTime:
-      new Date(data.endAppointmentTime),
+      endAppointmentTime:
+        new Date(data.endAppointmentTime),
 
-    reason: data.reason,
-  });
+      reason: data.reason,
+    });
     await this._appointmentRepository.update(existing);
     return existing;
   }
@@ -197,6 +197,28 @@ export class AppointmentService implements IAppointmentService {
     return appointment;
   }
 
+  async abandon(
+    id: string
+  ): Promise<Appointment | null> {
+
+    const appointment =
+      await this._appointmentRepository.findById(id);
+
+    if (!appointment) {
+      return null;
+    }
+
+    // DOMAIN
+    appointment.abandon();
+
+    // PERSISTENCE
+    await this._appointmentRepository.update(
+      appointment
+    );
+
+    return appointment;
+  }
+
   // ============================================================
   // REMINDER
   // ============================================================
@@ -283,7 +305,7 @@ export class AppointmentService implements IAppointmentService {
     return appointment.isPending;
   }
 
-    // ============================================================
+  // ============================================================
   // INVOICE
   // ============================================================
 
@@ -330,4 +352,5 @@ export class AppointmentService implements IAppointmentService {
 
     return appointment;
   }
+
 }

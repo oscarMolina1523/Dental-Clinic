@@ -133,6 +133,31 @@ export class AppointmentController {
 
   };
 
+  abandon = async (req: Request, res: Response) => {
+    try {
+      const id =
+      req.params.id as string;
+
+      const appointment =
+        await this._appointmentService.abandon(id);
+
+      if (!appointment) {
+        return res.status(404).json({
+          message: "Cita no encontrada",
+        });
+      }
+
+      return res.status(200).json(appointment);
+    } catch (error) {
+      return res.status(400).json({
+        message:
+          error instanceof Error
+            ? error.message
+            : "Error al abandonar la cita",
+      });
+    }
+  }
+
   cancel = async (
     req: Request,
     res: Response

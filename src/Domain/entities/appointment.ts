@@ -506,4 +506,29 @@ export default class Appointment extends BaseModel {
     this.isClinicalProgressRegistered = true;
   }
 
+  abandon(): void {
+
+    if (
+      this.status !== AppointmentStatus.SCHEDULED &&
+      this.status !== AppointmentStatus.CONFIRMED
+    ) {
+      throw new Error(
+        "Solo se puede abandonar una cita programada o confirmada"
+      );
+    }
+
+    const now = new Date();
+    const oneHourInMs = 60 * 60 * 1000;
+
+    const elapsedTime =
+      now.getTime() - this.startAppointmentTime.getTime();
+
+    if (elapsedTime < oneHourInMs) {
+      throw new Error(
+        "Solo se puede abandonar una cita que deberia haber iniciado hace al menos una hora"
+      );
+    }
+
+    this.status = AppointmentStatus.ABANDONED;
+  }
 }
