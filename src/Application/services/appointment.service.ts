@@ -68,6 +68,7 @@ export class AppointmentService implements IAppointmentService {
         new Date(data.endAppointmentTime),
 
       reason: data.reason,
+      status: data.status
     });
     await this._appointmentRepository.update(existing);
     return existing;

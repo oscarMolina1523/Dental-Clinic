@@ -381,6 +381,7 @@ export default class Appointment extends BaseModel {
     startAppointmentTime,
     endAppointmentTime,
     reason,
+    status
   }: {
     patientId: string;
     patientFullName: string;
@@ -399,6 +400,7 @@ export default class Appointment extends BaseModel {
     startAppointmentTime: Date;
     endAppointmentTime: Date;
     reason: string;
+    status: AppointmentStatus;
   }): void {
 
     // ============================================================
@@ -496,6 +498,8 @@ export default class Appointment extends BaseModel {
 
     this.reason =
       reason.trim();
+
+    this.status = status;
   }
 
   markAsInvoiced(): void {

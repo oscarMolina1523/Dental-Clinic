@@ -1,9 +1,13 @@
 import { InvoiceStatus } from "../types/invoicesStatus.enum";
 import BaseModel from "./base.model";
 
+// funcion auxiliar para redondear decimales
+const roundMoney = (amount: number): number =>
+  Math.round((amount + Number.EPSILON) * 100) / 100;
+
 export default class Invoice extends BaseModel {
   patientId: string;
-  patientFullName:string;
+  patientFullName: string;
 
   treatmentPlanId?: string;
   treatmentId?: string;
@@ -112,7 +116,7 @@ export default class Invoice extends BaseModel {
 
     this.treatmentPlanId = treatmentPlanId;
     this.treatmentId = treatmentId;
-    
+
     this.invoiceNumber = invoiceNumber;
     this.totalAmount = totalAmount;
     this.paidAmount = paidAmount;
@@ -142,6 +146,7 @@ export default class Invoice extends BaseModel {
   // ============================================================
 
   addPayment(amount: number): void {
+    amount = roundMoney(amount);
 
     if (this.status === InvoiceStatus.CANCELLED) {
       throw new Error(
@@ -155,13 +160,13 @@ export default class Invoice extends BaseModel {
       );
     }
 
-    if (amount > this.pendingAmount) {
+    if (amount > roundMoney(this.pendingAmount)) {
       throw new Error(
         "El pago no puede superar el monto pendiente"
       );
     }
 
-    this.paidAmount += amount;
+    this.paidAmount = roundMoney(this.paidAmount + amount);
 
     this.recalculatePending();
 
@@ -170,6 +175,8 @@ export default class Invoice extends BaseModel {
 
 
   removePayment(amount: number): void {
+
+    amount = roundMoney(amount);
 
     if (this.status === InvoiceStatus.CANCELLED) {
       throw new Error(
@@ -183,13 +190,13 @@ export default class Invoice extends BaseModel {
       );
     }
 
-    if (amount > this.paidAmount) {
+    if (amount > roundMoney(this.paidAmount)) {
       throw new Error(
         "No se puede retirar más dinero del que ha sido pagado"
       );
     }
 
-    this.paidAmount -= amount;
+    this.paidAmount = roundMoney(this.paidAmount - amount);
 
     this.recalculatePending();
 
@@ -198,9 +205,14 @@ export default class Invoice extends BaseModel {
 
 
   private recalculatePending(): void {
+    this.pendingAmount = roundMoney(
+      this.totalAmount - this.paidAmount
+    );
 
-    this.pendingAmount =
-      this.totalAmount - this.paidAmount;
+    // Evitar diferencias residuales al liquidar la factura.
+    if (this.pendingAmount === 0) {
+      this.paidAmount = roundMoney(this.totalAmount);
+    }
   }
 
 
@@ -227,6 +239,8 @@ export default class Invoice extends BaseModel {
 
   changeTotal(amount: number): void {
 
+    amount = roundMoney(amount);
+
     if (this.status === InvoiceStatus.CANCELLED) {
       throw new Error(
         "No se puede modificar una factura cancelada"
@@ -239,7 +253,7 @@ export default class Invoice extends BaseModel {
       );
     }
 
-    if (amount < this.paidAmount) {
+    if (amount < roundMoney(this.paidAmount)) {
       throw new Error(
         "El nuevo total no puede ser menor que el monto ya pagado"
       );
