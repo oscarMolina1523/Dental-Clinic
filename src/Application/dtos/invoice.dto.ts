@@ -4,6 +4,9 @@ export interface InvoiceDto {
   patientId: string;
   patientFullName: string;
 
+  dentistId: string;
+  dentistFullName: string;
+
   treatmentPlanId?: string;
   treatmentId?: string;
   
@@ -14,4 +17,6 @@ export interface InvoiceDto {
   status: InvoiceStatus;
 
   hasInstallment: boolean;
+
+  createdAt: Date;
 }

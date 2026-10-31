@@ -216,6 +216,8 @@ export async function initializeDatabase(): Promise<void> {
         ID TEXT PRIMARY KEY,
         PATIENTID TEXT,
         PATIENTFULLNAME TEXT,
+        DENTISTID TEXT,
+        DENTISTFULLNAME TEXT,
         TREATMENTPLANID TEXT,
         TREATMENTID TEXT,
         INVOICENUMBER TEXT,
@@ -223,7 +225,8 @@ export async function initializeDatabase(): Promise<void> {
         PAIDAMOUNT INTEGER,
         PENDINGAMOUNT INTEGER,
         STATUS TEXT,
-        HASINSTALLMENT INTEGER
+        HASINSTALLMENT INTEGER,
+        CREATEDAT TEXT
     );
 `);
 

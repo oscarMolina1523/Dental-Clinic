@@ -261,6 +261,8 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("ID", "id", true),
             new SqlColumnSettings("PATIENTID", "patientId", false),
             new SqlColumnSettings("PATIENTFULLNAME", "patientFullName", false),
+            new SqlColumnSettings("DENTISTID", "dentistId", false),
+            new SqlColumnSettings("DENTISTFULLNAME", "dentistFullName", false),
             new SqlColumnSettings("TREATMENTPLANID", "treatmentPlanId", false),
             new SqlColumnSettings("TREATMENTID", "treatmentId", false),
             new SqlColumnSettings("INVOICENUMBER", "invoiceNumber", false),
@@ -269,6 +271,7 @@ export class EntitiesService implements IEntitiesService {
             new SqlColumnSettings("PENDINGAMOUNT", "pendingAmount", false),
             new SqlColumnSettings("STATUS", "status", false),
             new SqlColumnSettings("HASINSTALLMENT", "hasInstallment", false),
+            new SqlColumnSettings("CREATEDAT", "createdAt", false),
         ];
         return new SqlEntitySettings("INVOICES", columns);
     }

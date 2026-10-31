@@ -39,19 +39,22 @@ export class InvoiceRepository implements IInvoiceRepository {
     const rows = await this._connection.executeQuery(readCommand);
     return rows.map(
       (row) =>
-      new Invoice({
-        id: row["ID"],
-        patientId: row["PATIENTID"],
-        patientFullName: row["PATIENTFULLNAME"],
-        treatmentPlanId: row["TREATMENTPLANID"],
-        treatmentId: row["TREATMENTID"],
-        invoiceNumber: row["INVOICENUMBER"],
-        totalAmount: row["TOTALAMOUNT"],
-        paidAmount: row["PAIDAMOUNT"],
-        pendingAmount: row["PENDINGAMOUNT"],
-        status: row["STATUS"],
-        hasInstallment: row["HASINSTALLMENT"],
-      })
+        new Invoice({
+          id: row["ID"],
+          patientId: row["PATIENTID"],
+          patientFullName: row["PATIENTFULLNAME"],
+          dentistId: row["DENTISTID"],
+          dentistFullName: row["DENTISTFULLNAME"],
+          treatmentPlanId: row["TREATMENTPLANID"],
+          treatmentId: row["TREATMENTID"],
+          invoiceNumber: row["INVOICENUMBER"],
+          totalAmount: row["TOTALAMOUNT"],
+          paidAmount: row["PAIDAMOUNT"],
+          pendingAmount: row["PENDINGAMOUNT"],
+          status: row["STATUS"],
+          hasInstallment: row["HASINSTALLMENT"],
+          createdAt: row["CREATEDAT"],
+        })
     );
   }
 
@@ -69,6 +72,8 @@ export class InvoiceRepository implements IInvoiceRepository {
       id: row["ID"],
       patientId: row["PATIENTID"],
       patientFullName: row["PATIENTFULLNAME"],
+      dentistId: row["DENTISTID"],
+      dentistFullName: row["DENTISTFULLNAME"],
       treatmentPlanId: row["TREATMENTPLANID"],
       treatmentId: row["TREATMENTID"],
       invoiceNumber: row["INVOICENUMBER"],
@@ -77,6 +82,7 @@ export class InvoiceRepository implements IInvoiceRepository {
       pendingAmount: row["PENDINGAMOUNT"],
       status: row["STATUS"],
       hasInstallment: row["HASINSTALLMENT"],
+      createdAt: row["CREATEDAT"],
     });
   }
 

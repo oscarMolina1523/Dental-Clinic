@@ -9,6 +9,9 @@ export default class Invoice extends BaseModel {
   patientId: string;
   patientFullName: string;
 
+  dentistId: string;
+  dentistFullName: string;
+
   treatmentPlanId?: string;
   treatmentId?: string;
 
@@ -19,11 +22,15 @@ export default class Invoice extends BaseModel {
   private status: InvoiceStatus;
 
   hasInstallment: boolean;
+  createdAt: Date;
 
   constructor({
     id,
     patientId,
     patientFullName,
+
+    dentistId,
+    dentistFullName,
 
     treatmentPlanId,
     treatmentId,
@@ -33,11 +40,15 @@ export default class Invoice extends BaseModel {
     paidAmount,
     pendingAmount,
     status,
-    hasInstallment
+    hasInstallment,
+    createdAt
   }: {
     id: string;
     patientId: string;
     patientFullName: string;
+
+    dentistId: string;
+    dentistFullName: string;
 
     treatmentPlanId?: string;
     treatmentId?: string;
@@ -48,6 +59,7 @@ export default class Invoice extends BaseModel {
     pendingAmount: number;
     status: InvoiceStatus;
     hasInstallment: boolean;
+    createdAt: Date;
   }) {
     super(id);
 
@@ -114,6 +126,9 @@ export default class Invoice extends BaseModel {
     this.patientId = patientId;
     this.patientFullName = patientFullName;
 
+    this.dentistId = dentistId;
+    this.dentistFullName = dentistFullName;
+
     this.treatmentPlanId = treatmentPlanId;
     this.treatmentId = treatmentId;
 
@@ -123,6 +138,7 @@ export default class Invoice extends BaseModel {
     this.pendingAmount = pendingAmount;
     this.status = status;
     this.hasInstallment = hasInstallment;
+    this.createdAt = createdAt;
   }
 
   get currentTotalAmount(): number {
