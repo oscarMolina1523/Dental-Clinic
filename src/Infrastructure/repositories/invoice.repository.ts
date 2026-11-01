@@ -32,7 +32,7 @@ export class InvoiceRepository implements IInvoiceRepository {
 
     const readCommand = this._operationBuilder
       .Initialize(EntityType.Invoice)
-      .WithOrderBy("createdAt", "ASC")
+      .WithOrderBy("createdAt", "DESC")
       .WithOperation(SqlReadOperation.Select)
       .WithPagination(pageSize, offset)
       .BuildReader();
