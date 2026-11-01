@@ -25,7 +25,7 @@ export class TreatmentPlanDetailController {
 
   getById= async (req: Request, res: Response)=> {
     const id = req.params.id as string;
-    const result = await this._treatmentPlanDetailService.findById(id);
+    const result = await this._treatmentPlanDetailService.findByPlanId(id);
     res.json(result);
   }
 
